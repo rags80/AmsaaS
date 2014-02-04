@@ -1,0 +1,28 @@
+/* 
+ * Document   : JS
+ * Author     : Raghavendra I Badiger
+ * Description: 
+ *  
+ */
+
+define(function(require) {
+    "use strict";
+    return [{
+	path : '#home',
+	controller : require("./modules/homemanager/controller/homecontroller")
+    }, 
+    {
+	path : '#people',
+	controller : require("./modules/usermanager/controller/usercontroller")
+    },
+    {
+	path : '#services',
+	controller : require("./modules/servicemanager/servicecatalogue/controller/servicecontroller"),
+    }, {
+	path : '#serviceplans/',
+	controller : require("./modules/servicemanager/serviceplancatalogue/controller/serviceplancontroller")
+    }, {
+	path : '#serviceplans/{srvcPlanName}/servicerates/',
+	controller : require("./modules/servicemanager/serviceplancatalogue/controller/serviceratecontroller")
+    } ];
+});
