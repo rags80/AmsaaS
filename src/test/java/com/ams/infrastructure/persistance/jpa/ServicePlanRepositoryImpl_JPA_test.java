@@ -17,17 +17,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ams.billingandpayment.domain.model.service.Service;
-import com.ams.billingandpayment.domain.model.service.ServicePlan;
-import com.ams.billingandpayment.domain.model.service.ServiceRate;
-import com.ams.billingandpayment.domain.model.service.ServiceRate.ServiceChargeType;
-import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
-import com.ams.billingandpayment.domain.repository.ServiceRepository;
-import com.ams.sharedkernel.domain.model.measureandunits.Currency;
-import com.ams.sharedkernel.domain.model.measureandunits.Frequency;
-import com.ams.sharedkernel.domain.model.measureandunits.Money;
-import com.ams.sharedkernel.domain.model.measureandunits.Rate;
-import com.ams.sharedkernel.domain.model.measureandunits.Unit;
+import com.ams.sales.domain.model.servicecatalog.Service;
+import com.ams.sales.domain.model.servicecatalog.ServicePlan;
+import com.ams.sales.domain.model.servicecatalog.ServiceRate;
+import com.ams.sales.domain.model.servicecatalog.ServiceRate.ServiceChargeType;
+import com.ams.sales.domain.repository.ServicePlanRepository;
+import com.ams.sales.domain.repository.ServiceRepository;
+import com.ams.sharedkernel.domain.model.measuresandunits.Currency;
+import com.ams.sharedkernel.domain.model.measuresandunits.Frequency;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
+import com.ams.sharedkernel.domain.model.measuresandunits.Rate;
+import com.ams.sharedkernel.domain.model.measuresandunits.Unit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:ApplicationContext.xml" })

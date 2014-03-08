@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ams.billingandpayment.application.api.service.bill.ManageBill;
-import com.ams.billingandpayment.application.api.servicedata.BillDto;
+import com.ams.sales.application.api.service.bill.ManageBill;
+import com.ams.sales.application.api.servicedata.BillDto;
 
 @ParentPackage("json-default")
 @Namespace("/")

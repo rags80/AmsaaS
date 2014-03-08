@@ -14,8 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ams.billingandpayment.domain.model.service.Service;
-import com.ams.billingandpayment.domain.repository.ServiceRepository;
+import com.ams.sales.domain.model.servicecatalog.Service;
+import com.ams.sales.domain.repository.ServiceRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:ApplicationContext.xml" })

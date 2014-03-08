@@ -16,10 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.ams.billingandpayment.application.api.service.bill.ManageBill;
-import com.ams.billingandpayment.application.api.servicedata.BillDto;
-import com.ams.billingandpayment.domain.model.bill.BillItem;
-import com.ams.billingandpayment.domain.model.service.Service;
+import com.ams.sales.application.api.service.bill.ManageBill;
+import com.ams.sales.application.api.servicedata.BillDto;
+import com.ams.sales.domain.model.bill.BillItem;
+import com.ams.sales.domain.model.servicecatalog.Service;
 
 public class ManageBillServiceImplTest
 {

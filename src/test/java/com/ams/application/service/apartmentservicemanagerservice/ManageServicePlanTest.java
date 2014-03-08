@@ -17,10 +17,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ams.billingandpayment.application.api.service.billableservice.ManageService;
-import com.ams.billingandpayment.application.api.service.billableservice.ManageServicePlan;
-import com.ams.billingandpayment.application.api.servicedata.ServicePlanDto;
-import com.ams.billingandpayment.domain.model.service.ServicePlan;
+import com.ams.sales.application.api.service.serviceportfolio.ManageService;
+import com.ams.sales.application.api.service.serviceportfolio.ManageServicePlan;
+import com.ams.sales.application.api.servicedata.ServicePlanDto;
+import com.ams.sales.domain.model.servicecatalog.ServicePlan;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:ApplicationContext.xml" })

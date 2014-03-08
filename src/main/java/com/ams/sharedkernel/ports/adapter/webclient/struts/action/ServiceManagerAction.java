@@ -9,8 +9,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ams.billingandpayment.application.api.service.billableservice.ManageService;
-import com.ams.billingandpayment.domain.model.service.Service;
+import com.ams.sales.application.api.service.serviceportfolio.ManageService;
+import com.ams.sales.domain.model.servicecatalog.Service;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage("json-default")

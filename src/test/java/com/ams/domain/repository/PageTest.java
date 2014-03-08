@@ -1,6 +1,6 @@
 package com.ams.domain.repository;
 
-import com.ams.billingandpayment.domain.model.service.Service;
+import com.ams.sales.domain.model.servicecatalog.Service;
 import com.ams.sharedkernel.domain.repository.Page;
 
 public class PageTest

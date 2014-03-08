@@ -2,7 +2,7 @@ package com.ams.domain.model.measureandunits;
 
 import java.util.Date;
 
-import com.ams.sharedkernel.domain.model.measureandunits.Period;
+import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 
 public class PeriodTest
 {

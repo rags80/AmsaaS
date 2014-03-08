@@ -2,8 +2,8 @@ package com.ams.domain.model.measureandunits;
 
 import java.math.BigDecimal;
 
-import com.ams.sharedkernel.domain.model.measureandunits.Quantity;
-import com.ams.sharedkernel.domain.model.measureandunits.Unit;
+import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
+import com.ams.sharedkernel.domain.model.measuresandunits.Unit;
 
 public class QuantityTest
 {

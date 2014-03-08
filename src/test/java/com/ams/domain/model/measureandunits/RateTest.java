@@ -2,10 +2,10 @@ package com.ams.domain.model.measureandunits;
 
 import java.math.BigDecimal;
 
-import com.ams.sharedkernel.domain.model.measureandunits.Currency;
-import com.ams.sharedkernel.domain.model.measureandunits.Money;
-import com.ams.sharedkernel.domain.model.measureandunits.Rate;
-import com.ams.sharedkernel.domain.model.measureandunits.Unit;
+import com.ams.sharedkernel.domain.model.measuresandunits.Currency;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
+import com.ams.sharedkernel.domain.model.measuresandunits.Rate;
+import com.ams.sharedkernel.domain.model.measuresandunits.Unit;
 
 public class RateTest
 {

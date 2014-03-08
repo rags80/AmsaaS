@@ -3,8 +3,8 @@ package com.ams.domain.model.measureandunits;
 import java.math.BigDecimal;
 
 import com.ams.sharedkernel.domain.model.DomainException;
-import com.ams.sharedkernel.domain.model.measureandunits.Currency;
-import com.ams.sharedkernel.domain.model.measureandunits.Money;
+import com.ams.sharedkernel.domain.model.measuresandunits.Currency;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 
 public class MoneyTest
 {
