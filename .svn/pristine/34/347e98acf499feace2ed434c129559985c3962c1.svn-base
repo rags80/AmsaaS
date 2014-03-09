@@ -1,0 +1,49 @@
+define(function(require) {
+    "use strict";
+    return {
+
+	persistServicePlan : function(servicePlanModel) {
+	    return $.ajax({
+		url : "servicePlan",
+		type : "POST",
+		data : ko.toJSON(servicePlanModel),
+		dataType : "json",
+		contentType : "application/json; charset=utf-8"
+	    });
+	},
+
+	updateServicePlan : function(servicePlanModel) {
+	    return $.ajax({
+		url : "servicePlan",
+		type : "PUT",
+		data : ko.toJSON(servicePlanModel),
+		dataType : "json",
+		contentType : "application/json; charset=utf-8"
+	    });
+	},
+
+	removeService : function(servicePlanModel) {
+	    return $.ajax({
+		url : "servicePlan/" + servicePlanModel.srvcPlanName,
+		type : "DELETE",
+		dataType : "json",
+		contentType : "application/json; charset=utf-8"
+	    });
+	},
+
+	getAllServicePlanList : function() {
+	    return $.getJSON("servicePlan");
+	},
+
+	getBulkPageData : function(srvcPlanPage) {
+	    return $.ajax({
+		url : "servicePlans/" + srvcPlanPage.currentIndex + "&" + srvcPlanPage.nextIndex,
+		type : "GET",
+		dataType : "json",
+		contentType : "application/json; charset=utf-8"
+	    });
+
+	}
+    };
+
+});

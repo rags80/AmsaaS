@@ -1,0 +1,23 @@
+define(function(require) {
+
+    ko.validation.registerExtenders();
+
+    var modelView = function(data) {
+	this.dataModel = {
+	    srvcPlanName : ko.observable(data.srvcPlanName).extend({
+		required : true
+	    }),
+	    srvcPlanCreatDate : ko.observable(data.srvcPlanCreatDate)
+	};
+
+	this.viewModel = {
+	    isIdEditable : ko.observable(false),
+	    isEditable : ko.observable(false),
+	    isSelected : ko.observable(false)
+	};
+
+    };
+
+    return modelView;
+
+});

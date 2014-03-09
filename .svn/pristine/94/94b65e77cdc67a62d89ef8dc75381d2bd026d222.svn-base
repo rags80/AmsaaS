@@ -1,0 +1,106 @@
+<table id="srvcPlanMgrTable" class="table table-bordered gridTable">
+	<thead>
+		<tr>
+			<th>Sl#</th>
+			<th>SERVICE PLAN NAME</th>
+			<th>SERVICE PLAN CREATION DATE</th>
+			<th colspan="3">ACTION</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach:srvcPlanPagedGridView().pagedRecordsList">
+		<tr data-toggle="collapse"
+			data-bind="attr:{'data-target':'#'+$index()}"
+			class="accordion-toggle">
+			<td data-bind="text:$index()+1"><span class="icon-edit"></span></td>
+			<td><input
+				data-bind='value:dataModel.srvcPlanName,hasFocus:viewModel.isSelected,enable:viewModel.isIdEditable'></input></td>
+			<td><input
+				data-bind='value:dataModel.srvcPlanCreatDate,enable:viewModel.isEditable' /></td>
+			<td>
+				<button id="edit" data-bind="click:viewModel.isEditable"
+					title="Edit">
+					<span class="icon-edit" data-bind="visible:viewModel.isEditable"></span>
+					<span class="icon-folder-close"
+						data-bind="visible:!viewModel.isEditable()"></span>
+				</button>
+			</td>
+			<td>
+				<button id="save" data-bind="click:$parent.saveServicePlan"
+					title="Save changes!">
+					<span class="icon-ok"></span>
+				</button>
+			</td>
+			<td>
+				<button id="delete" data-bind="click:$parent.deleteServicePlan"
+					title="Delete">
+					<span class="icon-trash"></span>
+				</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="6" style="padding: 0;">
+				<div class="accordian-body collapse"
+					data-bind="attr:{'id':$index()}">
+					<table id="child" class="table table-striped">
+						<thead>
+							<tr>
+								<th>Sl#</th>
+								<th>Service Code</th>
+								<th width="15%">Service Name</th>
+								<th>Service Description</th>
+								<th width="">Charge Type</th>
+								<th width="">Charge Amount</th>
+								<th width="">Charge Frequency</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach:dataModel.srvcPlanRates">
+							<tr>
+								<td data-bind="text:$index()+1"></td>
+								<td data-bind="text:service.srvcCode"></td>
+								<td data-bind="text:service.srvcName"></td>
+								<td data-bind="text:service.srvcDescription"></td>
+								<td data-bind="text:srvcChargeComponent.chargeType"></td>
+								<td><span
+									data-bind="text:srvcChargeComponent.chargeRate.price.amount"></span><span
+									data-bind="text:srvcChargeComponent.chargeRate.price.currency"></span>/<span
+									data-bind="text:srvcChargeComponent.chargeRate.perUnit"></span></td>
+								<td data-bind="text:srvcChargeComponent.chargeFrequency"></td>
+								<td><button
+										data-bind="click:function(){$root.updateServiceRateToPlan($parent)}"
+										title="Service-Rate" class="btn btn-success"></button></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	<tbody>
+		<tr>
+			<td colspan="7">
+				<button data-bind="click:addNewServicePlan" title="Add new Service"
+					class="btn btn-success">Add Service Plan</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7" class="pagination pagination-centered"><span
+				style="margin: 0 0 0 5px;">Records/Page:<select id="records"
+					data-bind="options:srvcPlanPagedGridView().recsPerPageOptions,value:srvcPlanPagedGridView().chosenRecsPerPageOption"></select></span>
+				<ul class="pagination-centered">
+					<li><a href="#"
+						data-bind="click:srvcPlanPagedGridView().moveToPrevPage">&laquo;</a></li>
+				</ul>
+				<ul class="pagination-centered"
+					data-bind="foreach:new Array(srvcPlanPagedGridView().noOfPages())">
+					<li><a href="#"
+						data-bind="text:$index()+1,click:function(){$parent.srvcPlanPagedGridView().moveToPage($index()+1)}"></a></li>
+				</ul>
+				<ul class="pagination-centered">
+					<li><a href="#"
+						data-bind="click:srvcPlanPagedGridView().moveToNextPage">&raquo;</a></li>
+				</ul></td>
+		</tr>
+	</tbody>
+</table>
+<br>

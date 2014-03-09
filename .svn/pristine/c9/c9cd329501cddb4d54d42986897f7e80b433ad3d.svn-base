@@ -1,0 +1,130 @@
+define(function(require) {
+	return {
+		persistService : function(servicemodel) {
+			return $.ajax({
+				url : "service",
+				type : "POST",
+				data : ko.toJSON(servicemodel),
+				dataType : "json",
+				contentType : "application/json; charset=utf-8"
+			});
+		},
+
+		updateService : function(serviceModel) {
+			return $.ajax({
+				url : "service",
+				type : "PUT",
+				data : ko.toJSON(serviceModel),
+				dataType : "json",
+				contentType : "application/json; charset=utf-8"
+			});
+		},
+
+		removeService : function(serviceModel) {
+			return $.ajax({
+				url : "service/" + serviceModel.srvcCode(),
+				type : "DELETE",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8"
+			});
+		},
+
+		getAllServiceList : function(Service) {
+			return $.getJSON("services");
+		},
+
+		getNextPageData : function(ServicePage) {
+			var serviceData = [ {
+				"srvcCode" : "SRVC-01",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-02",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-03",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-04",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-05",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-06",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-07",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-08",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-09",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-010",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-011",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-012",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-013",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-014",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-015",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-016",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-017",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-018",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-019",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-020",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			}, {
+				"srvcCode" : "SRVC-021",
+				"srvcName" : "MAINT-SRVC",
+				"srvcDescription" : "Maintainance Services"
+			} ];
+
+			return serviceData.slice(ServicePage.currentIndex,
+					ServicePage.nextIndex);
+
+		}
+
+	};
+
+});

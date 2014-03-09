@@ -1,0 +1,42 @@
+/* 
+ *   Document   : Application Style
+ *   Author     : Raghavendra Badiger
+ *   Description: Stylesheet to provide custom UI styles for SERVICE-MANAGER page
+ */
+.gridTable {
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 2%;
+}
+
+.gridTable th {
+	background-color: black;
+	color: white;
+}
+
+.table #child {
+	width: 80%;
+	margin: 2% 0 1% 5%;
+	overflow: scroll;
+}
+
+#child th {
+	background-color: white;
+	color: inherit;
+	border: none;
+}
+
+#child td {
+	color: inherit;
+	border-left: none;
+}
+
+#records {
+	width: 50px;
+	margin: 10px 100px 10px 5px;
+}
+
+input {
+	width: 100%;
+	border: 0;
+}

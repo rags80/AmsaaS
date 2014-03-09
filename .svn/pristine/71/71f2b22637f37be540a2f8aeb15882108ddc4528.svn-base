@@ -1,0 +1,64 @@
+define(function(require) {
+    "use strict";
+    var viewResolver = require("ViewResolver"), srvcPlanViewTemplate = require('Text!../views/servicesplan.html'), SrvcPlanModelView = require('../model/serviceplanviewmodel'), srvcPlanRepo = require('repository/serviceplanrepository'), PagedGridView = require("modules/common/model/pagedgridmodel");
+
+    var srvcPlanController = {
+
+	srvcPlanPagedGridView : ko.observable(''),
+
+	init : function() {
+	    console.log("Initialize Service Plan controller");
+	    srvcPlanRepo.getAllServicePlanList().then(function(srvcPlanData) {
+		var mappedSrvcPlanList = $.map(srvcPlanData, function(item) {
+		    return new SrvcPlanModelView(item);
+		});
+		srvcPlanController.srvcPlanPagedGridView(new PagedGridView(mappedSrvcPlanList, [ "1", "5", "10", "15" ], "5"));
+	    });
+
+	    viewResolver.renderModelView("ServicePlanManagerDiv", this, srvcPlanViewTemplate, "gridStyle");
+	},
+
+	addNewServicePlan : function() {
+	    var svcPlanModelView = new SrvcPlanModelView("");
+	    svcPlanModelView.viewModel.isSelected(true);
+	    svcPlanModelView.viewModel.isIdEditable(true);
+	    svcPlanModelView.viewModel.isEditable(true);
+	    srvcPlanController.srvcPlanPagedGridView().dataRepo.push(svcPlanModelView);
+	    srvcPlanController.srvcPlanPagedGridView().moveToLastPage();
+	},
+
+	deleteServicePlan : function(data) {
+	    if (data !== "") {
+		srvcPlanController.srvcPlanPagedGridView().dataRepo.remove(data);
+		srvcPlanRepo.removeServicePlan(data.dataModel);
+		srvcPlanController.srvcPlanPagedGridView().moveToLastPage();
+	    }
+
+	},
+
+	saveServicePlan : function(data) {
+	    if (data !== "") {
+		if (data.viewModel.isIdEditable() === true) {
+		    data.viewModel.isIdEditable(false);
+		    data.viewModel.isEditable(false);
+		    srvcPlanRepo.persistServicePlan(data.dataModel).then(function(serverData) {
+			var mappedSrvcList = $.map(serverData, function(item) {
+			    return new SrvcModelView(item);
+			});
+			srvcPlanController.srvcPlanPagedGridView().dataRepo.removeAll();
+			srvcPlanController.srvcPlanPagedGridView().dataRepo(mappedSrvcList);
+		    });
+		} else if (data === "") {
+		    srvcPlanController.srvcPlanPagedGridView().dataRepo.remove(data);
+		} else {
+		    data.viewModel.isEditable(false);
+		    srvcPlanRepo.updateServicePlan(data.dataModel);
+		}
+	    }
+
+	}
+
+    };
+
+    return srvcPlanController;
+});

@@ -1,0 +1,185 @@
+<table id="srvcPlanMgrTable" class="table table-bordered gridTable">
+	<thead>
+		<tr>
+			<th>Sl#</th>
+			<th>SERVICE PLAN NAME</th>
+			<th>SERVICE PLAN CREATION DATE</th>
+			<th colspan="3">ACTION</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach:srvcPlanPagedGridView().pagedRecordList">
+		<tr data-toggle="collapse"
+			data-bind="attr:{'data-target':'#'+$index()}"
+			class="accordion-toggle">
+			<td data-bind="text:$index()+1"><span class="icon-edit"></span>
+			</td>
+			<td><input
+				data-bind='value:dataModel.srvcPlanName,hasFocus:viewModel.isSelected,enable:viewModel.isIdEditable'></input></td>
+			<td><input
+				data-bind='value:dataModel.srvcPlanCreatDate,enable:viewModel.isEditable' /></td>
+			<td>
+				<button id="edit" data-bind="click:viewModel.isEditable"
+					title="Edit">
+					<span class="icon-edit" data-bind="visible:viewModel.isEditable"></span>
+					<span class="icon-folder-close"
+						data-bind="visible:!viewModel.isEditable()"></span>
+				</button>
+			</td>
+			<td>
+				<button id="save" data-bind="click:$parent.saveServicePlan"
+					title="Save changes!">
+					<span class="icon-ok"></span>
+				</button>
+			</td>
+			<td>
+				<button id="delete" data-bind="click:$parent.deleteServicePlan"
+					title="Delete">
+					<span class="icon-trash"></span>
+				</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="6" style="padding: 0;">
+				<div class="accordian-body collapse"
+					data-bind="attr:{'id':$index()}">
+					<table id="child" class="table table-striped">
+						<tr>
+							<th>Sl#</th>
+							<th>Service Code</th>
+							<th>Service Name</th>
+							<th>Service Description</th>
+							<th>Rate</th>
+							<th>Discount</th>
+							<th>Tax</th>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>SRVC_01</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>SRVC_02</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>SRVC_01</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>SRVC_02</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>SRVC_01</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>SRVC_02</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>SRVC_01</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>8</td>
+							<td>SRVC_02</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>9</td>
+							<td>SRVC_01</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+						<tr>
+							<td>10</td>
+							<td>SRVC_02</td>
+							<td>MAINT_SRVC</td>
+							<td>Maintainace Service</td>
+							<td>Rs 1000/Month</td>
+							<td>Rs 0</td>
+							<td>Rs 0</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+	<tbody>
+		<tr>
+			<td colspan="7">
+				<button data-bind="click:addNewServicePlan" title="Add new Service"
+					class="btn btn-success">Add Service Plan</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7">Records/Page:<select id="records"
+				data-bind="options:srvcPlanPagedGridView().pageRecordOption,value:srvcPlanPagedGridView().chosenPageRecord"></select>
+				<button id="firstPage"
+					data-bind="click:srvcPlanPagedGridView().moveToFirstPage"
+					title="Go to first page">
+					<span class="icon-fast-backward"></span>
+				</button>
+				<button id="prevPage"
+					data-bind="click:srvcPlanPagedGridView().moveToPrevPage"
+					title="Go to prev page">
+					<span class="icon-step-backward"></span>
+				</button> Page:<span data-bind="text:srvcPlanPagedGridView().currentPageNo"></span>
+				/<span data-bind="text:srvcPlanPagedGridView().noOfPages"></span>
+				<button id="nextPage"
+					data-bind="click:srvcPlanPagedGridView().moveToNextPage"
+					title="Go to next page">
+					<span class="icon-step-forward"></span>
+				</button>
+				<button id="lastPage"
+					data-bind="click:srvcPlanPagedGridView().moveToLastPage"
+					title="Go to last page">
+					<span class="icon-fast-forward"></span>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<br>

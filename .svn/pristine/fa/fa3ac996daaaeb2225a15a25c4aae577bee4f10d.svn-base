@@ -1,0 +1,6 @@
+package com.ams.ports.adapter.batch;
+
+public class BillingTask
+{
+
+}

@@ -1,0 +1,93 @@
+package com.ams.ports.adapter.web_client.spring_mvc.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ams.application.common.ServiceException;
+import com.ams.application.service.apartmentservicemanagerservice.ManageServicePlan;
+import com.ams.domain.model.service.ServicePlan;
+import com.ams.domain.repository.common.Page;
+
+@Controller
+public class ServicePlanController
+{
+	@Autowired
+	private ManageServicePlan	manageServicePlan;
+
+	@RequestMapping(value = "servicePlan",method = RequestMethod.POST)
+	@ResponseBody
+	public String registerNewServicePlan(@RequestBody final ServicePlan servicePlan) throws ServiceException
+	{
+		try
+		{
+			return manageServicePlan.registerServicePlan(servicePlan.getSrvcPlanName());
+		} catch (Exception e)
+		{
+			throw new ServiceException(e.toString());
+
+		}
+
+	}
+
+	@RequestMapping(value = "servicePlan",method = RequestMethod.PUT)
+	@ResponseBody
+	public String updateServicePlan(@RequestBody final ServicePlan servicePlan) throws ServiceException
+	{
+		try
+		{
+			return manageServicePlan.updateServicePlanDetails(servicePlan.getSrvcPlanName(), servicePlan.getSrvcPlanCreatDate());
+		} catch (Exception e)
+		{
+			throw new ServiceException(e.toString());
+
+		}
+
+	}
+
+	@RequestMapping(value = "servicePlan/{srvcPlanName}",method = RequestMethod.DELETE)
+	@ResponseBody
+	public List<ServicePlan> deleteServicePlan(@PathVariable final String srvcPlanName)
+	{
+		System.out.println(srvcPlanName);
+		manageServicePlan.removeServicePlan(srvcPlanName);
+		return this.getServicePlanList();
+
+	}
+
+	@RequestMapping("servicePlan")
+	@ResponseBody
+	public List<ServicePlan> getServicePlanList()
+	{
+
+		return manageServicePlan.getAllServicePlans();
+	}
+
+	@RequestMapping(value = "servicePlans/{currentIndex}&{nextIndex}",method = RequestMethod.GET)
+	@ResponseBody
+	public Page<ServicePlan> getServicePlanNextPage(@PathVariable final int currentIndex, @PathVariable final int nextIndex)
+	{
+		/*
+		 * List<ServicePlan> spList = new ArrayList<ServicePlan>(); for (int i
+		 * = 0; i < 40; i++) { ServicePlan sp = new ServicePlan("ServicePlan-"
+		 * + i, new Date()); spList.add(sp);
+		 * 
+		 * }
+		 */
+
+		Page<ServicePlan> p = new Page<ServicePlan>(currentIndex, nextIndex);
+		/*
+		 * if (currentIndex < spList.size()) {
+		 * p.setPageDataList(spList.subList(currentIndex, nextIndex)); }
+		 */
+		p.setPageDataList(manageServicePlan.getAllServicePlans());
+		return p;
+	}
+
+}
