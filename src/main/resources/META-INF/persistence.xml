@@ -3,17 +3,14 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="ApartmentManagementSoftware">
-		<class>com.ams.sales.domain.model.bill.Bill</class>
-		<class>com.ams.sales.domain.model.bill.BillItem</class>
-		<class>com.ams.sales.domain.model.bill.BillPaymentRegister</class>
-		<class>com.ams.sales.domain.model.bill.Payment</class>
-		<class>com.ams.sales.domain.model.servicecatalog.Service</class>
-		<class>com.ams.sales.domain.model.servicecatalog.ServiceCharge</class>
-		<class>com.ams.sales.domain.model.servicecatalog.ServicePlan</class>
-		<class>com.ams.sales.domain.model.servicecatalog.ServiceRate</class>
-		<class>com.ams.sales.domain.model.servicecatalog.ServiceRateId</class>
-		<class>com.ams.sales.domain.model.servicecatalog.ServiceSubscription</class>
-		<class>com.ams.sales.domain.model.servicecatalog.ServiceUsage</class>
+		<class>com.ams.billing.domain.model.bill.Bill</class>
+		<class>com.ams.billing.domain.model.bill.BillItem</class>
+		<class>com.ams.billing.domain.model.bill.BillPaymentRegister</class>
+		<class>com.ams.billing.domain.model.bill.Payment</class>
+		<class>com.ams.billing.domain.model.servicecatalog.Service</class>
+		<class>com.ams.billing.domain.model.servicecatalog.ServicePlan</class>
+		<class>com.ams.billing.domain.model.servicecatalog.ServicePrice</class>
+		<class>com.ams.billing.domain.model.servicecatalog.ServiceSubscription</class>
 		<class>com.ams.finance.domain.model.Account</class>
 		<class>com.ams.finance.domain.model.AccountDetail</class>
 		<class>com.ams.finance.domain.model.Transaction</class>

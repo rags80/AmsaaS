@@ -20,11 +20,11 @@ import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.ams.billing.domain.model.bill.Bill;
+import com.ams.billing.domain.model.bill.Payment;
+import com.ams.billing.domain.model.servicecatalog.ServiceSubscription;
 import com.ams.finance.domain.model.Account;
 import com.ams.finance.domain.model.Transaction;
-import com.ams.sales.domain.model.bill.Bill;
-import com.ams.sales.domain.model.bill.Payment;
-import com.ams.sales.domain.model.servicecatalog.ServiceSubscription;
 
 @Entity
 @Access(PROPERTY)

@@ -18,9 +18,10 @@
 	<!-- *********************SERVICES & REPOSITORY CONFIGURATION************************ -->
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.ams.ports.adapter.persistance.jpa" />
-	<context:component-scan base-package="com.ams.application.service" />
-
+	<context:component-scan base-package="com.ams" >
+		        <context:include-filter type="regex" expression=".*jpa\.[^.]*"/>
+				<context:include-filter type="regex" expression=".*service\.[^.]*"/>						        
+	</context:component-scan>
 
 
 	<!-- *********************LOGGER AOP SERVICE CONFIGURATION ************************ -->

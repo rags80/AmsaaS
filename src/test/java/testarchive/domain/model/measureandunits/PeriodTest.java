@@ -1,0 +1,18 @@
+package testarchive.domain.model.measureandunits;
+
+import java.util.Date;
+
+import com.ams.sharedkernel.domain.model.measuresandunits.Period;
+
+public class PeriodTest
+{
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args)
+	{
+		Period p = new Period(new Date(), new Date());
+		System.out.println(p);
+	}
+}

@@ -1,8 +1,13 @@
+/**
+ * 
+ */
 package com.ams.sharedkernel.domain.model.measuresandunits;
 
-import java.io.Serializable;
-
-public enum Unit implements Serializable
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
+public interface Unit
 {
-	Hrs, Days, Weeks, FortNight, Months, Item
+	Unit convertTo(Unit toUnit, Unit fromUnit);
 }

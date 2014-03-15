@@ -126,7 +126,7 @@ public class Money implements Serializable
 
 	public BigDecimal getAmount()
 	{
-		return amount;
+		return this.amount;
 	}
 
 	@SuppressWarnings("unused")
@@ -138,7 +138,7 @@ public class Money implements Serializable
 	@Enumerated(EnumType.STRING)
 	public Currency getCurrency()
 	{
-		return currency;
+		return this.currency;
 	}
 
 	@SuppressWarnings("unused")
@@ -150,7 +150,7 @@ public class Money implements Serializable
 	@Override
 	public String toString()
 	{
-		return amount + "" + currency;
+		return this.amount + "" + this.currency;
 	}
 
 	@Override
@@ -158,8 +158,8 @@ public class Money implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((amount == null) ? 0 : amount.hashCode());
-		result = (prime * result) + ((currency == null) ? 0 : currency.hashCode());
+		result = (prime * result) + ((this.amount == null) ? 0 : this.amount.hashCode());
+		result = (prime * result) + ((this.currency == null) ? 0 : this.currency.hashCode());
 		return result;
 	}
 
@@ -179,18 +179,18 @@ public class Money implements Serializable
 			return false;
 		}
 		Money other = (Money) obj;
-		if (amount == null)
+		if (this.amount == null)
 		{
 			if (other.amount != null)
 			{
 				return false;
 			}
 		}
-		else if (!amount.equals(other.amount))
+		else if (!this.amount.equals(other.amount))
 		{
 			return false;
 		}
-		if (currency != other.currency)
+		if (this.currency != other.currency)
 		{
 			return false;
 		}

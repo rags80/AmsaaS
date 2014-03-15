@@ -3,8 +3,6 @@ package com.ams.sharedkernel.domain.model.measuresandunits;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Embeddable
 public class Rate implements Serializable
@@ -14,45 +12,47 @@ public class Rate implements Serializable
 	 */
 	private static final long	serialVersionUID	= 1L;
 
-	private Money				price;
-	private Unit				perUnit;
+	private Money				pricePerUnit;
+	private TimeUnit				unitOfMeasure;
 
 	public Rate()
 	{}
 
-	public Rate(Money money, Unit perUnit)
+	public Rate(Money money, TimeUnit perUnit)
 	{
-		this.price = money;
-		this.perUnit = perUnit;
+		this.pricePerUnit = money;
+		this.unitOfMeasure = perUnit;
 	}
 
-	public Money getPrice()
+	public Money getPricePerUnit()
 	{
-		return price;
+		return pricePerUnit;
 	}
 
-	@SuppressWarnings("unused")
-	private void setPrice(Money price)
+	private void setPricePerUnit(Money pricePerUnit)
 	{
-		this.price = price;
+		this.pricePerUnit = pricePerUnit;
 	}
 
-	@Enumerated(EnumType.STRING)
-	public Unit getPerUnit()
+	public TimeUnit getUnitOfMeasure()
 	{
-		return perUnit;
+		return unitOfMeasure;
 	}
 
-	@SuppressWarnings("unused")
-	private void setPerUnit(Unit perUnit)
+	private void setUnitOfMeasure(TimeUnit unitOfMeasure)
 	{
-		this.perUnit = perUnit;
+		this.unitOfMeasure = unitOfMeasure;
+	}
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Rate [" + price + "/" + perUnit + "]";
+		return "Rate [" + pricePerUnit + "/" + unitOfMeasure + "]";
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class Rate implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((perUnit == null) ? 0 : perUnit.hashCode());
-		result = (prime * result) + ((price == null) ? 0 : price.hashCode());
+		result = (prime * result) + ((pricePerUnit == null) ? 0 : pricePerUnit.hashCode());
+		result = (prime * result) + ((unitOfMeasure == null) ? 0 : unitOfMeasure.hashCode());
 		return result;
 	}
 
@@ -81,18 +81,18 @@ public class Rate implements Serializable
 			return false;
 		}
 		Rate other = (Rate) obj;
-		if (perUnit != other.perUnit)
+		if (pricePerUnit == null)
 		{
-			return false;
-		}
-		if (price == null)
-		{
-			if (other.price != null)
+			if (other.pricePerUnit != null)
 			{
 				return false;
 			}
 		}
-		else if (!price.equals(other.price))
+		else if (!pricePerUnit.equals(other.pricePerUnit))
+		{
+			return false;
+		}
+		if (unitOfMeasure != other.unitOfMeasure)
 		{
 			return false;
 		}

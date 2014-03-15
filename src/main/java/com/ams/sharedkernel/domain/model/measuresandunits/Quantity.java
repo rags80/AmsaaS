@@ -2,8 +2,16 @@ package com.ams.sharedkernel.domain.model.measuresandunits;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Embeddable;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.Months;
+import org.joda.time.Weeks;
+import org.joda.time.Years;
 
 @Embeddable
 public class Quantity implements Serializable
@@ -13,15 +21,73 @@ public class Quantity implements Serializable
 	 */
 	private static final long	serialVersionUID	= 1L;
 	private BigDecimal			value;
-	private Unit				unit;
+	private TimeUnit				unit;
 
 	public Quantity()
 	{}
 
-	public Quantity(BigDecimal qty, Unit qtUnit)
+	public Quantity(BigDecimal qty, TimeUnit qtUnit)
 	{
 		this.value = qty;
 		this.unit = qtUnit;
+	}
+
+	/**
+	 * @param srvcUsagePeriod
+	 * @param unitOfMeasure
+	 * @return
+	 */
+	public static Quantity converToUnit(Quantity qty, TimeUnit unitOfMeasure)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @param srvcUsagePeriod
+	 * @param unitOfMeasure
+	 * @return
+	 */
+
+	public static Quantity quantify(Period srvcUsagePeriod, TimeUnit unitOfMeasure)
+	{
+		Quantity qty = new Quantity();
+		BigDecimal value;
+
+		switch (unitOfMeasure)
+		{
+
+		case Hrs:
+			value = BigDecimal.valueOf(Hours.hoursBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getHours());
+			break;
+		case Days:
+			value = BigDecimal.valueOf(Days.daysBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getDays());
+			break;
+		case Weeks:
+			value = BigDecimal.valueOf(Weeks.weeksBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getWeeks());
+			break;
+		case FortNights:
+			value = BigDecimal.valueOf(Weeks.weeksBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getWeeks() / 2);
+			break;
+		case Months:
+			value = BigDecimal.valueOf(Months.monthsBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getMonths());
+			break;
+		case Years:
+			value = BigDecimal.valueOf(Years.yearsBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getYears());
+			break;
+		case QuarterYears:
+			value = BigDecimal.valueOf(Years.yearsBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getYears() * 4);
+			break;
+		case HalfYears:
+			value = BigDecimal.valueOf(Years.yearsBetween(new DateTime(srvcUsagePeriod.getFromDate()), new DateTime(srvcUsagePeriod.getToDate())).getYears() * 2);
+			break;
+
+		default:
+			throw new IllegalArgumentException("Unknown Unit to convert!!");
+
+		}
+
+		return new Quantity(value, unitOfMeasure);
 	}
 
 	public Quantity add(Quantity qty) throws InvalidUnitException
@@ -124,16 +190,16 @@ public class Quantity implements Serializable
 
 	public BigDecimal getValue()
 	{
-		return value;
+		return this.value;
 	}
 
-	public Unit getUnit()
+	public TimeUnit getUnit()
 	{
-		return unit;
+		return this.unit;
 	}
 
 	@SuppressWarnings("unused")
-	private void setUnit(Unit unit)
+	private void setUnit(TimeUnit unit)
 	{
 		this.unit = unit;
 	}
@@ -141,7 +207,7 @@ public class Quantity implements Serializable
 	@Override
 	public String toString()
 	{
-		return "Quantity [" + value + unit + "]";
+		return "Quantity [" + this.value + this.unit + "]";
 	}
 
 	@Override
@@ -149,8 +215,8 @@ public class Quantity implements Serializable
 	{
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + ((unit == null) ? 0 : unit.hashCode());
-		result = (prime * result) + ((value == null) ? 0 : value.hashCode());
+		result = (prime * result) + ((this.unit == null) ? 0 : this.unit.hashCode());
+		result = (prime * result) + ((this.value == null) ? 0 : this.value.hashCode());
 		return result;
 	}
 
@@ -170,22 +236,31 @@ public class Quantity implements Serializable
 			return false;
 		}
 		Quantity other = (Quantity) obj;
-		if (unit != other.unit)
+		if (this.unit != other.unit)
 		{
 			return false;
 		}
-		if (value == null)
+		if (this.value == null)
 		{
 			if (other.value != null)
 			{
 				return false;
 			}
 		}
-		else if (!value.equals(other.value))
+		else if (!this.value.equals(other.value))
 		{
+
 			return false;
 		}
 		return true;
+	}
+
+	public static void main(String[] args)
+	{
+
+		Quantity qty = Quantity.quantify(new Period(new Date(2013, 1, 1, 0, 0, 0), new Date(2014, 3, 1, 0, 0, 0)), TimeUnit.FortNights);
+		System.out.println(qty);
+
 	}
 
 }
