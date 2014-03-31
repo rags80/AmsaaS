@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.ams.finance.application.api.servicedata.AccountServiceData;
 import com.ams.finance.domain.model.Account;
 import com.ams.finance.domain.model.AccountDetail;
-import com.ams.usermanagement.domain.model.Person;
+import com.ams.users.domain.model.Person;
 
 @Component("AccountServiceDataAssembler")
 public class AccountServiceDataAssembler

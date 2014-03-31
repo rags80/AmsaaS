@@ -12,9 +12,9 @@ import com.ams.finance.application.api.servicedata.AccountServiceData;
 import com.ams.finance.domain.model.Account;
 import com.ams.finance.domain.model.Transaction;
 import com.ams.finance.domain.repository.AccountRepository;
-import com.ams.sharedkernel.application.common.ServiceException;
-import com.ams.usermanagement.domain.model.Person;
-import com.ams.usermanagement.domain.repository.PersonRepository;
+import com.ams.sharedkernel.exception.ServiceException;
+import com.ams.users.domain.model.Person;
+import com.ams.users.domain.repository.PersonRepository;
 
 @Transactional
 @Service("ManageAccountService")

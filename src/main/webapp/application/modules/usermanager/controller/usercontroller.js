@@ -10,7 +10,8 @@ define(function(require) {
     var userController = {
 
 	userPagedGridView : ko.observable(''),
-
+	
+	
 	init : function(path,param) {
 	    console.log("init USER-CONTROLLER!!");
 	    userRepo.setPath(path);
@@ -25,6 +26,28 @@ define(function(require) {
 	    viewResolver.renderModelView("people", this, userViewTemplate, "gridStyle");
 
 	}
+    ,
+    	
+    submitDoc:function()
+    {
+	var data=new FormData($("form")[0]);
+	
+	$.ajax({
+		url :"docs",
+		type : "POST",
+		data :data,
+		dataType : "json",
+		contentType:false,
+		processData:false
+		
+	    }).then(function(data){
+		console.log(data);
+	    });
+	
+	// console.log("Form submitted");
+	
+    }
+    
     };
 
     return userController;

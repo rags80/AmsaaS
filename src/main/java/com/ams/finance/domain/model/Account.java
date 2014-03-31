@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import com.ams.usermanagement.domain.model.Person;
+import com.ams.users.domain.model.Person;
 
 @Entity
 @Access(PROPERTY)

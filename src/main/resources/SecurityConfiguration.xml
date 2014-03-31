@@ -15,7 +15,7 @@
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:user-service>
+			 <security:user-service>
 				<security:user name="rags1980" password="abc"
 					authorities="ROLE_USER" />
 			</security:user-service>

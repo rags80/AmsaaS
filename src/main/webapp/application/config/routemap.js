@@ -17,7 +17,7 @@ define(function(require) {
     },
     {
 	path : '#services',
-	controller : require("./modules/servicemanager/servicecatalogue/controller/servicecontroller"),
+	controller : require("./modules/servicemanager/servicecatalogue/servicecontroller"),
     }, {
 	path : '#serviceplans/',
 	controller : require("./modules/servicemanager/serviceplancatalogue/controller/serviceplancontroller")

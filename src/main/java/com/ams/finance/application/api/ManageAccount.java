@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.ams.finance.application.api.servicedata.AccountServiceData;
 import com.ams.finance.domain.model.Transaction;
-import com.ams.sharedkernel.application.common.ServiceException;
+import com.ams.sharedkernel.exception.ServiceException;
 
 public interface ManageAccount
 {

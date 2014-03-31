@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import com.ams.sharedkernel.domain.model.DomainException;
+import com.ams.sharedkernel.exception.DomainException;
 
 /**
  * @author Raghavendra Badiger

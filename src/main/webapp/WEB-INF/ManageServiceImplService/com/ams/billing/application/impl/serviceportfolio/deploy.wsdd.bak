@@ -12,33 +12,27 @@
 
   <!-- Services from ManageServiceImplService WSDL service -->
 
-  <service name="ManageServiceImpl" provider="java:RPC" style="wrapped" use="literal">
+  <service name="ManageServiceImpl" provider="java:RPC" style="rpc" use="encoded">
       <parameter name="wsdlTargetNamespace" value="http://serviceportfolio.impl.application.billing.ams.com"/>
       <parameter name="wsdlServiceElement" value="ManageServiceImplService"/>
-      <parameter name="schemaQualified" value="http://servicecatalog.model.domain.billing.ams.com,http://xml.apache.org/xml-soap,http://repository.domain.sharedkernel.ams.com,http://serviceportfolio.impl.application.billing.ams.com"/>
+      <parameter name="schemaUnqualified" value="http://servicecatalog.model.domain.billing.ams.com,http://serviceportfolio.impl.application.billing.ams.com"/>
       <parameter name="wsdlServicePort" value="ManageServiceImpl"/>
       <parameter name="className" value="com.ams.billing.application.impl.serviceportfolio.ManageServiceImplSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="ManageServiceImpl"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation name="getService" qname="operNS:getService" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="retNS:getServiceReturn" xmlns:retNS="http://serviceportfolio.impl.application.billing.ams.com" returnType="rtns:Service" xmlns:rtns="http://servicecatalog.model.domain.billing.ams.com" soapAction="" >
-        <parameter qname="pns:svcCode" xmlns:pns="http://serviceportfolio.impl.application.billing.ams.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      <operation name="getService" qname="operNS:getService" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="getServiceReturn" returnType="rtns:Service" xmlns:rtns="http://servicecatalog.model.domain.billing.ams.com" soapAction="" >
+        <parameter qname="svcCode" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="removeService" qname="operNS:removeService" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" soapAction="" >
-        <parameter qname="pns:svcCode" xmlns:pns="http://serviceportfolio.impl.application.billing.ams.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="svcCode" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <operation name="registerService" qname="operNS:registerService" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="retNS:registerServiceReturn" xmlns:retNS="http://serviceportfolio.impl.application.billing.ams.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
-        <parameter qname="pns:svc" xmlns:pns="http://serviceportfolio.impl.application.billing.ams.com" type="tns:Service" xmlns:tns="http://servicecatalog.model.domain.billing.ams.com"/>
+      <operation name="registerService" qname="operNS:registerService" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="registerServiceReturn" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="svc" type="tns:Service" xmlns:tns="http://servicecatalog.model.domain.billing.ams.com"/>
       </operation>
-      <operation name="updateServiceDetails" qname="operNS:updateServiceDetails" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="retNS:updateServiceDetailsReturn" xmlns:retNS="http://serviceportfolio.impl.application.billing.ams.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
-        <parameter qname="pns:svc" xmlns:pns="http://serviceportfolio.impl.application.billing.ams.com" type="tns:Service" xmlns:tns="http://servicecatalog.model.domain.billing.ams.com"/>
+      <operation name="updateServiceDetails" qname="operNS:updateServiceDetails" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="updateServiceDetailsReturn" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="svc" type="tns:Service" xmlns:tns="http://servicecatalog.model.domain.billing.ams.com"/>
       </operation>
-      <operation name="getAllServices" qname="operNS:getAllServices" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="retNS:getAllServicesReturn" xmlns:retNS="http://serviceportfolio.impl.application.billing.ams.com" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://serviceportfolio.impl.application.billing.ams.com" returnItemQName="tns:item" xmlns:tns="http://serviceportfolio.impl.application.billing.ams.com" soapAction="" >
-      </operation>
-      <operation name="getServicesNextPage" qname="operNS:getServicesNextPage" xmlns:operNS="http://serviceportfolio.impl.application.billing.ams.com" returnQName="retNS:getServicesNextPageReturn" xmlns:retNS="http://serviceportfolio.impl.application.billing.ams.com" returnType="rtns:Page" xmlns:rtns="http://repository.domain.sharedkernel.ams.com" soapAction="" >
-        <parameter qname="pns:index" xmlns:pns="http://serviceportfolio.impl.application.billing.ams.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-        <parameter qname="pns:offset" xmlns:pns="http://serviceportfolio.impl.application.billing.ams.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-      </operation>
-      <parameter name="allowedMethods" value="getServicesNextPage updateServiceDetails getAllServices removeService registerService getService"/>
+      <parameter name="allowedMethods" value="updateServiceDetails removeService registerService getService"/>
 
       <typeMapping
         xmlns:ns="http://servicecatalog.model.domain.billing.ams.com"
@@ -46,118 +40,14 @@
         type="java:com.ams.billing.domain.model.servicecatalog.Service"
         serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
         deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
       />
       <arrayMapping
         xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
         qname="ns:ArrayOf_xsd_anyType"
         type="java:java.lang.Object[]"
         innerType="cmp-ns:anyType" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>getAllServices"
-        type="java:com.ams.billing.application.impl.serviceportfolio.GetAllServices"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>removeService"
-        type="java:com.ams.billing.application.impl.serviceportfolio.RemoveService"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>updateServiceDetails"
-        type="java:com.ams.billing.application.impl.serviceportfolio.UpdateServiceDetails"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>getServicesNextPage"
-        type="java:com.ams.billing.application.impl.serviceportfolio.GetServicesNextPage"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>getServiceResponse"
-        type="java:com.ams.billing.application.impl.serviceportfolio.GetServiceResponse"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>removeServiceResponse"
-        type="java:com.ams.billing.application.impl.serviceportfolio.RemoveServiceResponse"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>updateServiceDetailsResponse"
-        type="java:com.ams.billing.application.impl.serviceportfolio.UpdateServiceDetailsResponse"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>getServicesNextPageResponse"
-        type="java:com.ams.billing.application.impl.serviceportfolio.GetServicesNextPageResponse"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>getAllServicesResponse"
-        type="java:com.ams.billing.application.impl.serviceportfolio.GetAllServicesResponse"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>getService"
-        type="java:com.ams.billing.application.impl.serviceportfolio.GetService"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://repository.domain.sharedkernel.ams.com"
-        qname="ns:Page"
-        type="java:com.ams.sharedkernel.domain.repository.Page"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>registerService"
-        type="java:com.ams.billing.application.impl.serviceportfolio.RegisterService"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
-      />
-      <typeMapping
-        xmlns:ns="http://serviceportfolio.impl.application.billing.ams.com"
-        qname="ns:>registerServiceResponse"
-        type="java:com.ams.billing.application.impl.serviceportfolio.RegisterServiceResponse"
-        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
-        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
-        encodingStyle=""
+        encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
       />
   </service>
 </deployment>

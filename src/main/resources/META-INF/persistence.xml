@@ -3,14 +3,14 @@
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="ApartmentManagementSoftware">
-		<class>com.ams.billing.domain.model.bill.Bill</class>
-		<class>com.ams.billing.domain.model.bill.BillItem</class>
-		<class>com.ams.billing.domain.model.bill.BillPaymentRegister</class>
-		<class>com.ams.billing.domain.model.bill.Payment</class>
-		<class>com.ams.billing.domain.model.servicecatalog.Service</class>
-		<class>com.ams.billing.domain.model.servicecatalog.ServicePlan</class>
-		<class>com.ams.billing.domain.model.servicecatalog.ServicePrice</class>
-		<class>com.ams.billing.domain.model.servicecatalog.ServiceSubscription</class>
+		<class>com.ams.billingandpayment.domain.model.bill.Bill</class>
+		<class>com.ams.billingandpayment.domain.model.bill.BillItem</class>
+		<class>com.ams.billingandpayment.domain.model.bill.BillPaymentRegister</class>
+		<class>com.ams.billingandpayment.domain.model.bill.Payment</class>
+		<class>com.ams.billingandpayment.domain.model.servicecatalog.Service</class>
+		<class>com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan</class>
+		<class>com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice</class>
+		<class>com.ams.billingandpayment.domain.model.servicecatalog.ServiceSubscription</class>
 		<class>com.ams.finance.domain.model.Account</class>
 		<class>com.ams.finance.domain.model.AccountDetail</class>
 		<class>com.ams.finance.domain.model.Transaction</class>
@@ -18,9 +18,9 @@
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Period</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Quantity</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Rate</class>
-		<class>com.ams.usermanagement.domain.model.Address</class>
-		<class>com.ams.usermanagement.domain.model.Person</class>
-		<class>com.ams.usermanagement.domain.model.PersonDetail</class>
+		<class>com.ams.users.domain.model.Address</class>
+		<class>com.ams.users.domain.model.Person</class>
+		<class>com.ams.users.domain.model.PersonDetail</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />

@@ -13,7 +13,7 @@ public class Rate implements Serializable
 	private static final long	serialVersionUID	= 1L;
 
 	private Money				pricePerUnit;
-	private TimeUnit				unitOfMeasure;
+	private TimeUnit			unitOfMeasure;
 
 	public Rate()
 	{}

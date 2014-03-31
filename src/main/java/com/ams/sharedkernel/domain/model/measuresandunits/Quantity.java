@@ -21,7 +21,7 @@ public class Quantity implements Serializable
 	 */
 	private static final long	serialVersionUID	= 1L;
 	private BigDecimal			value;
-	private TimeUnit				unit;
+	private TimeUnit			unit;
 
 	public Quantity()
 	{}

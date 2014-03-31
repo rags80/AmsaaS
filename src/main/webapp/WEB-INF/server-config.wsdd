@@ -32,6 +32,30 @@
   <ns1:parameter name="allowedMethods" value="getVersion"/>
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
+ <ns1:service name="ManageServiceImpl" provider="java:RPC">
+  <ns3:operation name="getService" qname="ns2:getService" returnQName="getServiceReturn" returnType="ns1:Service" soapAction="" xmlns:ns1="http://servicecatalog.model.domain.billing.ams.com" xmlns:ns2="http://serviceportfolio.impl.application.billing.ams.com" xmlns:ns3="http://xml.apache.org/axis/wsdd/">
+   <ns3:parameter name="svcCode" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns3:operation>
+  <ns1:operation name="removeService" qname="ns3:removeService" soapAction="" xmlns:ns3="http://serviceportfolio.impl.application.billing.ams.com">
+   <ns1:parameter name="svcCode" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="registerService" qname="ns4:registerService" returnQName="registerServiceReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://serviceportfolio.impl.application.billing.ams.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter name="svc" type="ns5:Service" xmlns:ns5="http://servicecatalog.model.domain.billing.ams.com"/>
+  </ns1:operation>
+  <ns1:operation name="updateServiceDetails" qname="ns6:updateServiceDetails" returnQName="updateServiceDetailsReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://serviceportfolio.impl.application.billing.ams.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter name="svc" type="ns7:Service" xmlns:ns7="http://servicecatalog.model.domain.billing.ams.com"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="updateServiceDetails removeService registerService getService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="ManageServiceImpl"/>
+  <ns1:parameter name="className" value="com.ams.billing.application.impl.serviceportfolio.ManageServiceImpl"/>
+  <ns1:parameter name="wsdlServicePort" value="ManageServiceImpl"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://serviceportfolio.impl.application.billing.ams.com"/>
+  <ns1:parameter name="wsdlServiceElement" value="ManageServiceImplService"/>
+  <ns1:parameter name="schemaUnqualified" value="http://servicecatalog.model.domain.billing.ams.com,http://serviceportfolio.impl.application.billing.ams.com"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" qname="ns8:Service" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.ams.billing.domain.model.servicecatalog.Service" xmlns:ns8="http://servicecatalog.model.domain.billing.ams.com"/>
+  <ns1:arrayMapping innerType="xsd:anyType" languageSpecificType="java:java.lang.Object[]" qname="ns9:ArrayOf_xsd_anyType" xmlns:ns9="http://serviceportfolio.impl.application.billing.ams.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>
    <ns1:handler type="URLMapper"/>

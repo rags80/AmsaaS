@@ -1,6 +1,6 @@
 package com.ams.sharedkernel.domain.model.measuresandunits;
 
-import com.ams.sharedkernel.domain.model.DomainException;
+import com.ams.sharedkernel.exception.DomainException;
 
 public class InvalidCurrencyException extends DomainException
 {

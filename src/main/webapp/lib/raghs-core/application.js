@@ -14,7 +14,7 @@ define(function(require) {
     var urlController = require("Dispatcher");
 
     var app = {
-	context : this,
+	context : function(){return $("#appContent");},
 	start : function(path) {
 	    console.log("Application starting");
 	    urlController.init();

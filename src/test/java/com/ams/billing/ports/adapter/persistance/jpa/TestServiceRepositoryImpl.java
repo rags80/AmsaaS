@@ -20,8 +20,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ams.billing.domain.model.servicecatalog.Service;
-import com.ams.billing.domain.repository.ServiceRepository;
+import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.sharedkernel.domain.repository.Page;
 
 /**
@@ -72,7 +72,7 @@ public class TestServiceRepositoryImpl
 
 	/**
 	 * Test method for
-	 * {@link com.ams.billing.ports.adapter.persistance.jpa.ServiceRepositoryImpl#createOrUpdate(com.ams.billing.domain.model.servicecatalog.Service)}
+	 * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.servicecatalog.Service)}
 	 * .
 	 */
 	@Test
@@ -91,7 +91,7 @@ public class TestServiceRepositoryImpl
 
 	/**
 	 * Test method for
-	 * {@link com.ams.billing.ports.adapter.persistance.jpa.ServiceRepositoryImpl#delete(java.lang.String)}
+	 * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#delete(java.lang.String)}
 	 * .
 	 */
 	@Test
@@ -107,7 +107,7 @@ public class TestServiceRepositoryImpl
 
 	/**
 	 * Test method for
-	 * {@link com.ams.billing.ports.adapter.persistance.jpa.ServiceRepositoryImpl#findById(java.lang.String)}
+	 * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#findById(java.lang.String)}
 	 * .
 	 */
 	@Test
@@ -121,7 +121,7 @@ public class TestServiceRepositoryImpl
 
 	/**
 	 * Test method for
-	 * {@link com.ams.billing.ports.adapter.persistance.jpa.ServiceRepositoryImpl#findAll()}
+	 * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#findAll()}
 	 * .
 	 */
 	@Test
@@ -135,16 +135,16 @@ public class TestServiceRepositoryImpl
 
 	/**
 	 * Test method for
-	 * {@link com.ams.billing.ports.adapter.persistance.jpa.ServiceRepositoryImpl#findNextPageData(com.ams.sharedkernel.domain.repository.Page)}
+	 * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#findNextPageData(com.ams.sharedkernel.domain.repository.Page)}
 	 * .
 	 */
 	@Test
 	public final void testFindNextPageData()
 	{
 		Page<Service> sp = new Page<Service>(0, 2);
-		assertTrue(sp.getPageDataList().equals(0));
+		assertTrue(sp.getPageDataList().size() == 0);
 		sp = this.srvcRepo.findNextPageData(sp);
-		System.out.println("Service List size:" + sp.getPageDataList().size());
-		// assertFalse(sp.getPageDataList().equals(null));
+		assertEquals("SRVC01", sp.getPageDataList().get(0).getSrvcCode());
+		assertTrue(sp.getPageDataList().size() > 0);
 	}
 }
