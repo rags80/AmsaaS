@@ -66,6 +66,7 @@ public class DocumentController
 	@ResponseBody
 	public Folder getRootFolderContents()
 	{
+
 		return this.manageDocument.getFolderContents(this.getFolderOwner(), "");
 	}
 
@@ -107,7 +108,7 @@ public class DocumentController
 			folder.addFile(file);
 		}
 
-		return this.manageDocument.createFiles(this.getFolderOwner(), folder);
+		return this.manageDocument.saveFiles(this.getFolderOwner(), folder);
 
 	}
 }

@@ -23,7 +23,7 @@ public interface ManageDocument
 
 	Folder getFolderContents(Person folderOwner, String folderPath);
 
-	Folder createFiles(Person fileOwner, Folder fileData);
+	Folder saveFiles(Person fileOwner, Folder fileData);
 
 	File updateFileDetails(File fileDetails);
 

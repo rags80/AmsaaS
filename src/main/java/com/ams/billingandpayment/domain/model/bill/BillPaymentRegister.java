@@ -40,20 +40,20 @@ public class BillPaymentRegister implements Serializable
 	{
 
 		if (!BillSpecification.isPaymentWithinDueDate(bill, paymnt)
-				&& !isDuePenaltyApplied)
+				&& !this.isDuePenaltyApplied)
 		{
-			isDuePenaltyApplied = true;
-			billPenaltyAmount = BillSpecification.billDuePenaltyAmount;
+			this.isDuePenaltyApplied = true;
+			this.billPenaltyAmount = BillSpecification.billDuePenaltyAmount;
 			bill.setBillNote("Late payment penalty amount "
 					+ BillSpecification.billDuePenaltyAmount + " applied");
 		}
 
 		this.billAmountPaid = this.billAmountPaid.add(paymnt.getPaymntAmount());
 		this.billRemainingAmount = bill.getBillTotalAmount()
-									.subtract(this.billAmountPaid).add(billPenaltyAmount);
+									.subtract(this.billAmountPaid).add(this.billPenaltyAmount);
 
 		paymnt.setPaymntBalance(this.billRemainingAmount);
-		updateBillPaymentStatus(bill);
+		this.updateBillPaymentStatus(bill);
 		bill.getBillPayments().add(paymnt);
 	}
 
@@ -61,19 +61,19 @@ public class BillPaymentRegister implements Serializable
 	{
 		if (this.billRemainingAmount.compareTo(BigDecimal.ZERO) <= 0)
 		{
-			billPaymentStatus = status.PAID;
+			this.billPaymentStatus = status.PAID;
 		}
 
 		else if ((this.billRemainingAmount.compareTo(BigDecimal.ZERO) > 0)
 				&& (this.billRemainingAmount
 										.compareTo(bill.getBillTotalAmount()) < 0))
 		{
-			billPaymentStatus = status.PARTIALLY_PAID;
+			this.billPaymentStatus = status.PARTIALLY_PAID;
 		}
 
 		else if (this.billRemainingAmount.compareTo(bill.getBillTotalAmount()) <= 0)
 		{
-			billPaymentStatus = status.UNPAID;
+			this.billPaymentStatus = status.UNPAID;
 		}
 	}
 

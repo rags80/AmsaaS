@@ -93,8 +93,18 @@ public final class ManageDocumentImpl implements ManageDocument
 	}
 
 	@Override
-	public Folder createFiles(Person fileOwner, Folder folder)
+	public Folder saveFiles(Person fileOwner, Folder folder)
 	{
+		try
+		{
+			FileRepository.resourceAtLocation(fileOwner, folder.getPath()).storeFiles(folder.getFileList());
+
+		} catch (Exception e)
+		{
+
+			e.printStackTrace();
+			throw new ServiceException("Files saving failed!!");
+		}
 
 		throw new ServiceException("Functionality not implemented!!");
 	}
@@ -188,12 +198,22 @@ public final class ManageDocumentImpl implements ManageDocument
 			Iterator<File> fileItr = fileList.iterator();
 			FileOutputStream fo;
 
-			while (fileItr.hasNext())
+			try
 			{
-				new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
+				while (fileItr.hasNext())
+				{
+					File file = fileItr.next();
+					fo = new FileOutputStream(new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath, file.getName())));
+					fo.write(file.getFileObject());
+					fo.close();
+				}
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private String getActualResourcePath(Person user, String reltvPath)
@@ -205,6 +225,19 @@ public final class ManageDocumentImpl implements ManageDocument
 			 * 
 			 * */
 			String actlpath = "D:/" + user.getPersnFirstName() + "/" + reltvPath;
+			System.out.println("Actual Path:" + actlpath);
+			return actlpath;
+		}
+
+		private String getActualResourcePath(Person user, String reltvPath, String fileName)
+		{
+			/**
+			 * 
+			 * Implement strategy to find actual path from relative path of
+			 * folder of document owner
+			 * 
+			 * */
+			String actlpath = "D:/" + user.getPersnFirstName() + "/" + reltvPath + "/" + fileName;
 			System.out.println("Actual Path:" + actlpath);
 			return actlpath;
 		}
