@@ -20,35 +20,40 @@ public class ManageUserImpl implements ManageUser
 	@Autowired
 	private PersonRepository	personRepository;
 
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void registerUser(Person user)
 	{
-		personRepository.createOrUpdate(user);
+		this.personRepository.createOrUpdate(user);
 
 	}
 
+	@Override
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
 	public void updateUserDetails(Person user)
 	{
-		personRepository.createOrUpdate(user);
+		this.personRepository.createOrUpdate(user);
 
 	}
 
+	@Override
 	public void deleteUser(long userId)
 	{
-		personRepository.delete(userId);
+		this.personRepository.delete(userId);
 
 	}
 
+	@Override
 	public Person getUserDetails(long userId)
 	{
-		Person user = personRepository.findById(userId);
+		Person user = this.personRepository.findById(userId);
 		return user;
 	}
 
+	@Override
 	public List<Person> getAllUsers()
 	{
-		List<Person> users = personRepository.findAll();
+		List<Person> users = this.personRepository.findAll();
 		return users;
 
 	}

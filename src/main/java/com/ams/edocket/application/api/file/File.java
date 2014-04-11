@@ -5,6 +5,8 @@ package com.ams.edocket.application.api.file;
 
 import java.util.Date;
 
+import javax.persistence.Lob;
+
 /**
  * @author Raghavendra Badiger
  * 
@@ -77,6 +79,7 @@ public class File
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
+	@Lob
 	public byte[] getFileObject()
 	{
 		return this.fileObject;

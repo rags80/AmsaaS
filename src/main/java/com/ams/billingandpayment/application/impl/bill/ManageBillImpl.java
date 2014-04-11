@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ams.billingandpayment.application.api.commandquery.BillDto;
@@ -22,13 +23,13 @@ import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.billingandpayment.domain.repository.ServiceUsageRepository;
 import com.ams.billingandpayment.domain.service.TaxPolicyAdvisor;
-import com.ams.email.application.api.ManageMail;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.sharedkernel.exception.DomainException;
+import com.ams.sharedkernel.service.ManageMail;
 import com.ams.users.domain.model.Person;
 import com.ams.users.domain.repository.PersonRepository;
 
-@Transactional
+@Transactional(isolation = Isolation.DEFAULT)
 @org.springframework.stereotype.Service("ManageBillService")
 public class ManageBillImpl implements ManageBill
 {
@@ -56,6 +57,7 @@ public class ManageBillImpl implements ManageBill
 
 	private BillServiceDataAssembler	bsdAssmblr	= new BillServiceDataAssembler();
 
+	@Override
 	public void billSubscriberForPeriod(Person srvcSubscriber, Period billPeriod, Date billDate, Date billDueDate)
 	{
 		Bill bill = new Bill(srvcSubscriber, billDate, billDueDate, billPeriod);
@@ -85,7 +87,7 @@ public class ManageBillImpl implements ManageBill
 			// srvcTaxPolicy.calculateTax());
 		}
 
-		return this.bill;
+		return null;
 	}
 
 	Bill nonUsageCharges(Person srvcSubscriber, ServicePlan subscbrSrvcPlan, Period billPeriod)
@@ -101,11 +103,13 @@ public class ManageBillImpl implements ManageBill
 		return this.bill;
 	}
 
+	@Override
 	public void deleteBill(long billNumber)
 	{
 		this.billRepository.deleteBill(billNumber);
 	}
 
+	@Override
 	public void payBill(Payment pymnt)
 	{
 		Bill bill = this.billRepository.findBill(pymnt.getPaymntForBill()
@@ -128,6 +132,7 @@ public class ManageBillImpl implements ManageBill
 
 	}
 
+	@Override
 	public BillDto addBillItems(BillDto billSrvcData)
 	{
 
@@ -152,6 +157,7 @@ public class ManageBillImpl implements ManageBill
 		return this.bsdAssmblr.toBillDTO(this.bill);
 	}
 
+	@Override
 	public BillDto createNewBill(BillDto billSrvcData)
 	{
 		try

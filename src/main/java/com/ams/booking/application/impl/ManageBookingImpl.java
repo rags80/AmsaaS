@@ -1,0 +1,65 @@
+/**
+ * 
+ */
+package com.ams.booking.application.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ams.booking.application.api.ManageBooking;
+import com.ams.booking.domain.Booking;
+import com.ams.booking.domain.PersonId;
+import com.ams.booking.domain.ResourceId;
+import com.ams.booking.domain.repository.BookingRepository;
+import com.ams.sharedkernel.exception.ServiceException;
+
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
+public class ManageBookingImpl implements ManageBooking
+{
+
+	@Autowired
+	private BookingRepository	bookingRepo;
+
+	@Override
+	public long newBooking(PersonId persnId, ResourceId resourceId, Date startDateTime, Date endDateTime)
+	{
+
+		List<Booking> bookings = this.bookingRepo.findAllActiveBookingsForResource(resourceId, startDateTime, endDateTime);
+		if (bookings.size() > 0)
+		{
+			throw new ServiceException(BookingException.NOT_POSSIBLE.getExceptionDetails());
+		}
+		else
+		{
+			return this.bookingRepo.createBooking(new Booking(persnId, resourceId, startDateTime, endDateTime));
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ams.booking.application.api.ManageBooking#cancelBooking(long)
+	 */
+	@Override
+	public long cancelBooking(long bookingId)
+	{
+		Booking booking = this.bookingRepo.findById(bookingId);
+
+		if (booking.canBeCancelled())
+		{
+			return this.bookingRepo.deleteBooking(bookingId);
+		}
+		else
+		{
+			throw new ServiceException(BookingException.CANCEL_FAILED.getExceptionDetails());
+		}
+
+	}
+
+}

@@ -23,12 +23,12 @@ public class Page<T>
 	public int nextIndexIs()
 	{
 		this.nextIndex = this.currentIndex + this.noOfRecordsPerFetch;
-		return nextIndex;
+		return this.nextIndex;
 	}
 
 	public int getNoOfRecordsPerFetch()
 	{
-		return noOfRecordsPerFetch;
+		return this.noOfRecordsPerFetch;
 	}
 
 	public void setNoOfRecordsPerFetch(int noOfRecordsPerFetch)
@@ -38,7 +38,7 @@ public class Page<T>
 
 	public int getCurrentIndex()
 	{
-		return currentIndex;
+		return this.currentIndex;
 	}
 
 	public void setCurrentIndex(int currentIndex)
@@ -48,7 +48,7 @@ public class Page<T>
 
 	public int getNextIndex()
 	{
-		return nextIndex;
+		return this.nextIndex;
 	}
 
 	public void setNextIndex(int nextIndex)
@@ -58,12 +58,66 @@ public class Page<T>
 
 	public List<T> getPageDataList()
 	{
-		return pageDataList;
+		return this.pageDataList;
 	}
 
 	public void setPageDataList(List<T> pageDataList)
 	{
 		this.pageDataList = pageDataList;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + this.currentIndex;
+		result = (prime * result) + this.nextIndex;
+		result = (prime * result) + this.noOfRecordsPerFetch;
+		result = (prime * result) + ((this.pageDataList == null) ? 0 : this.pageDataList.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (!(obj instanceof Page))
+		{
+			return false;
+		}
+		Page other = (Page) obj;
+		if (this.currentIndex != other.currentIndex)
+		{
+			return false;
+		}
+		if (this.nextIndex != other.nextIndex)
+		{
+			return false;
+		}
+		if (this.noOfRecordsPerFetch != other.noOfRecordsPerFetch)
+		{
+			return false;
+		}
+		if (this.pageDataList == null)
+		{
+			if (other.pageDataList != null)
+			{
+				return false;
+			}
+		}
+		else if (!this.pageDataList.equals(other.pageDataList))
+		{
+			return false;
+		}
+		return true;
 	}
 
 }

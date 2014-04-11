@@ -18,17 +18,20 @@ define(function(require) {
 			self.applicationContext = applnContext;
 			self.dispatcherContext = this;
 			router.greedy = true;
-
+			console.log("Application Context:"+self.applicationContext);
+			console.log("Route map:");
 			$.each(routeMap, function(i) {
-				console.log("Route:" + routeMap[i].path);
-				var routeObj=router.addRoute(routeMap[i].path, function(path,param) {
+				//console.log("Route:{" + "path:"+routeMap[i].path+ "   controller:"+routeMap[i].controller.toString()+"}");
+				console.log("Route:"+ko.toJSON(routeMap[i]));
+			    var routeObj=router.addRoute(routeMap[i].path, function(path,param) {
 					console.log("Params:" + param);
 					console.log("Path:" +path);
 					routeMap[i].controller.init(path,param);
 				});
 			});
-
-			$("#appContent").delegate('a','click onhashchange', function() {
+			
+			
+			self.applicationContext().delegate('a','click onhashchange', function() {
 				var url = $(this).attr('href');
 				//self.dispatcherContext.loadModule(url);
 				console.log("URL:" + url);

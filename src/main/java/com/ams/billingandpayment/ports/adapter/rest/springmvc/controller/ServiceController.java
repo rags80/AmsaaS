@@ -51,11 +51,10 @@ public class ServiceController
 	{
 		try
 		{
-			System.out.println(service.getSrvcCode());
 			return this.manageService.registerService(service);
 		} catch (Exception e)
 		{
-			throw new ServiceException(e.toString());
+			throw new ServiceException(e.getMessage());
 		}
 
 	}
