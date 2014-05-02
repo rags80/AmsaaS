@@ -20,17 +20,6 @@ public class Quantity implements Serializable
 	 * 
 	 */
 	private static final long	serialVersionUID	= 1L;
-	private BigDecimal			value;
-	private TimeUnit			unit;
-
-	public Quantity()
-	{}
-
-	public Quantity(BigDecimal qty, TimeUnit qtUnit)
-	{
-		this.value = qty;
-		this.unit = qtUnit;
-	}
 
 	/**
 	 * @param srvcUsagePeriod
@@ -43,6 +32,14 @@ public class Quantity implements Serializable
 		return null;
 	}
 
+	public static void main(String[] args)
+	{
+
+		Quantity qty = Quantity.quantify(new Period(new Date(2013, 1, 1, 0, 0, 0), new Date(2014, 3, 1, 0, 0, 0)), TimeUnit.FortNights);
+		System.out.println(qty);
+
+	}
+
 	/**
 	 * @param srvcUsagePeriod
 	 * @param unitOfMeasure
@@ -51,7 +48,6 @@ public class Quantity implements Serializable
 
 	public static Quantity quantify(Period srvcUsagePeriod, TimeUnit unitOfMeasure)
 	{
-		Quantity qty = new Quantity();
 		BigDecimal value;
 
 		switch (unitOfMeasure)
@@ -90,6 +86,26 @@ public class Quantity implements Serializable
 		return new Quantity(value, unitOfMeasure);
 	}
 
+	private BigDecimal	value;
+
+	private TimeUnit	unit;
+
+	public Quantity()
+	{}
+
+	public Quantity(BigDecimal qty, TimeUnit qtUnit)
+	{
+		this.value = qty;
+		this.unit = qtUnit;
+	}
+
+	public Quantity add(BigDecimal other)
+	{
+		this.value = this.value.add(other);
+		return this;
+
+	}
+
 	public Quantity add(Quantity qty) throws InvalidUnitException
 	{
 		if (this.unit.equals(qty.getUnit()))
@@ -105,53 +121,9 @@ public class Quantity implements Serializable
 
 	}
 
-	public Quantity add(BigDecimal other)
+	public Quantity divideBy(BigDecimal other)
 	{
-		this.value = this.value.add(other);
-		return this;
-
-	}
-
-	public Quantity subtract(Quantity qty) throws InvalidUnitException
-	{
-		if (this.unit.equals(qty.getUnit()))
-		{
-			this.value = this.value.subtract(qty.getValue());
-		}
-		else
-		{
-			throw new InvalidUnitException("Unit of Quantity to be subtracted is different!!");
-		}
-
-		return this;
-
-	}
-
-	public Quantity subtract(BigDecimal other)
-	{
-		this.value = this.value.subtract(other);
-		return this;
-
-	}
-
-	public Quantity multiplyBy(Quantity qty) throws InvalidUnitException
-	{
-		if (this.unit.equals(qty.getUnit()))
-		{
-			this.value = this.value.multiply(qty.getValue());
-		}
-		else
-		{
-			throw new InvalidUnitException("Unit of Quantity to be multiplied is different!!");
-		}
-
-		return this;
-
-	}
-
-	public Quantity multiplyBy(BigDecimal other)
-	{
-		this.value = this.value.multiply(other);
+		this.value = this.value.divide(other);
 		return this;
 
 	}
@@ -169,55 +141,6 @@ public class Quantity implements Serializable
 
 		return this;
 
-	}
-
-	public Quantity divideBy(BigDecimal other)
-	{
-		this.value = this.value.divide(other);
-		return this;
-
-	}
-
-	/*
-	 * ACCESSOR & MUTATORS
-	 */
-
-	@SuppressWarnings("unused")
-	private void setValue(BigDecimal value)
-	{
-		this.value = value;
-	}
-
-	public BigDecimal getValue()
-	{
-		return this.value;
-	}
-
-	public TimeUnit getUnit()
-	{
-		return this.unit;
-	}
-
-	@SuppressWarnings("unused")
-	private void setUnit(TimeUnit unit)
-	{
-		this.unit = unit;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Quantity [" + this.value + this.unit + "]";
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.unit == null) ? 0 : this.unit.hashCode());
-		result = (prime * result) + ((this.value == null) ? 0 : this.value.hashCode());
-		return result;
 	}
 
 	@Override
@@ -255,12 +178,90 @@ public class Quantity implements Serializable
 		return true;
 	}
 
-	public static void main(String[] args)
+	public TimeUnit getUnit()
 	{
+		return this.unit;
+	}
 
-		Quantity qty = Quantity.quantify(new Period(new Date(2013, 1, 1, 0, 0, 0), new Date(2014, 3, 1, 0, 0, 0)), TimeUnit.FortNights);
-		System.out.println(qty);
+	public BigDecimal getValue()
+	{
+		return this.value;
+	}
 
+	/*
+	 * ACCESSOR & MUTATORS
+	 */
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.unit == null) ? 0 : this.unit.hashCode());
+		result = (prime * result) + ((this.value == null) ? 0 : this.value.hashCode());
+		return result;
+	}
+
+	public Quantity multiplyBy(BigDecimal other)
+	{
+		this.value = this.value.multiply(other);
+		return this;
+
+	}
+
+	public Quantity multiplyBy(Quantity qty) throws InvalidUnitException
+	{
+		if (this.unit.equals(qty.getUnit()))
+		{
+			this.value = this.value.multiply(qty.getValue());
+		}
+		else
+		{
+			throw new InvalidUnitException("Unit of Quantity to be multiplied is different!!");
+		}
+
+		return this;
+
+	}
+
+	@SuppressWarnings("unused")
+	private void setUnit(TimeUnit unit)
+	{
+		this.unit = unit;
+	}
+
+	@SuppressWarnings("unused")
+	private void setValue(BigDecimal value)
+	{
+		this.value = value;
+	}
+
+	public Quantity subtract(BigDecimal other)
+	{
+		this.value = this.value.subtract(other);
+		return this;
+
+	}
+
+	public Quantity subtract(Quantity qty) throws InvalidUnitException
+	{
+		if (this.unit.equals(qty.getUnit()))
+		{
+			this.value = this.value.subtract(qty.getValue());
+		}
+		else
+		{
+			throw new InvalidUnitException("Unit of Quantity to be subtracted is different!!");
+		}
+
+		return this;
+
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Quantity [" + this.value + this.unit + "]";
 	}
 
 }

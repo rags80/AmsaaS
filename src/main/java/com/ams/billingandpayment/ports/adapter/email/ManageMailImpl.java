@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 
-import com.ams.sharedkernel.service.ManageMail;
+import com.ams.sharedkernel.application.api.ManageMail;
 
 /**
  * @author Raghavendra Badiger
@@ -16,19 +16,6 @@ import com.ams.sharedkernel.service.ManageMail;
 @Service
 public class ManageMailImpl implements ManageMail
 {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.ams.sharedkernel.service.ManageMail#sendMail(java.lang.String,
-	 * java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void sendMail(String mailToParty, String sourceEmailId, String billPaymntSuccessMessage)
-	{
-		// TODO Auto-generated method stub
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -42,6 +29,19 @@ public class ManageMailImpl implements ManageMail
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ams.sharedkernel.service.ManageMail#sendMail(java.lang.String,
+	 * java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void sendMail(String mailToParty, String sourceEmailId, String billPaymntSuccessMessage)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

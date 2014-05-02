@@ -7,16 +7,16 @@ import com.ams.sharedkernel.domain.repository.Page;
 
 public interface ManageService
 {
-	String registerService(Service svc);
-
-	String updateServiceDetails(Service svc);
-
-	void removeService(String svcCode);
+	List<Service> getAllServices();
 
 	Service getService(String svcCode);
 
-	List<Service> getAllServices();
-
 	Page<Service> getServicesNextPage(int index, int offset);
+
+	String registerService(Service svc);
+
+	void removeService(String svcCode);
+
+	String updateServiceDetails(Service svc);
 
 }

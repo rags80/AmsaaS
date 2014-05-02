@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -20,16 +19,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.sharedkernel.domain.DomainException;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
-import com.ams.sharedkernel.exception.DomainException;
 import com.ams.users.domain.model.Person;
 
 @Entity
@@ -43,24 +43,24 @@ public class Bill implements Serializable
 	private static final long	serialVersionUID	= 1L;
 	private Long				billNumber;
 	private Person				billedPerson;
-	private Collection<BillItem>	billItems			= Collections.EMPTY_LIST;
-	private BigDecimal			billTotalTax;
-	private BigDecimal			billTotalAmount;
 	private Date				billDate;
 	private Date				billDueDate;
 	private Period				billPeriod;
+	private Collection<BillItem>	billItems;
+	private BigDecimal			billTotalTax;
+	private BigDecimal			billTotalAmount;
 	private Collection<Payment>	billPayments;
 	private BillPaymentRegister	billPaymentRegister;
 	private String				billNote;
 
 	public Bill()
 	{
-		billItems = new ArrayList<BillItem>();
-		billTotalTax = new BigDecimal(0);
-		billTotalAmount = new BigDecimal(0);
-		billPeriod = new Period();
-		billPayments = new ArrayList<Payment>();
-		billPaymentRegister = new BillPaymentRegister();
+		this.billItems = new ArrayList<BillItem>();
+		this.billTotalTax = new BigDecimal(0);
+		this.billTotalAmount = new BigDecimal(0);
+		this.billPeriod = new Period();
+		this.billPayments = new ArrayList<Payment>();
+		this.billPaymentRegister = new BillPaymentRegister();
 	}
 
 	public Bill(Person billedPersn, Date billDate, Date billDueDate, Period billPeriod)
@@ -78,11 +78,39 @@ public class Bill implements Serializable
 	 * Bill Domain Logic Functions
 	 */
 
+	public void addBillItem(long itemUsage, Service service) throws DomainException
+	{
+		BillItem billItem = new BillItem(itemUsage, service);
+		this.updateBillTotalAmount(billItem.getBillItemAmount());
+		billItem.setBill(this);
+		this.billItems.add(billItem);
+	}
+
+	public void addBillItem(Service srvc, Quantity srvcUsageQty, Money calculateServiceCharge, Tax tax)
+	{
+
+	}
+
+	public void addBillItems(List<BillItem> list) throws DomainException
+	{
+		for (BillItem item : list)
+		{
+			if (item != null)
+			{
+				this.billItems.add(item);
+				this.updateBillTotalAmount(item.getBillItemAmount());
+			}
+		}
+		this.calculateTotalAmount();
+		this.getBillPaymentRegister().setBillRemainingAmount(this.getBillTotalAmount());
+		this.getBillPaymentRegister().setBillPaymentStatus(BillSpecification.status.UNPAID);
+	}
+
 	public BigDecimal calculateTotalAmount() throws DomainException
 	{
 		this.calculateTotalTax();
 		this.billTotalAmount = this.billTotalAmount.add(this.billTotalTax);
-		return billTotalAmount;
+		return this.billTotalAmount;
 	}
 
 	private BigDecimal calculateTotalTax() throws DomainException
@@ -93,73 +121,19 @@ public class Bill implements Serializable
 			throw new DomainException("The bill total amout is null");
 		}
 
-		this.billTotalTax = this.billTotalAmount.multiply(new BigDecimal(0.1));
+		this.billTotalTax = this.billTotalAmount.multiply(BigDecimal.valueOf(0.1));
 
 		return this.billTotalTax;
 	}
 
-	private void updateBillTotalAmount(BigDecimal updtByAmount) throws DomainException
+	public Date getBillDate()
 	{
-		this.billTotalAmount = this.billTotalAmount.add(updtByAmount);
+		return this.billDate;
 	}
 
-	public void addBillItem(Service srvc, Quantity srvcUsageQty, Money calculateServiceCharge, Tax tax)
+	public Date getBillDueDate()
 	{
-
-	}
-
-	public void addBillItem(long itemUsage, Service service) throws DomainException
-	{
-		BillItem billItem = new BillItem(itemUsage, service);
-		this.updateBillTotalAmount(billItem.getBillItemAmount());
-		billItem.setBill(this);
-		this.billItems.add(billItem);
-	}
-
-	public void addBillItems(List<BillItem> list) throws DomainException
-	{
-		BillItem billItem = new BillItem();
-		Long quantity;
-		Service service;
-		for (BillItem item : list)
-		{
-			quantity = item.getBillItemQuantity();
-			service = item.getBillItemService();
-			if ((item != null) && (quantity != null) && (service != null))
-			{
-				billItem.setBillItemQuantity(quantity);
-				billItem.setBillItemService(service);
-				System.out.println(" item.getBillItemAmount() " + item.getBillItemAmount());
-				this.updateBillTotalAmount(item.getBillItemAmount());
-				billItem.setBill(this);
-				this.billItems.add(billItem);
-			}
-		}
-		this.calculateTotalAmount();
-		this.getBillPaymentRegister().setBillRemainingAmount(this.getBillTotalAmount());
-		this.getBillPaymentRegister().setBillPaymentStatus(BillSpecification.status.UNPAID);
-	}
-
-	public void makePayment(Payment payment)
-	{
-		this.billPaymentRegister.updateBillPayment(this, payment);
-	}
-
-	/*
-	 * Accessor N Mutator Functions
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator = "BillNoSeqGen")
-	@TableGenerator(name = "BillNoSeqGen",table = "T_IdSeqGen",pkColumnName = "idSeq_name",
-					pkColumnValue = "idSeq_value",initialValue = 1000)
-	public Long getBillNumber()
-	{
-		return billNumber;
-	}
-
-	public void setBillNumber(Long billNumber)
-	{
-		this.billNumber = billNumber;
+		return this.billDueDate;
 	}
 
 	@ManyToOne(optional = false)
@@ -167,34 +141,50 @@ public class Bill implements Serializable
 	@JsonIgnore
 	public Person getBilledPerson()
 	{
-		return billedPerson;
-	}
-
-	public void setBilledPerson(Person billedPerson)
-	{
-		this.billedPerson = billedPerson;
+		return this.billedPerson;
 	}
 
 	@OneToMany(mappedBy = "bill",targetEntity = BillItem.class,orphanRemoval = true,
 				cascade = CascadeType.ALL)
+	@OrderBy(value = "")
 	public Collection<BillItem> getBillItems()
 	{
-		return billItems;
+		return this.billItems;
 	}
 
-	public void setBillItems(Collection<BillItem> billItems)
+	public String getBillNote()
 	{
-		this.billItems = billItems;
+		return this.billNote;
 	}
 
-	public BigDecimal getBillTotalTax()
+	/*
+	 * Accessor & Mutator Functions
+	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE,generator = "BillNoSeqGen")
+	@TableGenerator(name = "BillNoSeqGen",table = "T_IdSeqGen",pkColumnName = "idSeq_name",
+					pkColumnValue = "idSeq_value",initialValue = 1000)
+	public Long getBillNumber()
 	{
-		return this.billTotalTax;
+		return this.billNumber;
 	}
 
-	public void setBillTotalTax(BigDecimal tax)
+	@Embedded
+	public BillPaymentRegister getBillPaymentRegister()
 	{
-		this.billTotalTax = tax;
+		return this.billPaymentRegister;
+	}
+
+	@OneToMany(mappedBy = "paymntForBill",targetEntity = Payment.class,orphanRemoval = true,
+				cascade = CascadeType.ALL)
+	public Collection<Payment> getBillPayments()
+	{
+		return this.billPayments;
+	}
+
+	public Period getBillPeriod()
+	{
+		return this.billPeriod;
 	}
 
 	public BigDecimal getBillTotalAmount()
@@ -202,14 +192,14 @@ public class Bill implements Serializable
 		return this.billTotalAmount;
 	}
 
-	public void setBillTotalAmount(BigDecimal amount)
+	public BigDecimal getBillTotalTax()
 	{
-		this.billTotalAmount = amount;
+		return this.billTotalTax;
 	}
 
-	public Date getBillDate()
+	public void makePayment(Payment payment)
 	{
-		return billDate;
+		this.billPaymentRegister.updateBillPayment(this, payment);
 	}
 
 	public void setBillDate(Date billDate)
@@ -217,41 +207,19 @@ public class Bill implements Serializable
 		this.billDate = billDate;
 	}
 
-	public Date getBillDueDate()
-	{
-		return billDueDate;
-	}
-
 	public void setBillDueDate(Date billDueDate)
 	{
 		this.billDueDate = billDueDate;
 	}
 
-	public Period getBillPeriod()
+	public void setBilledPerson(Person billedPerson)
 	{
-		return billPeriod;
+		this.billedPerson = billedPerson;
 	}
 
-	public void setBillPeriod(Period period)
+	public void setBillItems(Collection<BillItem> billItems)
 	{
-		this.billPeriod = period;
-	}
-
-	@OneToMany(mappedBy = "paymntForBill",targetEntity = Payment.class,orphanRemoval = true,
-				cascade = CascadeType.ALL)
-	public Collection<Payment> getBillPayments()
-	{
-		return billPayments;
-	}
-
-	public void setBillPayments(Collection<Payment> payments)
-	{
-		this.billPayments = payments;
-	}
-
-	public String getBillNote()
-	{
-		return billNote;
+		this.billItems = billItems;
 	}
 
 	void setBillNote(String billNote)
@@ -259,15 +227,39 @@ public class Bill implements Serializable
 		this.billNote = billNote;
 	}
 
-	@Embedded
-	public BillPaymentRegister getBillPaymentRegister()
+	public void setBillNumber(Long billNumber)
 	{
-		return billPaymentRegister;
+		this.billNumber = billNumber;
 	}
 
 	public void setBillPaymentRegister(BillPaymentRegister paymentRegister)
 	{
 		this.billPaymentRegister = paymentRegister;
+	}
+
+	public void setBillPayments(Collection<Payment> payments)
+	{
+		this.billPayments = payments;
+	}
+
+	public void setBillPeriod(Period period)
+	{
+		this.billPeriod = period;
+	}
+
+	public void setBillTotalAmount(BigDecimal amount)
+	{
+		this.billTotalAmount = amount;
+	}
+
+	public void setBillTotalTax(BigDecimal tax)
+	{
+		this.billTotalTax = tax;
+	}
+
+	private void updateBillTotalAmount(BigDecimal updtByAmount) throws DomainException
+	{
+		this.billTotalAmount = this.billTotalAmount.add(updtByAmount);
 	}
 
 }

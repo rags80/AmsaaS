@@ -22,14 +22,6 @@ public class File
 	public File()
 	{}
 
-	public File(String name, String type, long size, Date modifyDate)
-	{
-		this.name = name;
-		this.type = type;
-		this.size = size;
-		this.lastModifiedDate = modifyDate;
-	}
-
 	public File(String name, String type, long size, byte[] fileData, Date modifyDate)
 	{
 		this.name = name;
@@ -39,44 +31,12 @@ public class File
 		this.fileObject = fileData;
 	}
 
-	public String getName()
-	{
-		return this.name;
-	}
-
-	private void setName(String name)
+	public File(String name, String type, long size, Date modifyDate)
 	{
 		this.name = name;
-	}
-
-	public String getType()
-	{
-		return this.type;
-	}
-
-	private void setType(String type)
-	{
 		this.type = type;
-	}
-
-	public long getSize()
-	{
-		return this.size;
-	}
-
-	private void setSize(long size)
-	{
 		this.size = size;
-	}
-
-	public Date getLastModifiedDate()
-	{
-		return this.lastModifiedDate;
-	}
-
-	private void setLastModifiedDate(Date lastModifiedDate)
-	{
-		this.lastModifiedDate = lastModifiedDate;
+		this.lastModifiedDate = modifyDate;
 	}
 
 	@Lob
@@ -85,9 +45,49 @@ public class File
 		return this.fileObject;
 	}
 
+	public Date getLastModifiedDate()
+	{
+		return this.lastModifiedDate;
+	}
+
+	public String getName()
+	{
+		return this.name;
+	}
+
+	public long getSize()
+	{
+		return this.size;
+	}
+
+	public String getType()
+	{
+		return this.type;
+	}
+
 	private void setFileObject(byte[] fileObject)
 	{
 		this.fileObject = fileObject;
+	}
+
+	private void setLastModifiedDate(Date lastModifiedDate)
+	{
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	private void setName(String name)
+	{
+		this.name = name;
+	}
+
+	private void setSize(long size)
+	{
+		this.size = size;
+	}
+
+	private void setType(String type)
+	{
+		this.type = type;
 	}
 
 }

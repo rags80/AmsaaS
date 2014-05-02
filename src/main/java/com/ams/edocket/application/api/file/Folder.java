@@ -39,60 +39,20 @@ public class Folder
 		this.fileList = new ArrayList<File>(5);
 	}
 
-	public void addFolder(Folder folder)
-	{
-		if (!folder.equals(null))
-		{
-			this.subFolderList.add(folder);
-		}
-	}
-
 	public void addFile(File file)
 	{
-		if (!file.equals(null))
+		if (file != null)
 		{
 			this.fileList.add(file);
 		}
 	}
 
-	public String getName()
+	public void addFolder(Folder folder)
 	{
-		return this.name;
-	}
-
-	private void setName(String name)
-	{
-		this.name = name;
-	}
-
-	public String getPath()
-	{
-		return this.path;
-	}
-
-	private void setPath(String path)
-	{
-		this.path = path;
-	}
-
-	public Date getLastModifiedDate()
-	{
-		return this.lastModifiedDate;
-	}
-
-	private void setLastModifiedDate(Date lastModifiedDate)
-	{
-		this.lastModifiedDate = lastModifiedDate;
-	}
-
-	public List<Folder> getSubFolderList()
-	{
-		return this.subFolderList;
-	}
-
-	private void setSubFolderList(List<Folder> subFolderList)
-	{
-		this.subFolderList = subFolderList;
+		if (folder != null)
+		{
+			this.subFolderList.add(folder);
+		}
 	}
 
 	public List<File> getFileList()
@@ -100,9 +60,49 @@ public class Folder
 		return this.fileList;
 	}
 
+	public Date getLastModifiedDate()
+	{
+		return this.lastModifiedDate;
+	}
+
+	public String getName()
+	{
+		return this.name;
+	}
+
+	public String getPath()
+	{
+		return this.path;
+	}
+
+	public List<Folder> getSubFolderList()
+	{
+		return this.subFolderList;
+	}
+
 	private void setFileList(List<File> fileList)
 	{
 		this.fileList = fileList;
+	}
+
+	private void setLastModifiedDate(Date lastModifiedDate)
+	{
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	private void setName(String name)
+	{
+		this.name = name;
+	}
+
+	private void setPath(String path)
+	{
+		this.path = path;
+	}
+
+	private void setSubFolderList(List<Folder> subFolderList)
+	{
+		this.subFolderList = subFolderList;
 	}
 
 }

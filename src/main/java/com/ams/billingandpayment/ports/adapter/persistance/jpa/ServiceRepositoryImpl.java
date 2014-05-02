@@ -22,6 +22,7 @@ public class ServiceRepositoryImpl implements ServiceRepository
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager	entityManager;
 
+	@Override
 	public String createOrUpdate(Service srvc)
 	{
 		if (srvc.getSrvcCode() == null)
@@ -38,6 +39,7 @@ public class ServiceRepositoryImpl implements ServiceRepository
 
 	}
 
+	@Override
 	public void delete(String svcCode)
 	{
 		Service svc = this.entityManager.find(Service.class, svcCode);
@@ -45,20 +47,23 @@ public class ServiceRepositoryImpl implements ServiceRepository
 
 	}
 
-	public Service findById(String svcCode)
-	{
-		return this.entityManager.find(Service.class, svcCode);
-	}
-
+	@Override
 	public List<Service> findAll()
 	{
 		TypedQuery<Service> query = this.entityManager.createQuery("select S from Service S", Service.class);
 		return query.getResultList();
 	}
 
+	@Override
+	public Service findById(String svcCode)
+	{
+		return this.entityManager.find(Service.class, svcCode);
+	}
+
+	@Override
 	public Page<Service> findNextPageData(Page<Service> page)
 	{
-		TypedQuery<Service> query = this.entityManager.createQuery("select S from Service S ", Service.class).setMaxResults(page.getNextIndex()).setFirstResult(page.getCurrentIndex());
+		TypedQuery<Service> query = this.entityManager.createQuery("select S from Service S order by S.srvcDescription DESC", Service.class).setMaxResults(page.getNextIndex()).setFirstResult(page.getCurrentIndex());
 		Page<Service> srvcPage = new Page<Service>(page.getNoOfRecordsPerFetch(), page.nextIndexIs());
 		srvcPage.setPageDataList(query.getResultList());
 		return srvcPage;

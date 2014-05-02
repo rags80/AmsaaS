@@ -52,6 +52,8 @@ define(function(require) {
 		    data.viewModel.isEditable(false);
 		    srvcRepo.update(data.dataModel).then(function(srvrData) {
 			console.log(srvrData);
+		    }).fail(function(excptn){
+			alert("Server Exception:"+excptn.responseText.message);
 		    });
 		}
 	    }

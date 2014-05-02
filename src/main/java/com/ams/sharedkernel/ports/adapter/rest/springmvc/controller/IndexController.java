@@ -9,12 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController
 {
-	@RequestMapping(value = "login.action")
-	public String loginPage(Model model)
-	{
-		return "login";
-	}
-
 	@RequestMapping("index.action")
 	public String loadHomePage(Model model)
 	{
@@ -22,5 +16,11 @@ public class IndexController
 		System.out.println("User Name:" + userDetails.getUsername() + "\n" + "Role:" + userDetails.getAuthorities());
 
 		return "index";
+	}
+
+	@RequestMapping(value = "login.action")
+	public String loginPage(Model model)
+	{
+		return "login";
 	}
 }

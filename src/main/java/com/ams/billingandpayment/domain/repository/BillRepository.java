@@ -11,13 +11,9 @@ public interface BillRepository
 
 	public Bill createBill(Bill bill);
 
-	public long updateBill(Bill bill);
-
-	public long deleteBill(long billNumber);
-
 	public void createBills(List<Bill> bills);
 
-	public void updateBills(Set<Bill> bills);
+	public long deleteBill(long billNumber);
 
 	public void deleteBills(Set<Bill> bills);
 
@@ -25,10 +21,14 @@ public interface BillRepository
 
 	public Set<Bill> findBills(long userId);
 
+	public List<Bill> findBillsByPaymentStatus();
+
 	public Payment findPayment(long paymntNumber);
 
 	public Set<Payment> findPayments(long billNumber);
 
-	public List<Bill> findBillsByPaymentStatus();
+	public long updateBill(Bill bill);
+
+	public void updateBills(Set<Bill> bills);
 
 }

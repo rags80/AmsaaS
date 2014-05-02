@@ -30,7 +30,7 @@ define(function(require) {
 	    });
 
 	    Repo.setPath("unitsnmeasure");
-	    Repo.findAll().then(function(unitsData) {
+	    epo.findAll()then(function(unitsData) {
 		srvcRateController.currencyList(unitsData.currencies);
 		console.log("Currency list:" + srvcRateController.currencyList());
 		srvcRateController.unitsList(unitsData.units);

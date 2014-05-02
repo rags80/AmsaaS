@@ -18,15 +18,15 @@ public class Tax
 		return taxAmount;
 	}
 
+	public String getTaxDescription()
+	{
+		return taxDescription;
+	}
+
 	@SuppressWarnings("unused")
 	private void setTaxAmount(Money taxAmount)
 	{
 		this.taxAmount = taxAmount;
-	}
-
-	public String getTaxDescription()
-	{
-		return taxDescription;
 	}
 
 	@SuppressWarnings("unused")

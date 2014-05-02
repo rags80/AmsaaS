@@ -15,20 +15,20 @@ import com.ams.users.domain.model.Person;
  */
 public interface ManageDocument
 {
-	Folder newDocumentsFolder(Person folderOwner, String folderPath);
-
-	Folder updateDocumentsFolderDetails(Folder folderData);
-
-	Folder removeDocumentsFolder(Person folderOwner, String folderPath);
-
-	Folder getFolderContents(Person folderOwner, String folderPath);
-
-	Folder saveFiles(Person fileOwner, Folder fileData);
-
-	File updateFileDetails(File fileDetails);
-
 	File deleteFile(Person fileOwner, String filePath);
 
 	List<File> getAllFilesFromFolder(Folder folder);
+
+	Folder getFolderContents(Person folderOwner, String folderPath);
+
+	Folder newDocumentsFolder(Person folderOwner, String folderPath);
+
+	Folder removeDocumentsFolder(Person folderOwner, String folderPath);
+
+	Folder saveFiles(Person fileOwner, Folder fileData);
+
+	Folder updateDocumentsFolderDetails(Folder folderData);
+
+	File updateFileDetails(File fileDetails);
 
 }

@@ -14,64 +14,9 @@ public class AccountServiceData
 	private Date	creationDate;
 	private long	personId;
 
-	public long getNumber()
-	{
-		return number;
-	}
-
-	public void setNumber(long l)
-	{
-		this.number = l;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	public String getType()
-	{
-		return type;
-	}
-
-	public void setType(String type)
-	{
-		this.type = type;
-	}
-
-	public String getCurrency()
-	{
-		return currency;
-	}
-
-	public void setCurrency(String currency)
-	{
-		this.currency = currency;
-	}
-
 	public float getBalance()
 	{
 		return balance;
-	}
-
-	public void setBalance(float balance)
-	{
-		this.balance = balance;
-	}
-
-	public String getDetail()
-	{
-		return detail;
-	}
-
-	public void setDetail(String detail)
-	{
-		this.detail = detail;
 	}
 
 	public Date getCreationDate()
@@ -79,9 +24,24 @@ public class AccountServiceData
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate)
+	public String getCurrency()
 	{
-		this.creationDate = creationDate;
+		return currency;
+	}
+
+	public String getDetail()
+	{
+		return detail;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public long getNumber()
+	{
+		return number;
 	}
 
 	public long getPersonId()
@@ -89,9 +49,49 @@ public class AccountServiceData
 		return personId;
 	}
 
+	public String getType()
+	{
+		return type;
+	}
+
+	public void setBalance(float balance)
+	{
+		this.balance = balance;
+	}
+
+	public void setCreationDate(Date creationDate)
+	{
+		this.creationDate = creationDate;
+	}
+
+	public void setCurrency(String currency)
+	{
+		this.currency = currency;
+	}
+
+	public void setDetail(String detail)
+	{
+		this.detail = detail;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public void setNumber(long l)
+	{
+		this.number = l;
+	}
+
 	public void setPersonId(long l)
 	{
 		this.personId = l;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 
 }

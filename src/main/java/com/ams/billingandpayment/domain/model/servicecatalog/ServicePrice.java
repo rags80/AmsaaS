@@ -1,5 +1,6 @@
 package com.ams.billingandpayment.domain.model.servicecatalog;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Access;
@@ -26,8 +27,12 @@ import com.ams.sharedkernel.domain.model.measuresandunits.TimeUnit;
 @Access(AccessType.PROPERTY)
 @Table(name = "T_SERVICEPRICE")
 @IdClass(ServicePriceId.class)
-public class ServicePrice
+public class ServicePrice implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
 	private ServicePlan			srvcPlan;
 	private Service			service;
 	private ServicePriceCategory	srvcPriceCategory;
@@ -36,6 +41,17 @@ public class ServicePrice
 
 	public ServicePrice()
 	{}
+
+	public ServicePrice(ServicePlan srvcPlan, Service srvc, String srvcPriceCategory,
+					BigDecimal pricePerUnit, String currency,
+					String unitOfMeasure)
+	{
+		this.srvcPlan = srvcPlan;
+		this.service = srvc;
+		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
+		this.srvcPricePerUnit = new Money(pricePerUnit, Currency.valueOf(currency));
+		this.srvcUnitOfMeasure = TimeUnit.valueOf(unitOfMeasure);
+	}
 
 	public ServicePrice(ServicePlan servicePlan, Service srvc, String srvcPriceCategory,
 					Money srvcPrice,
@@ -49,26 +65,16 @@ public class ServicePrice
 
 	}
 
-	public ServicePrice(ServicePlan srvcPlan, Service srvc, String srvcPriceCategory,
-					BigDecimal pricePerUnit, String currency,
-					String unitOfMeasure)
-	{
-		this.srvcPlan = srvcPlan;
-		this.service = srvc;
-		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
-		this.srvcPricePerUnit = new Money(pricePerUnit, Currency.valueOf(currency));
-		this.srvcUnitOfMeasure = TimeUnit.valueOf(unitOfMeasure);
-	}
-
 	/*
 	 * Domain functions
 	 */
 
-	public void updateDetails(String srvcPriceCategory, BigDecimal srvcPriceAmountValue, String srvcPriceAmountCurrency, String srvcPriceUnitOfMeasure)
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "srvcCode")
+	public Service getService()
 	{
-		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
-		this.srvcPricePerUnit = new Money(srvcPriceAmountValue, Currency.valueOf(srvcPriceAmountCurrency));
-		this.srvcUnitOfMeasure = TimeUnit.valueOf(srvcPriceUnitOfMeasure);
+		return this.service;
 	}
 
 	/*
@@ -83,26 +89,6 @@ public class ServicePrice
 		return this.srvcPlan;
 	}
 
-	@SuppressWarnings("unused")
-	private void setSrvcPlan(ServicePlan srvcPlan)
-	{
-		this.srvcPlan = srvcPlan;
-	}
-
-	@Id
-	@ManyToOne
-	@JoinColumn(name = "srvcCode")
-	public Service getService()
-	{
-		return this.service;
-	}
-
-	@SuppressWarnings("unused")
-	private void setService(Service srvc)
-	{
-		this.service = srvc;
-	}
-
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	public ServicePriceCategory getSrvcPriceCategory()
@@ -110,21 +96,9 @@ public class ServicePrice
 		return this.srvcPriceCategory;
 	}
 
-	@SuppressWarnings("unused")
-	private void setSrvcPriceCategory(ServicePriceCategory srvcPriceCategory)
-	{
-		this.srvcPriceCategory = srvcPriceCategory;
-	}
-
 	public Money getSrvcPricePerUnit()
 	{
 		return this.srvcPricePerUnit;
-	}
-
-	@SuppressWarnings("unused")
-	private void setSrvcPricePerUnit(Money srvcPricePerUnit)
-	{
-		this.srvcPricePerUnit = srvcPricePerUnit;
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -134,9 +108,40 @@ public class ServicePrice
 	}
 
 	@SuppressWarnings("unused")
+	private void setService(Service srvc)
+	{
+		this.service = srvc;
+	}
+
+	@SuppressWarnings("unused")
+	private void setSrvcPlan(ServicePlan srvcPlan)
+	{
+		this.srvcPlan = srvcPlan;
+	}
+
+	@SuppressWarnings("unused")
+	private void setSrvcPriceCategory(ServicePriceCategory srvcPriceCategory)
+	{
+		this.srvcPriceCategory = srvcPriceCategory;
+	}
+
+	@SuppressWarnings("unused")
+	private void setSrvcPricePerUnit(Money srvcPricePerUnit)
+	{
+		this.srvcPricePerUnit = srvcPricePerUnit;
+	}
+
+	@SuppressWarnings("unused")
 	private void setSrvcUnitOfMeasure(TimeUnit srvcUnitOfMeasure)
 	{
 		this.srvcUnitOfMeasure = srvcUnitOfMeasure;
+	}
+
+	public void updateDetails(String srvcPriceCategory, BigDecimal srvcPriceAmountValue, String srvcPriceAmountCurrency, String srvcPriceUnitOfMeasure)
+	{
+		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
+		this.srvcPricePerUnit = new Money(srvcPriceAmountValue, Currency.valueOf(srvcPriceAmountCurrency));
+		this.srvcUnitOfMeasure = TimeUnit.valueOf(srvcPriceUnitOfMeasure);
 	}
 
 }

@@ -17,14 +17,14 @@ public class Resource
 		return this.resourceId;
 	}
 
-	public void setResourceId(long resourceId)
-	{
-		this.resourceId = resourceId;
-	}
-
 	public String getResourceName()
 	{
 		return this.resourceName;
+	}
+
+	public void setResourceId(long resourceId)
+	{
+		this.resourceId = resourceId;
 	}
 
 	public void setResourceName(String resourceName)

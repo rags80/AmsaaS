@@ -7,8 +7,10 @@
 	<display-name>AMS</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:ApplicationContext.xml 
-       			 classpath:SecurityConfiguration.xml
+		<param-value>
+			classpath:security-configuration.xml
+			classpath:context-application.xml       			 
+        	classpath:context-infrastructure-persistance.xml
         </param-value>
 	</context-param>
 	<servlet>

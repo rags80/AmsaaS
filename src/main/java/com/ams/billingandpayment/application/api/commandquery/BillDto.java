@@ -18,34 +18,9 @@ public class BillDto
 	private Double			billTotalAmount	= 0.0;
 	private List<BillItem>	billLineItems		= new ArrayList<BillItem>();
 
-	public long getBillNumber()
-	{
-		return billNumber;
-	}
-
-	public void setBillNumber(long billNumber)
-	{
-		this.billNumber = billNumber;
-	}
-
-	public long getCustomerId()
-	{
-		return customerId;
-	}
-
-	public void setCustomerId(long customerId)
-	{
-		this.customerId = customerId;
-	}
-
 	public Date getBillDate()
 	{
 		return billDate;
-	}
-
-	public void setBillDate(Date billDate)
-	{
-		this.billDate = billDate;
 	}
 
 	public Date getBillDueDate()
@@ -53,9 +28,14 @@ public class BillDto
 		return billDueDate;
 	}
 
-	public void setBillDueDate(Date billDueDate)
+	public List<BillItem> getBillLineItems()
 	{
-		this.billDueDate = billDueDate;
+		return billLineItems;
+	}
+
+	public long getBillNumber()
+	{
+		return billNumber;
 	}
 
 	public Date getBillPeriodFromDate()
@@ -63,29 +43,9 @@ public class BillDto
 		return billPeriodFromDate;
 	}
 
-	public void setBillPeriodFromDate(Date billPeriodFromDate)
-	{
-		this.billPeriodFromDate = billPeriodFromDate;
-	}
-
 	public Date getBillPeriodToDate()
 	{
 		return billPeriodToDate;
-	}
-
-	public void setBillPeriodToDate(Date billPeriodToDate)
-	{
-		this.billPeriodToDate = billPeriodToDate;
-	}
-
-	public Double getBillTotalTax()
-	{
-		return billTotalTax;
-	}
-
-	public void setBillTotalTax(Double billTotalTaxAmount)
-	{
-		this.billTotalTax = billTotalTaxAmount;
 	}
 
 	public Double getBillTotalAmount()
@@ -93,19 +53,59 @@ public class BillDto
 		return billTotalAmount;
 	}
 
-	public void setBillTotalAmount(Double billTotalAmount)
+	public Double getBillTotalTax()
 	{
-		this.billTotalAmount = billTotalAmount;
+		return billTotalTax;
 	}
 
-	public List<BillItem> getBillLineItems()
+	public long getCustomerId()
 	{
-		return billLineItems;
+		return customerId;
+	}
+
+	public void setBillDate(Date billDate)
+	{
+		this.billDate = billDate;
+	}
+
+	public void setBillDueDate(Date billDueDate)
+	{
+		this.billDueDate = billDueDate;
 	}
 
 	public void setBillLineItems(List<BillItem> billLineItems)
 	{
 		this.billLineItems = billLineItems;
+	}
+
+	public void setBillNumber(long billNumber)
+	{
+		this.billNumber = billNumber;
+	}
+
+	public void setBillPeriodFromDate(Date billPeriodFromDate)
+	{
+		this.billPeriodFromDate = billPeriodFromDate;
+	}
+
+	public void setBillPeriodToDate(Date billPeriodToDate)
+	{
+		this.billPeriodToDate = billPeriodToDate;
+	}
+
+	public void setBillTotalAmount(Double billTotalAmount)
+	{
+		this.billTotalAmount = billTotalAmount;
+	}
+
+	public void setBillTotalTax(Double billTotalTaxAmount)
+	{
+		this.billTotalTax = billTotalTaxAmount;
+	}
+
+	public void setCustomerId(long customerId)
+	{
+		this.customerId = customerId;
 	}
 
 }

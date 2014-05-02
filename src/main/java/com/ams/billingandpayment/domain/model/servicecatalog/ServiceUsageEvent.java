@@ -9,8 +9,12 @@ import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
 import com.ams.sharedkernel.domain.model.measuresandunits.TimeUnit;
 import com.ams.users.domain.model.Person;
 
-@Table(name = "T_SERVICEUSAGE")
-public class ServiceUsage implements Serializable
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
+@Table(name = "T_SERVICEUSAGE_EVENTS")
+public class ServiceUsageEvent implements Serializable
 {
 	/**
 	 * 
@@ -20,10 +24,10 @@ public class ServiceUsage implements Serializable
 	private Person				srvcUser;
 	private Period				srvcUsagePeriod;
 
-	public ServiceUsage()
+	public ServiceUsageEvent()
 	{}
 
-	public ServiceUsage(Person persn, Service srvc, Period duration)
+	public ServiceUsageEvent(Person persn, Service srvc, Period duration)
 	{
 		this.srvc = srvc;
 		this.srvcUser = persn;
@@ -35,7 +39,17 @@ public class ServiceUsage implements Serializable
 	 * SERVICE CHARGE DOMAIN FUNCTIONS
 	 */
 
-	Quantity srvcUsageQuantity(TimeUnit unitOfMeasure)
+	public Service getSrvc()
+	{
+		return this.srvc;
+	}
+
+	public Period getSrvcUsagePeriod()
+	{
+		return this.srvcUsagePeriod;
+	}
+
+	public Quantity srvcUsageQuantity(TimeUnit unitOfMeasure)
 	{
 		return Quantity.quantify(this.srvcUsagePeriod, unitOfMeasure);
 
@@ -45,14 +59,10 @@ public class ServiceUsage implements Serializable
 	 * SERVICE CHARGE ACCESSOR & MUTATOR FUNCTIONS
 	 */
 
-	public Service getSrvc()
+	public Quantity getSrvcUsageQty()
 	{
-		return this.srvc;
-	}
 
-	private void setSrvc(Service srvc)
-	{
-		this.srvc = srvc;
+		return null;
 	}
 
 	public Person getSrvcUser()
@@ -60,18 +70,19 @@ public class ServiceUsage implements Serializable
 		return this.srvcUser;
 	}
 
+	private void setSrvc(Service srvc)
+	{
+		this.srvc = srvc;
+	}
+
+	private void setSrvcUsagePeriod(Period srvcUsagePeriod)
+	{
+		this.srvcUsagePeriod = srvcUsagePeriod;
+	}
+
 	private void setSrvcUser(Person srvcUser)
 	{
 		this.srvcUser = srvcUser;
 	}
 
-	public Period getSrvcUsagePeriod()
-	{
-		return this.srvcUsagePeriod;
-	}
-
-	void setSrvcUsagePeriod(Period srvcUsagePeriod)
-	{
-		this.srvcUsagePeriod = srvcUsagePeriod;
-	}
 }

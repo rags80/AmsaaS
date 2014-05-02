@@ -14,20 +14,20 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class SpringMVCConfig
 {
 	@Bean
-	public static InternalResourceViewResolver viewResolver()
-	{
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/view/");
-		resolver.setSuffix(".jsp");
-		return resolver;
-	}
-
-	@Bean
 	public static MultipartResolver multipartResolver()
 	{
 		CommonsMultipartResolver msr = new CommonsMultipartResolver();
 		msr.setMaxUploadSize(10000000);
 		return msr;
 
+	}
+
+	@Bean
+	public static InternalResourceViewResolver viewResolver()
+	{
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/view/");
+		resolver.setSuffix(".jsp");
+		return resolver;
 	}
 }

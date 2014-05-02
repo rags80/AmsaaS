@@ -9,16 +9,16 @@ import com.ams.sharedkernel.domain.repository.Repository;
 public interface AccountRepository extends Repository<Account, Long>
 {
 
-	public List<Account> findAccountsByCustomerId(Long custId);
-
 	public void createTransaction(Transaction transaction);
 
-	public void updateTransaction(Transaction transaction);
-
 	public void deleteTransaction(Long transNumber);
+
+	public List<Account> findAccountsByCustomerId(Long custId);
 
 	public Transaction findTransactionById(long transNumber);
 
 	public List<Transaction> findTransactionsByAcntNumber(long acntNumber);
+
+	public void updateTransaction(Transaction transaction);
 
 }

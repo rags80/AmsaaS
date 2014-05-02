@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ams.sharedkernel.exception.ServiceException;
+import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.users.application.api.ManageUser;
 import com.ams.users.domain.model.Person;
 
@@ -20,12 +20,14 @@ public class UserController
 	@Autowired
 	private ManageUser	manageUser;
 
-	@RequestMapping("users")
+	@RequestMapping(value = "user/{userId}",method = RequestMethod.DELETE)
 	@ResponseBody
-	public List<Person> getUsersList() throws ServiceException
+	public String deleteUser(@PathVariable final Long userId) throws ServiceException
 	{
+		System.out.println(userId);
+		this.manageUser.deleteUser(userId);
+		return "SUCCESS";
 
-		return this.manageUser.getAllUsers();
 	}
 
 	@RequestMapping("users/{userId}")
@@ -34,6 +36,14 @@ public class UserController
 	{
 		return this.manageUser.getUserDetails(userId);
 
+	}
+
+	@RequestMapping("users")
+	@ResponseBody
+	public List<Person> getUsersList() throws ServiceException
+	{
+
+		return this.manageUser.getAllUsers();
 	}
 
 	@RequestMapping(value = "user",method = RequestMethod.POST)
@@ -58,16 +68,6 @@ public class UserController
 	{
 		System.out.println(user.getPersnFirstName());
 		this.manageUser.updateUserDetails(user);
-		return "SUCCESS";
-
-	}
-
-	@RequestMapping(value = "user/{userId}",method = RequestMethod.DELETE)
-	@ResponseBody
-	public String deleteUser(@PathVariable final Long userId) throws ServiceException
-	{
-		System.out.println(userId);
-		this.manageUser.deleteUser(userId);
 		return "SUCCESS";
 
 	}

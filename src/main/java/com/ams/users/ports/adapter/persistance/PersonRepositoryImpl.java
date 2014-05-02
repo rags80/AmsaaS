@@ -21,6 +21,13 @@ public class PersonRepositoryImpl implements PersonRepository
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager	entityManager;
 
+	public Long create(Person person)
+	{
+		entityManager.persist(person);
+		return person.getPersnId();
+	}
+
+	@Override
 	public Long createOrUpdate(Person persn)
 	{
 		if (persn.getPersnId() == null)
@@ -35,50 +42,50 @@ public class PersonRepositoryImpl implements PersonRepository
 		return persn.getPersnId();
 	}
 
-	public Long create(Person person)
-	{
-		entityManager.persist(person);
-		return person.getPersnId();
-	}
-
-	public Long update(Person person)
-	{
-		entityManager.merge(person);
-		return person.getPersnId();
-	}
-
+	@Override
 	public void delete(Long personId)
 	{
 		Person p = entityManager.find(Person.class, personId);
 		entityManager.remove(p);
 	}
 
-	public Person findById(Long personId)
-	{
-		return entityManager.find(Person.class, personId);
-	}
-
+	@Override
 	public List<Person> findAll()
 	{
 		TypedQuery<Person> query = entityManager.createQuery("select P from Person P", Person.class);
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Person> findAllByCriteria(String... criterias)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public List<Person> findAllByIds(long[] userIds)
 	{
 		return null;
 	}
 
+	@Override
+	public Person findById(Long personId)
+	{
+		return entityManager.find(Person.class, personId);
+	}
+
+	@Override
 	public Page<Person> findNextPageData(Page<Person> page)
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<Person> findAllByCriteria(String... criterias)
+	public Long update(Person person)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		entityManager.merge(person);
+		return person.getPersnId();
 	}
 
 }

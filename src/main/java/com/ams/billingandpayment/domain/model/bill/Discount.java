@@ -12,14 +12,14 @@ public class Discount
 		return discntAmount;
 	}
 
-	public void setDiscntAmount(Money discntAmount)
-	{
-		this.discntAmount = discntAmount;
-	}
-
 	public String getDiscntDescription()
 	{
 		return discntDescription;
+	}
+
+	public void setDiscntAmount(Money discntAmount)
+	{
+		this.discntAmount = discntAmount;
 	}
 
 	public void setDiscntDescription(String discntDescription)

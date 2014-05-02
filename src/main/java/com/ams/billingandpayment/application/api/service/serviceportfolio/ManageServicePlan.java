@@ -13,20 +13,20 @@ public interface ManageServicePlan
 	 * Service Plan command/write functions
 	 */
 
-	String registerServicePlan(ServicePlan svcPlan);
+	List<ServicePlan> getAllServicePlans();
 
-	String updateServicePlanDetails(ServicePlan srvcPlan);
-
-	void removeServicePlan(String srvcPlanName);
+	Page<ServicePrice> getNextPageOfServicePricesForPlan(String srvcPlanName, int startIndex, int offset);
 
 	/*
 	 * Service Plan query/read functions
 	 */
 	ServicePlan getServicePlan(String planName);
 
-	List<ServicePlan> getAllServicePlans();
-
 	Page<ServicePlan> getServicePlansNextPage(int index, int offset);
+
+	List<ServicePrice> getServicePricesForPlan(String srvcPlanName);
+
+	String registerServicePlan(ServicePlan svcPlan);
 
 	/*
 	 * Plan-Service Price command/write functions
@@ -34,18 +34,18 @@ public interface ManageServicePlan
 
 	String registerServicePriceToPlan(ServicePriceCommand spc);
 
-	void updateServicePriceDetails(ServicePriceCommand spc);
-
-	void removeServicePrice(String srvcPlanName, String srvcCode) throws InvalidServicePricePlanException;
+	void removeServicePlan(String srvcPlanName);
 
 	void removeServicePrice(ServicePriceCommand spc) throws InvalidServicePricePlanException;
+
+	void removeServicePrice(String srvcPlanName, String srvcCode) throws InvalidServicePricePlanException;
 
 	/*
 	 * Plan-Service Price query/read functions
 	 */
 
-	List<ServicePrice> getServicePricesForPlan(String srvcPlanName);
+	String updateServicePlanDetails(ServicePlan srvcPlan);
 
-	Page<ServicePrice> getNextPageOfServicePricesForPlan(String srvcPlanName, int startIndex, int offset);
+	void updateServicePriceDetails(ServicePriceCommand spc);
 
 }

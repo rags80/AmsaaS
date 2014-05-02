@@ -59,26 +59,16 @@ public class ServicePlan implements Serializable
 	 * SERVICE PLAN DOMAIN FUNCTIONS
 	 */
 
-	public void updateServicePlanDetails(String description, Date planCreatDate, String status)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@JsonSerialize
+	public Date getSrvcPlanCreatDate()
 	{
-		this.srvcPlanDescription = description;
-		this.srvcPlanCreatDate = planCreatDate;
-		this.srvcPlanStatus = Status.valueOf(status);
+		return this.srvcPlanCreatDate;
 	}
 
-	/**
-	 * @param srvcRateCategory
-	 * @param chargeName
-	 * @param chargeAmount
-	 * @param chargeCurrency
-	 * @param chargeUnit
-	 * @return
-	 */
-	public ServicePrice servicePriceToPlan(String srvcPriceCategory, Service srvc, Double chargeAmount, String chargeCurrency, String chargeUnit)
+	public String getSrvcPlanDescription()
 	{
-		ServicePrice psp = new ServicePrice(this, srvc, srvcPriceCategory, BigDecimal.valueOf(chargeAmount), chargeCurrency, chargeUnit);
-		this.srvcPriceSet.add(psp);
-		return psp;
+		return this.srvcPlanDescription;
 	}
 
 	/*
@@ -112,45 +102,10 @@ public class ServicePlan implements Serializable
 		return this.srvcPlanName;
 	}
 
-	@SuppressWarnings("unused")
-	private void setSrvcPlanName(String srvcPlanName)
-	{
-		this.srvcPlanName = srvcPlanName;
-	}
-
-	public String getSrvcPlanDescription()
-	{
-		return this.srvcPlanDescription;
-	}
-
-	public void setSrvcPlanDescription(String srvcPlanDescription)
-	{
-		this.srvcPlanDescription = srvcPlanDescription;
-	}
-
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	@JsonSerialize
-	public Date getSrvcPlanCreatDate()
-	{
-		return this.srvcPlanCreatDate;
-	}
-
-	@SuppressWarnings("unused")
-	@JsonDeserialize
-	private void setSrvcPlanCreatDate(Date srvcPlanCreatDate)
-	{
-		this.srvcPlanCreatDate = srvcPlanCreatDate;
-	}
-
 	@Enumerated(EnumType.STRING)
 	public Status getSrvcPlanStatus()
 	{
 		return this.srvcPlanStatus;
-	}
-
-	public void setSrvcPlanStatus(Status srvcPlanStatus)
-	{
-		this.srvcPlanStatus = srvcPlanStatus;
 	}
 
 	@OneToMany(mappedBy = "srvcPlan",targetEntity = ServicePrice.class)
@@ -160,9 +115,54 @@ public class ServicePlan implements Serializable
 		return this.srvcPriceSet;
 	}
 
+	/**
+	 * @param srvcRateCategory
+	 * @param chargeName
+	 * @param chargeAmount
+	 * @param chargeCurrency
+	 * @param chargeUnit
+	 * @return
+	 */
+	public ServicePrice servicePriceToPlan(String srvcPriceCategory, Service srvc, Double chargeAmount, String chargeCurrency, String chargeUnit)
+	{
+		ServicePrice psp = new ServicePrice(this, srvc, srvcPriceCategory, BigDecimal.valueOf(chargeAmount), chargeCurrency, chargeUnit);
+		this.srvcPriceSet.add(psp);
+		return psp;
+	}
+
+	@SuppressWarnings("unused")
+	@JsonDeserialize
+	private void setSrvcPlanCreatDate(Date srvcPlanCreatDate)
+	{
+		this.srvcPlanCreatDate = srvcPlanCreatDate;
+	}
+
+	public void setSrvcPlanDescription(String srvcPlanDescription)
+	{
+		this.srvcPlanDescription = srvcPlanDescription;
+	}
+
+	@SuppressWarnings("unused")
+	private void setSrvcPlanName(String srvcPlanName)
+	{
+		this.srvcPlanName = srvcPlanName;
+	}
+
+	public void setSrvcPlanStatus(Status srvcPlanStatus)
+	{
+		this.srvcPlanStatus = srvcPlanStatus;
+	}
+
 	private void setSrvcPriceSet(Set<ServicePrice> srvcPriceSet)
 	{
 		this.srvcPriceSet = srvcPriceSet;
+	}
+
+	public void updateServicePlanDetails(String description, Date planCreatDate, String status)
+	{
+		this.srvcPlanDescription = description;
+		this.srvcPlanCreatDate = planCreatDate;
+		this.srvcPlanStatus = Status.valueOf(status);
 	}
 
 }

@@ -22,19 +22,21 @@ public class AccountRepositoryImpl implements AccountRepository
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager	entityManager;
 
+	@Override
 	public Long createOrUpdate(Account account)
 	{
 		entityManager.persist(account);
 		return account.getAcntNumber();
 	}
 
-	public Long update(Account account)
+	@Override
+	public void createTransaction(Transaction transaction)
 	{
-		entityManager.persist(account);
-		return account.getAcntNumber();
+		entityManager.persist(transaction);
 
 	}
 
+	@Override
 	public void delete(Long accountNo)
 	{
 		Account acnt = entityManager.find(Account.class, accountNo);
@@ -42,11 +44,21 @@ public class AccountRepositoryImpl implements AccountRepository
 
 	}
 
-	public Account findById(Long accountNumber)
+	@Override
+	public void deleteTransaction(Long transNumber)
 	{
-		return entityManager.find(Account.class, accountNumber);
+		Transaction trn = entityManager.find(Transaction.class, transNumber);
+		entityManager.remove(trn);
+
 	}
 
+	@Override
+	public List<Account> findAccountsByCustomerId(Long personId)
+	{
+		return null;
+	}
+
+	@Override
 	public List<Account> findAll()
 	{
 		TypedQuery<Account> query = entityManager.createQuery(
@@ -56,36 +68,27 @@ public class AccountRepositoryImpl implements AccountRepository
 
 	}
 
-	public List<Account> findAccountsByCustomerId(Long personId)
+	@Override
+	public Account findById(Long accountNumber)
 	{
+		return entityManager.find(Account.class, accountNumber);
+	}
+
+	@Override
+	public Page<Account> findNextPageData(Page<Account> page)
+	{
+
 		return null;
 	}
 
-	public void createTransaction(Transaction transaction)
-	{
-		entityManager.persist(transaction);
-
-	}
-
-	public void updateTransaction(Transaction transaction)
-	{
-		entityManager.persist(transaction);
-
-	}
-
-	public void deleteTransaction(Long transNumber)
-	{
-		Transaction trn = entityManager.find(Transaction.class, transNumber);
-		entityManager.remove(trn);
-
-	}
-
+	@Override
 	public Transaction findTransactionById(long transNumber)
 	{
 		return entityManager.find(Transaction.class, transNumber);
 
 	}
 
+	@Override
 	public List<Transaction> findTransactionsByAcntNumber(long acntNumber)
 	{
 		TypedQuery<Transaction> query = entityManager
@@ -95,10 +98,18 @@ public class AccountRepositoryImpl implements AccountRepository
 		return query.getResultList();
 	}
 
-	public Page<Account> findNextPageData(Page<Account> page)
+	public Long update(Account account)
 	{
+		entityManager.persist(account);
+		return account.getAcntNumber();
 
-		return null;
+	}
+
+	@Override
+	public void updateTransaction(Transaction transaction)
+	{
+		entityManager.persist(transaction);
+
 	}
 
 }

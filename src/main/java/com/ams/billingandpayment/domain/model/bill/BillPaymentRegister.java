@@ -36,6 +36,61 @@ public class BillPaymentRegister implements Serializable
 	 * BILL DOMAIN FUNCTIONS
 	 */
 
+	public BigDecimal getBillAmountPaid()
+	{
+		return this.billAmountPaid;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public status getBillPaymentStatus()
+	{
+		return this.billPaymentStatus;
+	}
+
+	/*
+	 * ACCESSORS AND MUTATORS
+	 */
+
+	public BigDecimal getBillPenaltyAmount()
+	{
+		return this.billPenaltyAmount;
+	}
+
+	public BigDecimal getBillRemainingAmount()
+	{
+		return this.billRemainingAmount;
+	}
+
+	public boolean isDuePenaltyApplied()
+	{
+		return this.isDuePenaltyApplied;
+	}
+
+	public void setBillAmountPaid(BigDecimal billAmountPaid)
+	{
+		this.billAmountPaid = billAmountPaid;
+	}
+
+	public void setBillPaymentStatus(status billPaymentStatus)
+	{
+		this.billPaymentStatus = billPaymentStatus;
+	}
+
+	public void setBillPenaltyAmount(BigDecimal penaltyAmount)
+	{
+		this.billPenaltyAmount = penaltyAmount;
+	}
+
+	public void setBillRemainingAmount(BigDecimal billRemainingAmount)
+	{
+		this.billRemainingAmount = billRemainingAmount;
+	}
+
+	public void setDuePenaltyApplied(boolean isDuePenaltyApplied)
+	{
+		this.isDuePenaltyApplied = isDuePenaltyApplied;
+	}
+
 	protected void updateBillPayment(Bill bill, Payment paymnt)
 	{
 
@@ -75,61 +130,6 @@ public class BillPaymentRegister implements Serializable
 		{
 			this.billPaymentStatus = status.UNPAID;
 		}
-	}
-
-	/*
-	 * ACCESSORS AND MUTATORS
-	 */
-
-	@Enumerated(EnumType.STRING)
-	public status getBillPaymentStatus()
-	{
-		return this.billPaymentStatus;
-	}
-
-	public void setBillPaymentStatus(status billPaymentStatus)
-	{
-		this.billPaymentStatus = billPaymentStatus;
-	}
-
-	public BigDecimal getBillAmountPaid()
-	{
-		return this.billAmountPaid;
-	}
-
-	public void setBillAmountPaid(BigDecimal billAmountPaid)
-	{
-		this.billAmountPaid = billAmountPaid;
-	}
-
-	public BigDecimal getBillRemainingAmount()
-	{
-		return this.billRemainingAmount;
-	}
-
-	public void setBillRemainingAmount(BigDecimal billRemainingAmount)
-	{
-		this.billRemainingAmount = billRemainingAmount;
-	}
-
-	public boolean isDuePenaltyApplied()
-	{
-		return this.isDuePenaltyApplied;
-	}
-
-	public void setDuePenaltyApplied(boolean isDuePenaltyApplied)
-	{
-		this.isDuePenaltyApplied = isDuePenaltyApplied;
-	}
-
-	public BigDecimal getBillPenaltyAmount()
-	{
-		return this.billPenaltyAmount;
-	}
-
-	public void setBillPenaltyAmount(BigDecimal penaltyAmount)
-	{
-		this.billPenaltyAmount = penaltyAmount;
 	}
 
 }

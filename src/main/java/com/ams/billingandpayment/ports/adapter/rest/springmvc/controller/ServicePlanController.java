@@ -12,14 +12,42 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageServicePlan;
 import com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan;
+import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.repository.Page;
-import com.ams.sharedkernel.exception.ServiceException;
 
 @Controller
 public class ServicePlanController
 {
 	@Autowired
 	private ManageServicePlan	manageServicePlan;
+
+	@RequestMapping(value = "serviceplans/{srvcPlanName}",method = RequestMethod.DELETE)
+	@ResponseBody
+	public List<ServicePlan> deleteServicePlan(@PathVariable final String srvcPlanName)
+	{
+		System.out.println("Delete service plan:" + srvcPlanName);
+		this.manageServicePlan.removeServicePlan(srvcPlanName);
+		return this.getServicePlanList();
+
+	}
+
+	@RequestMapping(value = "serviceplans",method = RequestMethod.GET)
+	@ResponseBody
+	public List<ServicePlan> getServicePlanList()
+	{
+		System.out.println("GET SERVICE PLAN CATALOGUE");
+		return this.manageServicePlan.getAllServicePlans();
+	}
+
+	@RequestMapping(value = "serviceplans/page/{currentIndex}&{nextIndex}",method = RequestMethod.GET)
+	@ResponseBody
+	public Page<ServicePlan> getServicePlanNextPage(@PathVariable final int currentIndex, @PathVariable final int nextIndex)
+	{
+		System.out.println("GET PAGINATED SERVICE PLAN CATALOGUE");
+		Page<ServicePlan> p = new Page<ServicePlan>(currentIndex, nextIndex);
+		p.setPageDataList(this.manageServicePlan.getAllServicePlans());
+		return p;
+	}
 
 	@RequestMapping(value = "serviceplans",method = RequestMethod.POST)
 	@ResponseBody
@@ -51,34 +79,6 @@ public class ServicePlanController
 
 		}
 
-	}
-
-	@RequestMapping(value = "serviceplans/{srvcPlanName}",method = RequestMethod.DELETE)
-	@ResponseBody
-	public List<ServicePlan> deleteServicePlan(@PathVariable final String srvcPlanName)
-	{
-		System.out.println("Delete service plan:" + srvcPlanName);
-		this.manageServicePlan.removeServicePlan(srvcPlanName);
-		return this.getServicePlanList();
-
-	}
-
-	@RequestMapping(value = "serviceplans",method = RequestMethod.GET)
-	@ResponseBody
-	public List<ServicePlan> getServicePlanList()
-	{
-		System.out.println("GET SERVICE PLAN CATALOGUE");
-		return this.manageServicePlan.getAllServicePlans();
-	}
-
-	@RequestMapping(value = "serviceplans/page/{currentIndex}&{nextIndex}",method = RequestMethod.GET)
-	@ResponseBody
-	public Page<ServicePlan> getServicePlanNextPage(@PathVariable final int currentIndex, @PathVariable final int nextIndex)
-	{
-		System.out.println("GET PAGINATED SERVICE PLAN CATALOGUE");
-		Page<ServicePlan> p = new Page<ServicePlan>(currentIndex, nextIndex);
-		p.setPageDataList(this.manageServicePlan.getAllServicePlans());
-		return p;
 	}
 
 }

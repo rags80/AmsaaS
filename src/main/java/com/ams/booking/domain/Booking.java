@@ -7,8 +7,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-import com.ams.booking.application.impl.BookingException;
-import com.ams.sharedkernel.exception.DomainException;
+import com.ams.sharedkernel.domain.DomainException;
 
 /**
  * @author Raghavendra Badiger
@@ -50,33 +49,9 @@ public class Booking
 		}
 		else
 		{
-			throw new DomainException(BookingException.CANCEL_FAILED.getExceptionDetails());
+			throw new DomainException(BookingExceptionCode.CANCEL_FAILED.getExceptionDetails());
 		}
 
-	}
-
-	/**
-	 * 
-	 * ACCESSOR AND MUTATORS
-	 */
-	public long getBookingId()
-	{
-		return this.bookingId;
-	}
-
-	public void setBookingId(long bookingId)
-	{
-		this.bookingId = bookingId;
-	}
-
-	public String getBookingDetails()
-	{
-		return this.bookingDetails;
-	}
-
-	public void setBookingDetails(String bookingDetails)
-	{
-		this.bookingDetails = bookingDetails;
 	}
 
 	public ResourceId getBookedResourceId()
@@ -84,29 +59,9 @@ public class Booking
 		return this.bookedResourceId;
 	}
 
-	public void setBookedResourceId(ResourceId bookedResourceId)
+	public String getBookingDetails()
 	{
-		this.bookedResourceId = bookedResourceId;
-	}
-
-	public PersonId getBookingForPersonId()
-	{
-		return this.bookingForPersonId;
-	}
-
-	public void setBookingForPersonId(PersonId bookingForPersonId)
-	{
-		this.bookingForPersonId = bookingForPersonId;
-	}
-
-	public Date getBookingStartDateTime()
-	{
-		return this.bookingStartDateTime;
-	}
-
-	public void setBookingStartDateTime(Date bookingStartDateTime)
-	{
-		this.bookingStartDateTime = bookingStartDateTime;
+		return this.bookingDetails;
 	}
 
 	public Date getBookingEndDateTime()
@@ -114,9 +69,54 @@ public class Booking
 		return this.bookingEndDateTime;
 	}
 
+	public PersonId getBookingForPersonId()
+	{
+		return this.bookingForPersonId;
+	}
+
+	/**
+	 * 
+	 * ACCESSOR AND MUTATORS
+	 */
+
+	public long getBookingId()
+	{
+		return this.bookingId;
+	}
+
+	public Date getBookingStartDateTime()
+	{
+		return this.bookingStartDateTime;
+	}
+
+	public void setBookedResourceId(ResourceId bookedResourceId)
+	{
+		this.bookedResourceId = bookedResourceId;
+	}
+
+	public void setBookingDetails(String bookingDetails)
+	{
+		this.bookingDetails = bookingDetails;
+	}
+
 	public void setBookingEndDateTime(Date bookingEndDateTime)
 	{
 		this.bookingEndDateTime = bookingEndDateTime;
+	}
+
+	public void setBookingForPersonId(PersonId bookingForPersonId)
+	{
+		this.bookingForPersonId = bookingForPersonId;
+	}
+
+	public void setBookingId(long bookingId)
+	{
+		this.bookingId = bookingId;
+	}
+
+	public void setBookingStartDateTime(Date bookingStartDateTime)
+	{
+		this.bookingStartDateTime = bookingStartDateTime;
 	}
 
 }

@@ -16,14 +16,14 @@ public class PersonDetail implements Serializable
 	private String				mobileNumber;
 	private String				emailId;
 
+	public String getEmailId()
+	{
+		return emailId;
+	}
+
 	public String getLandLineNumber()
 	{
 		return landLineNumber;
-	}
-
-	public void setLandLineNumber(String landLineNumber)
-	{
-		this.landLineNumber = landLineNumber;
 	}
 
 	public String getMobileNumber()
@@ -31,19 +31,19 @@ public class PersonDetail implements Serializable
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(String mobileNumber)
-	{
-		this.mobileNumber = mobileNumber;
-	}
-
-	public String getEmailId()
-	{
-		return emailId;
-	}
-
 	public void setEmailId(String emailId)
 	{
 		this.emailId = emailId;
+	}
+
+	public void setLandLineNumber(String landLineNumber)
+	{
+		this.landLineNumber = landLineNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber)
+	{
+		this.mobileNumber = mobileNumber;
 	}
 
 }

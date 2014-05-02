@@ -12,8 +12,14 @@ public class Rate implements Serializable
 	 */
 	private static final long	serialVersionUID	= 1L;
 
-	private Money				pricePerUnit;
-	private TimeUnit			unitOfMeasure;
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
+	}
+
+	private Money		pricePerUnit;
+
+	private TimeUnit	unitOfMeasure;
 
 	public Rate()
 	{}
@@ -22,47 +28,6 @@ public class Rate implements Serializable
 	{
 		this.pricePerUnit = money;
 		this.unitOfMeasure = perUnit;
-	}
-
-	public Money getPricePerUnit()
-	{
-		return pricePerUnit;
-	}
-
-	private void setPricePerUnit(Money pricePerUnit)
-	{
-		this.pricePerUnit = pricePerUnit;
-	}
-
-	public TimeUnit getUnitOfMeasure()
-	{
-		return unitOfMeasure;
-	}
-
-	private void setUnitOfMeasure(TimeUnit unitOfMeasure)
-	{
-		this.unitOfMeasure = unitOfMeasure;
-	}
-
-	public static long getSerialversionuid()
-	{
-		return serialVersionUID;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Rate [" + pricePerUnit + "/" + unitOfMeasure + "]";
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((pricePerUnit == null) ? 0 : pricePerUnit.hashCode());
-		result = (prime * result) + ((unitOfMeasure == null) ? 0 : unitOfMeasure.hashCode());
-		return result;
 	}
 
 	@Override
@@ -97,6 +62,42 @@ public class Rate implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public Money getPricePerUnit()
+	{
+		return pricePerUnit;
+	}
+
+	public TimeUnit getUnitOfMeasure()
+	{
+		return unitOfMeasure;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((pricePerUnit == null) ? 0 : pricePerUnit.hashCode());
+		result = (prime * result) + ((unitOfMeasure == null) ? 0 : unitOfMeasure.hashCode());
+		return result;
+	}
+
+	private void setPricePerUnit(Money pricePerUnit)
+	{
+		this.pricePerUnit = pricePerUnit;
+	}
+
+	private void setUnitOfMeasure(TimeUnit unitOfMeasure)
+	{
+		this.unitOfMeasure = unitOfMeasure;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Rate [" + pricePerUnit + "/" + unitOfMeasure + "]";
 	}
 
 }

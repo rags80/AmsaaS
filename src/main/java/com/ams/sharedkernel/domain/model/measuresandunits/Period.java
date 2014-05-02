@@ -24,42 +24,6 @@ public class Period implements Serializable
 		this.setToDate(toDate);
 	}
 
-	public Date getFromDate()
-	{
-		return this.fromDate;
-	}
-
-	private void setFromDate(Date fromDate)
-	{
-		this.fromDate = fromDate;
-	}
-
-	public Date getToDate()
-	{
-		return this.toDate;
-	}
-
-	private void setToDate(Date toDate)
-	{
-		this.toDate = toDate;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Period [FromDate:" + fromDate + ", ToDate=" + toDate + "]";
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((fromDate == null) ? 0 : fromDate.hashCode());
-		result = (prime * result) + ((toDate == null) ? 0 : toDate.hashCode());
-		return result;
-	}
-
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -99,6 +63,42 @@ public class Period implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public Date getFromDate()
+	{
+		return this.fromDate;
+	}
+
+	public Date getToDate()
+	{
+		return this.toDate;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((fromDate == null) ? 0 : fromDate.hashCode());
+		result = (prime * result) + ((toDate == null) ? 0 : toDate.hashCode());
+		return result;
+	}
+
+	private void setFromDate(Date fromDate)
+	{
+		this.fromDate = fromDate;
+	}
+
+	private void setToDate(Date toDate)
+	{
+		this.toDate = toDate;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Period [FromDate:" + fromDate + ", ToDate=" + toDate + "]";
 	}
 
 }

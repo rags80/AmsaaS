@@ -33,22 +33,78 @@ public class ServiceSubscription implements Serializable
 
 	private static final long	serialVersionUID	= 1L;
 
-	private Long				srvcSubcrptnId;
-	private String				srvcSubcrptnName;
-	private Person				srvcSubcrptnOfPerson;
-	private Date				srvcSubcrptnStartDate;
-	private Date				srvcSubcrptnEndDate;
-	private Status				srvcSubcrptnStatus;
-	private ServicePlan			subscribedSrvcsPlan;
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
+	}
+
+	private Long		srvcSubcrptnId;
+	private String		srvcSubcrptnName;
+	private Person		srvcSubcrptnOfPerson;
+	private Date		srvcSubcrptnStartDate;
+	private Date		srvcSubcrptnEndDate;
+	private Status		srvcSubcrptnStatus;
+
+	private ServicePlan	subscribedSrvcsPlan;
+
+	/*
+	 * PERSON SERVICE PROFILE DOMAIN LOGIC
+	 */
 
 	public ServiceSubscription()
 	{
 		super();
 	}
 
+	@Column(name = "SUBSCRPTN_ENDDATE")
+	public Date getSrvcSubcrptnEndDate()
+	{
+		return this.srvcSubcrptnEndDate;
+	}
+
 	/*
-	 * PERSON SERVICE PROFILE DOMAIN LOGIC
+	 * ACCESSOR & MUTATORS
 	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "SUBSCRPTN_ID")
+	public Long getSrvcSubcrptnId()
+	{
+		return this.srvcSubcrptnId;
+	}
+
+	@Column(name = "SUBSCRPTN_NAME")
+	public String getSrvcSubcrptnName()
+	{
+		return this.srvcSubcrptnName;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PERSON_ID")
+	@JsonIgnore
+	public Person getSrvcSubcrptnOfPerson()
+	{
+		return this.srvcSubcrptnOfPerson;
+	}
+
+	@Column(name = "SUBSCRPTN_STARTDATE")
+	public Date getSrvcSubcrptnStartDate()
+	{
+		return this.srvcSubcrptnStartDate;
+	}
+
+	@Column(name = "SUBSCRPTN_STATUS")
+	public Status getSrvcSubcrptnStatus()
+	{
+		return this.srvcSubcrptnStatus;
+	}
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "SERVICEPLAN_ID")
+	public ServicePlan getSubscribedSrvcsPlan()
+	{
+		return this.subscribedSrvcsPlan;
+	}
 
 	public boolean isSrvcSubcrptnStatus(Status status)
 	{
@@ -63,15 +119,9 @@ public class ServiceSubscription implements Serializable
 
 	}
 
-	/*
-	 * ACCESSOR & MUTATORS
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SUBSCRPTN_ID")
-	public Long getSrvcSubcrptnId()
+	public void setSrvcSubcrptnEndDate(Date srvcSubcrptnendDate)
 	{
-		return this.srvcSubcrptnId;
+		this.srvcSubcrptnEndDate = srvcSubcrptnendDate;
 	}
 
 	public void setSrvcSubcrptnId(Long srvcSubcrptnId)
@@ -79,23 +129,9 @@ public class ServiceSubscription implements Serializable
 		this.srvcSubcrptnId = srvcSubcrptnId;
 	}
 
-	@Column(name = "SUBSCRPTN_NAME")
-	public String getSrvcSubcrptnName()
-	{
-		return this.srvcSubcrptnName;
-	}
-
 	public void setSrvcSubcrptnName(String srvcSubcrptnName)
 	{
 		this.srvcSubcrptnName = srvcSubcrptnName;
-	}
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PERSON_ID")
-	@JsonIgnore
-	public Person getSrvcSubcrptnOfPerson()
-	{
-		return this.srvcSubcrptnOfPerson;
 	}
 
 	public void setSrvcSubcrptnOfPerson(Person srvcSubcrptnOfPerson)
@@ -103,32 +139,9 @@ public class ServiceSubscription implements Serializable
 		this.srvcSubcrptnOfPerson = srvcSubcrptnOfPerson;
 	}
 
-	@Column(name = "SUBSCRPTN_STARTDATE")
-	public Date getSrvcSubcrptnStartDate()
-	{
-		return this.srvcSubcrptnStartDate;
-	}
-
 	public void setSrvcSubcrptnStartDate(Date srvcSubcrptnStartDate)
 	{
 		this.srvcSubcrptnStartDate = srvcSubcrptnStartDate;
-	}
-
-	@Column(name = "SUBSCRPTN_ENDDATE")
-	public Date getSrvcSubcrptnEndDate()
-	{
-		return this.srvcSubcrptnEndDate;
-	}
-
-	public void setSrvcSubcrptnEndDate(Date srvcSubcrptnendDate)
-	{
-		this.srvcSubcrptnEndDate = srvcSubcrptnendDate;
-	}
-
-	@Column(name = "SUBSCRPTN_STATUS")
-	public Status getSrvcSubcrptnStatus()
-	{
-		return this.srvcSubcrptnStatus;
 	}
 
 	public void setSrvcSubcrptnStatus(Status srvcSubcrptnStatus)
@@ -136,21 +149,9 @@ public class ServiceSubscription implements Serializable
 		this.srvcSubcrptnStatus = srvcSubcrptnStatus;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SERVICEPLAN_ID")
-	public ServicePlan getSubscribedSrvcsPlan()
-	{
-		return this.subscribedSrvcsPlan;
-	}
-
 	public void setSubscribedSrvcsPlan(ServicePlan srvcPlan)
 	{
 		this.subscribedSrvcsPlan = srvcPlan;
-	}
-
-	public static long getSerialversionuid()
-	{
-		return serialVersionUID;
 	}
 
 }

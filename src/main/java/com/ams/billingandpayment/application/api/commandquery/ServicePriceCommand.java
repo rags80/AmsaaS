@@ -9,44 +9,14 @@ public class ServicePriceCommand
 	private String	srvcPriceAmountCurrency;
 	private String	srvcPriceUnitOfMeasure;
 
-	public String getSrvcPlanName()
-	{
-		return this.srvcPlanName;
-	}
-
-	public void setSrvcPlanName(String srvcPlanName)
-	{
-		this.srvcPlanName = srvcPlanName;
-	}
-
 	public String getSrvcCode()
 	{
 		return this.srvcCode;
 	}
 
-	public void setSrvcCode(String srvcCode)
+	public String getSrvcPlanName()
 	{
-		this.srvcCode = srvcCode;
-	}
-
-	public String getSrvcPriceCategory()
-	{
-		return this.srvcPriceCategory;
-	}
-
-	public void setSrvcPriceCategory(String srvcPriceCategory)
-	{
-		this.srvcPriceCategory = srvcPriceCategory;
-	}
-
-	public Double getSrvcPriceAmountValue()
-	{
-		return this.srvcPriceAmountValue;
-	}
-
-	public void setSrvcPriceAmountValue(Double srvcPriceAmountValue)
-	{
-		this.srvcPriceAmountValue = srvcPriceAmountValue;
+		return this.srvcPlanName;
 	}
 
 	public String getSrvcPriceAmountCurrency()
@@ -54,14 +24,44 @@ public class ServicePriceCommand
 		return this.srvcPriceAmountCurrency;
 	}
 
-	public void setSrvcPriceAmountCurrency(String srvcPriceAmountCurrency)
+	public Double getSrvcPriceAmountValue()
 	{
-		this.srvcPriceAmountCurrency = srvcPriceAmountCurrency;
+		return this.srvcPriceAmountValue;
+	}
+
+	public String getSrvcPriceCategory()
+	{
+		return this.srvcPriceCategory;
 	}
 
 	public String getSrvcPriceUnitOfMeasure()
 	{
 		return this.srvcPriceUnitOfMeasure;
+	}
+
+	public void setSrvcCode(String srvcCode)
+	{
+		this.srvcCode = srvcCode;
+	}
+
+	public void setSrvcPlanName(String srvcPlanName)
+	{
+		this.srvcPlanName = srvcPlanName;
+	}
+
+	public void setSrvcPriceAmountCurrency(String srvcPriceAmountCurrency)
+	{
+		this.srvcPriceAmountCurrency = srvcPriceAmountCurrency;
+	}
+
+	public void setSrvcPriceAmountValue(Double srvcPriceAmountValue)
+	{
+		this.srvcPriceAmountValue = srvcPriceAmountValue;
+	}
+
+	public void setSrvcPriceCategory(String srvcPriceCategory)
+	{
+		this.srvcPriceCategory = srvcPriceCategory;
 	}
 
 	public void setSrvcPriceUnitOfMeasure(String srvcPriceUnitOfMeasure)

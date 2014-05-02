@@ -12,32 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageService;
 import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.repository.Page;
-import com.ams.sharedkernel.exception.ServiceException;
 
 @Controller
+@RequestMapping("/services")
 public class ServiceController
 {
 	@Autowired
 	private ManageService	manageService;
 
-	@RequestMapping("services")
-	@ResponseBody
-	public List<Service> getServiceList()
-	{
-		return (this.manageService.getAllServices());
-
-	}
-
-	@RequestMapping("services/page/{index}&{offset}")
-	@ResponseBody
-	public Page<Service> getServiceListNextPage(@PathVariable final int index, @PathVariable final int offset)
-	{
-		return (this.manageService.getServicesNextPage(index, offset));
-
-	}
-
-	@RequestMapping("services/{srvcCode}")
+	@RequestMapping("{srvcCode}")
 	@ResponseBody
 	public Service getServiceDetail(@PathVariable String srvcCode)
 	{
@@ -45,7 +30,32 @@ public class ServiceController
 
 	}
 
-	@RequestMapping(value = "services",method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public List<Service> getServiceList()
+	{
+		return (this.manageService.getAllServices());
+
+	}
+
+	@RequestMapping(value = "page/{index}&{offset}",method = RequestMethod.GET)
+	@ResponseBody
+	public Page<Service> getServiceListNextPage(@PathVariable final int index, @PathVariable final int offset)
+	{
+		return (this.manageService.getServicesNextPage(index, offset));
+
+	}
+
+	@RequestMapping(value = "{srvcCode}",method = RequestMethod.DELETE)
+	@ResponseBody
+	public void removeService(@PathVariable final String srvcCode)
+	{
+		System.out.println(srvcCode);
+		this.manageService.removeService(srvcCode);
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public String saveService(@RequestBody final Service service) throws ServiceException
 	{
@@ -59,21 +69,13 @@ public class ServiceController
 
 	}
 
-	@RequestMapping(value = "services",method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public String updateServiceDetail(@RequestBody final Service service)
 	{
 		System.out.println(service.getSrvcCode());
-		return this.manageService.registerService(service);
-
-	}
-
-	@RequestMapping(value = "services/{srvcCode}",method = RequestMethod.DELETE)
-	@ResponseBody
-	public void removeService(@PathVariable final String srvcCode)
-	{
-		System.out.println(srvcCode);
-		this.manageService.removeService(srvcCode);
+		// return this.manageService.registerService(service);
+		throw new ServiceException("This method is not implemented");
 
 	}
 

@@ -23,43 +23,41 @@ public class BillRepositoryImpl implements BillRepository
 	@PersistenceContext(type = PersistenceContextType.EXTENDED)
 	private EntityManager	entityManager;
 
+	@Override
 	public Bill createBill(Bill bill)
 	{
 		entityManager.persist(bill);
 		return bill;
 	}
 
-	public long updateBill(Bill bill)
-	{
-		entityManager.persist(bill);
-		return 0;
-	}
+	@Override
+	public void createBills(List<Bill> bills)
+	{}
 
+	@Override
 	public long deleteBill(long billNumber)
 	{
 		entityManager.remove(entityManager.find(Bill.class, billNumber));
 		return 0;
 	}
 
-	public void createBills(List<Bill> bills)
-	{}
-
-	public void updateBills(Set<Bill> bills)
-	{}
-
+	@Override
 	public void deleteBills(Set<Bill> bills)
 	{}
 
+	@Override
 	public Bill findBill(long billNumber)
 	{
 		return entityManager.find(Bill.class, billNumber);
 	}
 
+	@Override
 	public Set<Bill> findBills(long userId)
 	{
 		return null;
 	}
 
+	@Override
 	public List<Bill> findBillsByPaymentStatus()
 	{
 		Query query = entityManager.createQuery("select b from Bill b where b.billPaymentRegister.billPaymentStatus = 'UNPAID'");
@@ -70,14 +68,27 @@ public class BillRepositoryImpl implements BillRepository
 		return billList;
 	}
 
+	@Override
 	public Payment findPayment(long paymntNumber)
 	{
 		return null;
 	}
 
+	@Override
 	public Set<Payment> findPayments(long billNumber)
 	{
 		return null;
 	}
+
+	@Override
+	public long updateBill(Bill bill)
+	{
+		entityManager.persist(bill);
+		return 0;
+	}
+
+	@Override
+	public void updateBills(Set<Bill> bills)
+	{}
 
 }

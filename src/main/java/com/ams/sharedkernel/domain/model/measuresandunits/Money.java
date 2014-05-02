@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import com.ams.sharedkernel.exception.DomainException;
+import com.ams.sharedkernel.domain.DomainException;
 
 /**
  * @author Raghavendra Badiger
@@ -36,6 +36,13 @@ public class Money implements Serializable
 		this.currency = curncy;
 	}
 
+	public Money add(BigDecimal other)
+	{
+		this.amount = this.amount.add(other);
+		return this;
+
+	}
+
 	public Money add(Money other) throws DomainException
 	{
 		if (this.currency.equals(other.getCurrency()))
@@ -51,53 +58,9 @@ public class Money implements Serializable
 
 	}
 
-	public Money add(BigDecimal other)
+	public Money divideBy(BigDecimal other)
 	{
-		this.amount = this.amount.add(other);
-		return this;
-
-	}
-
-	public Money subtract(Money other) throws DomainException
-	{
-		if (this.currency.equals(other.getCurrency()))
-		{
-			this.amount = this.amount.subtract(other.getAmount());
-		}
-		else
-		{
-			throw new InvalidCurrencyException("Currency of Money to be subtracted is different!!");
-		};
-
-		return this;
-
-	}
-
-	public Money subtract(BigDecimal other)
-	{
-		this.amount = this.amount.subtract(other);
-		return this;
-
-	}
-
-	public Money multiplyBy(Money other) throws DomainException
-	{
-		if (this.currency.equals(other.getCurrency()))
-		{
-			this.amount = this.amount.multiply(other.getAmount());
-		}
-		else
-		{
-			throw new InvalidCurrencyException("Currency of Money to be multiplied is different!!");
-		};
-
-		return this;
-
-	}
-
-	public Money multiplyBy(BigDecimal other)
-	{
-		this.amount = this.amount.multiply(other);
+		this.amount = this.amount.divide(other);
 		return this;
 
 	}
@@ -115,52 +78,6 @@ public class Money implements Serializable
 
 		return this;
 
-	}
-
-	public Money divideBy(BigDecimal other)
-	{
-		this.amount = this.amount.divide(other);
-		return this;
-
-	}
-
-	public BigDecimal getAmount()
-	{
-		return this.amount;
-	}
-
-	@SuppressWarnings("unused")
-	private void setAmount(BigDecimal amount)
-	{
-		this.amount = amount;
-	}
-
-	@Enumerated(EnumType.STRING)
-	public Currency getCurrency()
-	{
-		return this.currency;
-	}
-
-	@SuppressWarnings("unused")
-	private void setCurrency(Currency currency)
-	{
-		this.currency = currency;
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.amount + "" + this.currency;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.amount == null) ? 0 : this.amount.hashCode());
-		result = (prime * result) + ((this.currency == null) ? 0 : this.currency.hashCode());
-		return result;
 	}
 
 	@Override
@@ -195,6 +112,89 @@ public class Money implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public BigDecimal getAmount()
+	{
+		return this.amount;
+	}
+
+	@Enumerated(EnumType.STRING)
+	public Currency getCurrency()
+	{
+		return this.currency;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.amount == null) ? 0 : this.amount.hashCode());
+		result = (prime * result) + ((this.currency == null) ? 0 : this.currency.hashCode());
+		return result;
+	}
+
+	public Money multiplyBy(BigDecimal other)
+	{
+		this.amount = this.amount.multiply(other);
+		return this;
+
+	}
+
+	public Money multiplyBy(Money other) throws DomainException
+	{
+		if (this.currency.equals(other.getCurrency()))
+		{
+			this.amount = this.amount.multiply(other.getAmount());
+		}
+		else
+		{
+			throw new InvalidCurrencyException("Currency of Money to be multiplied is different!!");
+		};
+
+		return this;
+
+	}
+
+	@SuppressWarnings("unused")
+	private void setAmount(BigDecimal amount)
+	{
+		this.amount = amount;
+	}
+
+	@SuppressWarnings("unused")
+	private void setCurrency(Currency currency)
+	{
+		this.currency = currency;
+	}
+
+	public Money subtract(BigDecimal other)
+	{
+		this.amount = this.amount.subtract(other);
+		return this;
+
+	}
+
+	public Money subtract(Money other) throws DomainException
+	{
+		if (this.currency.equals(other.getCurrency()))
+		{
+			this.amount = this.amount.subtract(other.getAmount());
+		}
+		else
+		{
+			throw new InvalidCurrencyException("Currency of Money to be subtracted is different!!");
+		};
+
+		return this;
+
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.amount + "" + this.currency;
 	}
 
 }

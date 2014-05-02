@@ -22,59 +22,9 @@ public class Address implements Serializable
 	private String				state;
 	private int				pin;
 
-	public int getFlatNumber()
-	{
-		return this.flatNumber;
-	}
-
-	public void setFlatNumber(int flatNumber)
-	{
-		this.flatNumber = flatNumber;
-	}
-
 	public String getApartmentName()
 	{
 		return this.apartmentName;
-	}
-
-	public void setApartmentName(String apartmentName)
-	{
-		this.apartmentName = apartmentName;
-	}
-
-	public String getStreet()
-	{
-		return this.street;
-	}
-
-	public void setStreet(String street)
-	{
-		this.street = street;
-	}
-
-	public String getLocality()
-	{
-		return this.locality;
-	}
-
-	public void setLocality(String locality)
-	{
-		this.locality = locality;
-	}
-
-	public String getLandMark()
-	{
-		return this.landMark;
-	}
-
-	public void setLandMark(String landMark)
-	{
-		this.landMark = landMark;
-	}
-
-	public void setCity(String city)
-	{
-		this.city = city;
 	}
 
 	public String getCity()
@@ -87,19 +37,19 @@ public class Address implements Serializable
 		return this.district;
 	}
 
-	public void setDistrict(String district)
+	public int getFlatNumber()
 	{
-		this.district = district;
+		return this.flatNumber;
 	}
 
-	public String getState()
+	public String getLandMark()
 	{
-		return this.state;
+		return this.landMark;
 	}
 
-	public void setState(String state)
+	public String getLocality()
 	{
-		this.state = state;
+		return this.locality;
 	}
 
 	public int getPin()
@@ -107,9 +57,59 @@ public class Address implements Serializable
 		return this.pin;
 	}
 
+	public String getState()
+	{
+		return this.state;
+	}
+
+	public String getStreet()
+	{
+		return this.street;
+	}
+
+	public void setApartmentName(String apartmentName)
+	{
+		this.apartmentName = apartmentName;
+	}
+
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
+
+	public void setDistrict(String district)
+	{
+		this.district = district;
+	}
+
+	public void setFlatNumber(int flatNumber)
+	{
+		this.flatNumber = flatNumber;
+	}
+
+	public void setLandMark(String landMark)
+	{
+		this.landMark = landMark;
+	}
+
+	public void setLocality(String locality)
+	{
+		this.locality = locality;
+	}
+
 	public void setPin(int pin)
 	{
 		this.pin = pin;
+	}
+
+	public void setState(String state)
+	{
+		this.state = state;
+	}
+
+	public void setStreet(String street)
+	{
+		this.street = street;
 	}
 
 }

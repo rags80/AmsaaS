@@ -40,9 +40,9 @@ public class UnitsDto
 		return currencies;
 	}
 
-	public void setCurrencies(List<String> currencies)
+	public List<String> getFrequencies()
 	{
-		this.currencies = currencies;
+		return frequencies;
 	}
 
 	public List<String> getUnits()
@@ -50,19 +50,19 @@ public class UnitsDto
 		return units;
 	}
 
-	public void setUnits(List<String> units)
+	public void setCurrencies(List<String> currencies)
 	{
-		this.units = units;
-	}
-
-	public List<String> getFrequencies()
-	{
-		return frequencies;
+		this.currencies = currencies;
 	}
 
 	public void setFrequencies(List<String> frequencies)
 	{
 		this.frequencies = frequencies;
+	}
+
+	public void setUnits(List<String> units)
+	{
+		this.units = units;
 	}
 
 }

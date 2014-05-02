@@ -37,36 +37,11 @@ public class Transaction implements Serializable
 	public Transaction()
 	{}
 
-	@Id
-	@GeneratedValue
-	public Long getTransNumber()
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "Account_Number")
+	public Account getTransAccount()
 	{
-		return transNumber;
-	}
-
-	public void setTransNumber(Long transNumber)
-	{
-		this.transNumber = transNumber;
-	}
-
-	public String getTransType()
-	{
-		return transType;
-	}
-
-	public void setTransType(String transType)
-	{
-		this.transType = transType;
-	}
-
-	public String getTransMode()
-	{
-		return transMode;
-	}
-
-	public void setTransMode(String transMode)
-	{
-		this.transMode = transMode;
+		return transAccount;
 	}
 
 	public float getTransAmount()
@@ -74,31 +49,21 @@ public class Transaction implements Serializable
 		return transAmount;
 	}
 
-	public void setTransAmount(float transAmount)
-	{
-		this.transAmount = transAmount;
-	}
-
 	public Date getTransDate()
 	{
 		return transDate;
 	}
 
-	public void setTransDate(Date transDate)
+	public String getTransMode()
 	{
-		this.transDate = transDate;
+		return transMode;
 	}
 
-	public void setTransAccount(Account transAccount)
+	@Id
+	@GeneratedValue
+	public Long getTransNumber()
 	{
-		this.transAccount = transAccount;
-	}
-
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "Account_Number")
-	public Account getTransAccount()
-	{
-		return transAccount;
+		return transNumber;
 	}
 
 	@ManyToOne(optional = false)
@@ -108,15 +73,50 @@ public class Transaction implements Serializable
 		return transPerson;
 	}
 
-	public void setTransPerson(Person param)
+	public String getTransType()
 	{
-		this.transPerson = param;
+		return transType;
 	}
 
 	@Version
 	public Integer getVersion()
 	{
 		return version;
+	}
+
+	public void setTransAccount(Account transAccount)
+	{
+		this.transAccount = transAccount;
+	}
+
+	public void setTransAmount(float transAmount)
+	{
+		this.transAmount = transAmount;
+	}
+
+	public void setTransDate(Date transDate)
+	{
+		this.transDate = transDate;
+	}
+
+	public void setTransMode(String transMode)
+	{
+		this.transMode = transMode;
+	}
+
+	public void setTransNumber(Long transNumber)
+	{
+		this.transNumber = transNumber;
+	}
+
+	public void setTransPerson(Person param)
+	{
+		this.transPerson = param;
+	}
+
+	public void setTransType(String transType)
+	{
+		this.transType = transType;
 	}
 
 	public void setVersion(Integer version)

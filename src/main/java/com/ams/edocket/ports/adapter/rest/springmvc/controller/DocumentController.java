@@ -29,37 +29,34 @@ import com.ams.users.domain.model.Person;
 @Controller
 public class DocumentController
 {
-	@Autowired
-	private ManageDocument	manageDocument;
-
 	enum PathStrategy
 	{
 		ANGULAR, HORIZONTAL
-	};
+	}
+
+	@Autowired
+	private ManageDocument	manageDocument;	;
+
+	@RequestMapping(value = "docs/folders/{folderPath}",method = RequestMethod.POST)
+	@ResponseBody
+	public Folder createNewFolder(@PathVariable String folderPath)
+	{
+		return this.manageDocument.newDocumentsFolder(this.getFolderOwner(), this.translatedPath(folderPath, PathStrategy.ANGULAR));
+
+	}
+
+	@RequestMapping(value = "docs/folders/{folderPath}",method = RequestMethod.GET)
+	@ResponseBody
+	public Folder getFolderContents(@PathVariable String folderPath)
+	{
+		return this.manageDocument.getFolderContents(this.getFolderOwner(), this.translatedPath(folderPath, PathStrategy.ANGULAR));
+	}
 
 	private Person getFolderOwner()
 	{
 		Person p = new Person();
 		p.setPersnFirstName("Raghav");
 		return p;
-	}
-
-	private String translatedPath(String reltvPath, PathStrategy ps)
-	{
-		String replcmntToken = null;
-		switch (ps)
-		{
-		case ANGULAR:
-			replcmntToken = ">";
-			break;
-		case HORIZONTAL:
-			replcmntToken = "-";
-			break;
-
-		}
-
-		return reltvPath.replace(replcmntToken, "/");
-
 	}
 
 	@RequestMapping(value = "docs/folders",method = RequestMethod.GET)
@@ -70,26 +67,30 @@ public class DocumentController
 		return this.manageDocument.getFolderContents(this.getFolderOwner(), "");
 	}
 
-	@RequestMapping(value = "docs/folders/{folderPath}",method = RequestMethod.GET)
-	@ResponseBody
-	public Folder getFolderContents(@PathVariable String folderPath)
-	{
-		return this.manageDocument.getFolderContents(this.getFolderOwner(), this.translatedPath(folderPath, PathStrategy.ANGULAR));
-	}
-
-	@RequestMapping(value = "docs/folders/{folderPath}",method = RequestMethod.POST)
-	@ResponseBody
-	public Folder createNewFolder(@PathVariable String folderPath)
-	{
-		return this.manageDocument.newDocumentsFolder(this.getFolderOwner(), this.translatedPath(folderPath, PathStrategy.ANGULAR));
-
-	}
-
 	@RequestMapping(value = "docs/folders/{folderPath}",method = RequestMethod.DELETE)
 	@ResponseBody
 	public Folder removeFolder(@PathVariable String folderPath)
 	{
 		return this.manageDocument.removeDocumentsFolder(this.getFolderOwner(), this.translatedPath(folderPath, PathStrategy.ANGULAR));
+	}
+
+	private String translatedPath(String reltvPath, PathStrategy ps)
+	{
+		String replcmntToken;
+		switch (ps)
+		{
+		case ANGULAR:
+			replcmntToken = ">";
+			break;
+		case HORIZONTAL:
+			replcmntToken = "-";
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid path strategy!! ");
+		}
+
+		return reltvPath.replace(replcmntToken, "/");
+
 	}
 
 	@RequestMapping(value = "docs/folders/{folderName}/files",method = RequestMethod.POST)

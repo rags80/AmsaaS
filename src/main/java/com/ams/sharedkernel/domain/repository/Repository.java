@@ -9,9 +9,9 @@ public interface Repository<T, ID extends Serializable>
 
 	public void delete(ID entityId);
 
-	public T findById(ID entityId);
-
 	public List<T> findAll();
+
+	public T findById(ID entityId);
 
 	public Page<T> findNextPageData(Page<T> page);
 }

@@ -27,40 +27,25 @@ public class ManageServicePlanImpl implements ManageServicePlan
 	@Autowired
 	private ServicePlanRepository	servicePlanRepository;
 
-	/*
-	 * Service Plan command/write functions implementation
-	 */
-	public String registerServicePlan(ServicePlan srvcPlan)
-	{
-
-		return this.servicePlanRepository.createOrUpdate(srvcPlan);
-
-	}
-
-	public String updateServicePlanDetails(ServicePlan srvcPlan)
-	{
-		return this.servicePlanRepository.createOrUpdate(srvcPlan);
-	}
-
-	public void removeServicePlan(String srvcPlanName)
-	{
-		this.servicePlanRepository.delete(srvcPlanName);
-	}
-
-	public ServicePlan getServicePlan(String planName)
-	{
-		return this.servicePlanRepository.findById(planName);
-	}
-
-	/*
-	 * Service Plan query/read functions implementation
-	 */
-
+	@Override
 	public List<ServicePlan> getAllServicePlans()
 	{
 		return this.servicePlanRepository.findAll();
 	}
 
+	@Override
+	public Page<ServicePrice> getNextPageOfServicePricesForPlan(String srvcPlanName, int startIndex, int offset)
+	{
+		return this.servicePlanRepository.findNextPageOfServicePrices(srvcPlanName, startIndex, offset);
+	}
+
+	@Override
+	public ServicePlan getServicePlan(String planName)
+	{
+		return this.servicePlanRepository.findById(planName);
+	}
+
+	@Override
 	public Page<ServicePlan> getServicePlansNextPage(int index, int offset)
 	{
 
@@ -68,9 +53,31 @@ public class ManageServicePlanImpl implements ManageServicePlan
 	}
 
 	/*
+	 * Service Plan query/read functions implementation
+	 */
+
+	@Override
+	public List<ServicePrice> getServicePricesForPlan(String srvcPlanName)
+	{
+		return this.servicePlanRepository.findAllServicePriceByPlanName(srvcPlanName);
+	}
+
+	/*
+	 * Service Plan command/write functions implementation
+	 */
+	@Override
+	public String registerServicePlan(ServicePlan srvcPlan)
+	{
+
+		return this.servicePlanRepository.createOrUpdate(srvcPlan);
+
+	}
+
+	/*
 	 * Plan-Service Price command/write functions implementation
 	 */
 
+	@Override
 	public String registerServicePriceToPlan(ServicePriceCommand srvcPriceCommand)
 	{
 		ServicePlan srvcPlan = this.servicePlanRepository.findById(srvcPriceCommand.getSrvcPlanName());
@@ -86,6 +93,36 @@ public class ManageServicePlanImpl implements ManageServicePlan
 
 	}
 
+	@Override
+	public void removeServicePlan(String srvcPlanName)
+	{
+		this.servicePlanRepository.delete(srvcPlanName);
+	}
+
+	@Override
+	public void removeServicePrice(ServicePriceCommand spc) throws InvalidServicePricePlanException
+	{
+		this.servicePlanRepository.deleteServicePriceOfPlan(spc.getSrvcPlanName(), spc.getSrvcCode());
+
+	}
+
+	@Override
+	public void removeServicePrice(String srvcPlanName, String srvcCode) throws InvalidServicePricePlanException
+	{
+		this.servicePlanRepository.deleteServicePriceOfPlan(srvcPlanName, srvcCode);
+	}
+
+	/*
+	 * Plan-Service Price query/read functions implementation
+	 */
+
+	@Override
+	public String updateServicePlanDetails(ServicePlan srvcPlan)
+	{
+		return this.servicePlanRepository.createOrUpdate(srvcPlan);
+	}
+
+	@Override
 	public void updateServicePriceDetails(ServicePriceCommand spc)
 	{
 		ServicePrice srvcRate = this.servicePlanRepository.findServicePriceByCriteria(spc.getSrvcPlanName(), spc.getSrvcCode());
@@ -93,31 +130,6 @@ public class ManageServicePlanImpl implements ManageServicePlan
 							BigDecimal.valueOf(spc.getSrvcPriceAmountValue()),
 							spc.getSrvcPriceAmountCurrency(),
 							spc.getSrvcPriceUnitOfMeasure());
-	}
-
-	public void removeServicePrice(String srvcPlanName, String srvcCode) throws InvalidServicePricePlanException
-	{
-		this.servicePlanRepository.deleteServicePriceOfPlan(srvcPlanName, srvcCode);
-	}
-
-	public void removeServicePrice(ServicePriceCommand spc) throws InvalidServicePricePlanException
-	{
-		this.servicePlanRepository.deleteServicePriceOfPlan(spc.getSrvcPlanName(), spc.getSrvcCode());
-
-	}
-
-	/*
-	 * Plan-Service Price query/read functions implementation
-	 */
-
-	public List<ServicePrice> getServicePricesForPlan(String srvcPlanName)
-	{
-		return this.servicePlanRepository.findAllServicePriceByPlanName(srvcPlanName);
-	}
-
-	public Page<ServicePrice> getNextPageOfServicePricesForPlan(String srvcPlanName, int startIndex, int offset)
-	{
-		return this.servicePlanRepository.findNextPageOfServicePrices(srvcPlanName, startIndex, offset);
 	}
 
 }

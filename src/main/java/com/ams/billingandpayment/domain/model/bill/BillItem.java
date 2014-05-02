@@ -49,13 +49,6 @@ public class BillItem implements Serializable
 		this.calculateBillItemAmount();
 	}
 
-	private BigDecimal calculateBillItemTax()
-	{
-
-		return this.billItemTax;
-
-	}
-
 	private BigDecimal calculateBillItemAmount()
 	{
 		if ((this.billItemService != null))
@@ -69,16 +62,11 @@ public class BillItem implements Serializable
 
 	}
 
-	@Id
-	@GeneratedValue
-	public Long getBillItemNumber()
+	private BigDecimal calculateBillItemTax()
 	{
-		return billItemNumber;
-	}
 
-	public void setBillItemNumber(Long id)
-	{
-		this.billItemNumber = id;
+		return this.billItemTax;
+
 	}
 
 	@ManyToOne(optional = false)
@@ -88,39 +76,21 @@ public class BillItem implements Serializable
 		return bill;
 	}
 
-	public void setBill(Bill param)
-	{
-		this.bill = param;
-	}
-
-	public void setBillItemTax(BigDecimal billItemTax)
-	{
-		this.billItemTax = billItemTax;
-	}
-
-	public BigDecimal getBillItemTax()
-	{
-		return billItemTax;
-	}
-
-	public void setBillItemAmount(BigDecimal billItemAmount)
-	{
-		this.billItemAmount = billItemAmount;
-	}
-
 	public BigDecimal getBillItemAmount()
 	{
 		return billItemAmount;
 	}
 
+	@Id
+	@GeneratedValue
+	public Long getBillItemNumber()
+	{
+		return billItemNumber;
+	}
+
 	public long getBillItemQuantity()
 	{
 		return billItemQuantity;
-	}
-
-	public void setBillItemQuantity(long billItemQuantity)
-	{
-		this.billItemQuantity = billItemQuantity;
 	}
 
 	@ManyToOne(optional = false,targetEntity = Service.class)
@@ -130,9 +100,39 @@ public class BillItem implements Serializable
 		return billItemService;
 	}
 
+	public BigDecimal getBillItemTax()
+	{
+		return billItemTax;
+	}
+
+	public void setBill(Bill param)
+	{
+		this.bill = param;
+	}
+
+	public void setBillItemAmount(BigDecimal billItemAmount)
+	{
+		this.billItemAmount = billItemAmount;
+	}
+
+	public void setBillItemNumber(Long id)
+	{
+		this.billItemNumber = id;
+	}
+
+	public void setBillItemQuantity(long billItemQuantity)
+	{
+		this.billItemQuantity = billItemQuantity;
+	}
+
 	public void setBillItemService(Service param)
 	{
 		this.billItemService = param;
+	}
+
+	public void setBillItemTax(BigDecimal billItemTax)
+	{
+		this.billItemTax = billItemTax;
 	}
 
 }

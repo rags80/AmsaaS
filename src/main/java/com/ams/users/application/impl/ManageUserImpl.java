@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ams.sharedkernel.domain.events.DomainEventPublisher;
 import com.ams.users.application.api.ManageUser;
 import com.ams.users.domain.model.Person;
+import com.ams.users.domain.model.events.UserCreatedEvent;
 import com.ams.users.domain.repository.PersonRepository;
 
 @Transactional
@@ -18,28 +20,22 @@ public class ManageUserImpl implements ManageUser
 {
 
 	@Autowired
-	private PersonRepository	personRepository;
+	private PersonRepository		personRepository;
 
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void registerUser(Person user)
-	{
-		this.personRepository.createOrUpdate(user);
-
-	}
-
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
-	public void updateUserDetails(Person user)
-	{
-		this.personRepository.createOrUpdate(user);
-
-	}
+	private DomainEventPublisher	domainEventPublisher;
 
 	@Override
 	public void deleteUser(long userId)
 	{
 		this.personRepository.delete(userId);
+
+	}
+
+	@Override
+	public List<Person> getAllUsers()
+	{
+		List<Person> users = this.personRepository.findAll();
+		return users;
 
 	}
 
@@ -51,10 +47,19 @@ public class ManageUserImpl implements ManageUser
 	}
 
 	@Override
-	public List<Person> getAllUsers()
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void registerUser(Person user)
 	{
-		List<Person> users = this.personRepository.findAll();
-		return users;
+		this.personRepository.createOrUpdate(user);
+		this.domainEventPublisher.raiseEvent(new UserCreatedEvent(user));
+
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
+	public void updateUserDetails(Person user)
+	{
+		this.personRepository.createOrUpdate(user);
 
 	}
 

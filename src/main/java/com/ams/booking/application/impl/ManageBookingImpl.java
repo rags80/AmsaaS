@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ams.booking.application.api.ManageBooking;
 import com.ams.booking.domain.Booking;
+import com.ams.booking.domain.BookingExceptionCode;
 import com.ams.booking.domain.PersonId;
 import com.ams.booking.domain.ResourceId;
 import com.ams.booking.domain.repository.BookingRepository;
-import com.ams.sharedkernel.exception.ServiceException;
+import com.ams.sharedkernel.application.api.exception.ServiceException;
 
 /**
  * @author Raghavendra Badiger
@@ -24,22 +25,6 @@ public class ManageBookingImpl implements ManageBooking
 
 	@Autowired
 	private BookingRepository	bookingRepo;
-
-	@Override
-	public long newBooking(PersonId persnId, ResourceId resourceId, Date startDateTime, Date endDateTime)
-	{
-
-		List<Booking> bookings = this.bookingRepo.findAllActiveBookingsForResource(resourceId, startDateTime, endDateTime);
-		if (bookings.size() > 0)
-		{
-			throw new ServiceException(BookingException.NOT_POSSIBLE.getExceptionDetails());
-		}
-		else
-		{
-			return this.bookingRepo.createBooking(new Booking(persnId, resourceId, startDateTime, endDateTime));
-		}
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -57,7 +42,23 @@ public class ManageBookingImpl implements ManageBooking
 		}
 		else
 		{
-			throw new ServiceException(BookingException.CANCEL_FAILED.getExceptionDetails());
+			throw new ServiceException(BookingExceptionCode.CANCEL_FAILED.getExceptionDetails());
+		}
+
+	}
+
+	@Override
+	public long newBooking(PersonId persnId, ResourceId resourceId, Date startDateTime, Date endDateTime)
+	{
+
+		List<Booking> bookings = this.bookingRepo.findAllActiveBookingsForResource(resourceId, startDateTime, endDateTime);
+		if (bookings.size() > 0)
+		{
+			throw new ServiceException(BookingExceptionCode.NOT_POSSIBLE.getExceptionDetails());
+		}
+		else
+		{
+			return this.bookingRepo.createBooking(new Booking(persnId, resourceId, startDateTime, endDateTime));
 		}
 
 	}

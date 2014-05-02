@@ -10,6 +10,12 @@ import com.ams.billingandpayment.domain.model.bill.BillItem;
 public class BillServiceDataAssembler
 {
 
+	public Bill toBill(BillDto bsd)
+	{
+		return null;
+
+	}
+
 	public BillDto toBillDTO(Bill bill)
 	{
 		BillDto bsd = new BillDto();
@@ -35,12 +41,6 @@ public class BillServiceDataAssembler
 		}
 
 		return bsd;
-
-	}
-
-	public Bill toBill(BillDto bsd)
-	{
-		return null;
 
 	}
 

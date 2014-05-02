@@ -15,6 +15,8 @@ import com.ams.booking.domain.ResourceId;
 public interface ManageBooking
 {
 
+	long cancelBooking(long bookingId);
+
 	/**
 	 * @param persnId
 	 * @param resourceId
@@ -23,7 +25,5 @@ public interface ManageBooking
 	 * @return
 	 */
 	long newBooking(PersonId persnId, ResourceId resourceId, Date startDateTime, Date endDateTime);
-
-	long cancelBooking(long bookingId);
 
 }

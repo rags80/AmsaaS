@@ -11,24 +11,9 @@ public class ServicePlanDto
 	private String	ratePerUnit;
 	private String	chargeFreq;
 
-	public String getSrvcPlanName()
+	public String getChargeFreq()
 	{
-		return srvcPlanName;
-	}
-
-	public void setSrvcPlanName(String srvcPlanName)
-	{
-		this.srvcPlanName = srvcPlanName;
-	}
-
-	public String getSrvcCode()
-	{
-		return srvcCode;
-	}
-
-	public void setSrvcCode(String srvcCode)
-	{
-		this.srvcCode = srvcCode;
+		return chargeFreq;
 	}
 
 	public String getChargeName()
@@ -36,19 +21,9 @@ public class ServicePlanDto
 		return chargeName;
 	}
 
-	public void setChargeName(String chargeName)
-	{
-		this.chargeName = chargeName;
-	}
-
 	public String getChargeType()
 	{
 		return chargeType;
-	}
-
-	public void setChargeType(String chargeType)
-	{
-		this.chargeType = chargeType;
 	}
 
 	public Double getRateAmount()
@@ -56,19 +31,9 @@ public class ServicePlanDto
 		return rateAmount;
 	}
 
-	public void setRateAmount(Double rateAmount)
-	{
-		this.rateAmount = rateAmount;
-	}
-
 	public String getRateCurrency()
 	{
 		return rateCurrency;
-	}
-
-	public void setRateCurrency(String rateCurrency)
-	{
-		this.rateCurrency = rateCurrency;
 	}
 
 	public String getRatePerUnit()
@@ -76,19 +41,54 @@ public class ServicePlanDto
 		return ratePerUnit;
 	}
 
-	public void setRatePerUnit(String ratePerUnit)
+	public String getSrvcCode()
 	{
-		this.ratePerUnit = ratePerUnit;
+		return srvcCode;
 	}
 
-	public String getChargeFreq()
+	public String getSrvcPlanName()
 	{
-		return chargeFreq;
+		return srvcPlanName;
 	}
 
 	public void setChargeFreq(String chargeFreq)
 	{
 		this.chargeFreq = chargeFreq;
+	}
+
+	public void setChargeName(String chargeName)
+	{
+		this.chargeName = chargeName;
+	}
+
+	public void setChargeType(String chargeType)
+	{
+		this.chargeType = chargeType;
+	}
+
+	public void setRateAmount(Double rateAmount)
+	{
+		this.rateAmount = rateAmount;
+	}
+
+	public void setRateCurrency(String rateCurrency)
+	{
+		this.rateCurrency = rateCurrency;
+	}
+
+	public void setRatePerUnit(String ratePerUnit)
+	{
+		this.ratePerUnit = ratePerUnit;
+	}
+
+	public void setSrvcCode(String srvcCode)
+	{
+		this.srvcCode = srvcCode;
+	}
+
+	public void setSrvcPlanName(String srvcPlanName)
+	{
+		this.srvcPlanName = srvcPlanName;
 	}
 
 }

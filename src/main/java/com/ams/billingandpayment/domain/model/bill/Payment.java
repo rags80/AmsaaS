@@ -37,57 +37,19 @@ public class Payment implements Serializable
 	private Bill				paymntForBill;
 	private Person				paymntPerson;
 
-	@Id
-	@GeneratedValue
-	public Long getPaymntId()
-	{
-		return paymntId;
-	}
-
-	public void setPaymntId(Long paymntId)
-	{
-		this.paymntId = paymntId;
-	}
-
 	public BigDecimal getPaymntAmount()
 	{
 		return this.paymntAmount;
 	}
 
-	public void setPaymntAmount(BigDecimal paymntAmount)
+	public BigDecimal getPaymntBalance()
 	{
-		this.paymntAmount = paymntAmount;
-	}
-
-	public String getPaymntMethod()
-	{
-		return this.paymntMethod;
-	}
-
-	public void setPaymntMethod(String paymntMethod)
-	{
-		this.paymntMethod = paymntMethod;
+		return paymntBalance;
 	}
 
 	public Date getPaymntDate()
 	{
 		return this.paymntDate;
-	}
-
-	public void setPaymntDate(Date paymntDate)
-	{
-		this.paymntDate = paymntDate;
-	}
-
-	@OneToOne(cascade = CascadeType.PERSIST,optional = false)
-	public Transaction getPaymntTransaction()
-	{
-		return this.paymntTransaction;
-	}
-
-	public void setPaymntTransaction(Transaction paymntTransaction)
-	{
-		this.paymntTransaction = paymntTransaction;
 	}
 
 	@ManyToOne(optional = false,cascade = CascadeType.ALL)
@@ -97,9 +59,16 @@ public class Payment implements Serializable
 		return this.paymntForBill;
 	}
 
-	public void setPaymntForBill(Bill paymntForBill)
+	@Id
+	@GeneratedValue
+	public Long getPaymntId()
 	{
-		this.paymntForBill = paymntForBill;
+		return paymntId;
+	}
+
+	public String getPaymntMethod()
+	{
+		return this.paymntMethod;
 	}
 
 	@ManyToOne(optional = false)
@@ -109,19 +78,50 @@ public class Payment implements Serializable
 		return this.paymntPerson;
 	}
 
-	public void setPaymntPerson(Person paymntPerson)
+	@OneToOne(cascade = CascadeType.PERSIST,optional = false)
+	public Transaction getPaymntTransaction()
 	{
-		this.paymntPerson = paymntPerson;
+		return this.paymntTransaction;
 	}
 
-	public BigDecimal getPaymntBalance()
+	public void setPaymntAmount(BigDecimal paymntAmount)
 	{
-		return paymntBalance;
+		this.paymntAmount = paymntAmount;
 	}
 
 	public void setPaymntBalance(BigDecimal paymntBalance)
 	{
 		this.paymntBalance = paymntBalance;
+	}
+
+	public void setPaymntDate(Date paymntDate)
+	{
+		this.paymntDate = paymntDate;
+	}
+
+	public void setPaymntForBill(Bill paymntForBill)
+	{
+		this.paymntForBill = paymntForBill;
+	}
+
+	public void setPaymntId(Long paymntId)
+	{
+		this.paymntId = paymntId;
+	}
+
+	public void setPaymntMethod(String paymntMethod)
+	{
+		this.paymntMethod = paymntMethod;
+	}
+
+	public void setPaymntPerson(Person paymntPerson)
+	{
+		this.paymntPerson = paymntPerson;
+	}
+
+	public void setPaymntTransaction(Transaction paymntTransaction)
+	{
+		this.paymntTransaction = paymntTransaction;
 	}
 
 }

@@ -39,18 +39,11 @@ public class Account implements Serializable
 	private Set<Transaction>		acntTransactions;
 	private Person				acntHolder;
 
+	@Version
+	protected Integer			version;
+
 	public Account()
 	{}
-
-	private void debitAmount(float amount)
-	{
-		this.acntBalance -= amount;
-	}
-
-	private void creditAmount(float amount)
-	{
-		this.acntBalance += amount;
-	}
 
 	public void addTransaction(Transaction tran)
 	{
@@ -66,45 +59,14 @@ public class Account implements Serializable
 		this.getAcntTransactions().add(tran);
 	}
 
-	@Id
-	public Long getAcntNumber()
+	private void creditAmount(float amount)
 	{
-		return acntNumber;
+		this.acntBalance += amount;
 	}
 
-	public void setAcntNumber(Long acntNumber)
+	private void debitAmount(float amount)
 	{
-		this.acntNumber = acntNumber;
-	}
-
-	public String getAcntName()
-	{
-		return acntName;
-	}
-
-	public void setAcntName(String acntName)
-	{
-		this.acntName = acntName;
-	}
-
-	public String getAcntType()
-	{
-		return acntType;
-	}
-
-	public void setAcntType(String acntType)
-	{
-		this.acntType = acntType;
-	}
-
-	public String getAcntCurrency()
-	{
-		return acntCurrency;
-	}
-
-	public void setAcntCurrency(String acntCurrency)
-	{
-		this.acntCurrency = acntCurrency;
+		this.acntBalance -= amount;
 	}
 
 	public float getAcntBalance()
@@ -112,9 +74,14 @@ public class Account implements Serializable
 		return acntBalance;
 	}
 
-	public void setAcntBalance(float balance)
+	public Date getAcntCreationDate()
 	{
-		this.acntBalance = balance;
+		return acntCreationDate;
+	}
+
+	public String getAcntCurrency()
+	{
+		return acntCurrency;
 	}
 
 	@Embedded
@@ -123,9 +90,74 @@ public class Account implements Serializable
 		return acntDetail;
 	}
 
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "Person_Id")
+	public Person getAcntHolder()
+	{
+		return acntHolder;
+	}
+
+	public String getAcntName()
+	{
+		return acntName;
+	}
+
+	@Id
+	public Long getAcntNumber()
+	{
+		return acntNumber;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Transaction.class,
+				mappedBy = "transAccount")
+	public Set<Transaction> getAcntTransactions()
+	{
+		return acntTransactions;
+	}
+
+	public String getAcntType()
+	{
+		return acntType;
+	}
+
+	public Integer getVersion()
+	{
+		return version;
+	}
+
+	public void setAcntBalance(float balance)
+	{
+		this.acntBalance = balance;
+	}
+
+	public void setAcntCreationDate(Date acntCreationDate)
+	{
+		this.acntCreationDate = acntCreationDate;
+	}
+
+	public void setAcntCurrency(String acntCurrency)
+	{
+		this.acntCurrency = acntCurrency;
+	}
+
 	public void setAcntDetail(AccountDetail detail)
 	{
 		this.acntDetail = detail;
+	}
+
+	public void setAcntHolder(Person person)
+	{
+		this.acntHolder = person;
+	}
+
+	public void setAcntName(String acntName)
+	{
+		this.acntName = acntName;
+	}
+
+	public void setAcntNumber(Long acntNumber)
+	{
+		this.acntNumber = acntNumber;
 	}
 
 	public void setAcntTransactions(Set<Transaction> transactions)
@@ -146,41 +178,9 @@ public class Account implements Serializable
 		this.acntTransactions = transactions;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,targetEntity = Transaction.class,
-				mappedBy = "transAccount")
-	public Set<Transaction> getAcntTransactions()
+	public void setAcntType(String acntType)
 	{
-		return acntTransactions;
-	}
-
-	public void setAcntHolder(Person person)
-	{
-		this.acntHolder = person;
-	}
-
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "Person_Id")
-	public Person getAcntHolder()
-	{
-		return acntHolder;
-	}
-
-	public void setAcntCreationDate(Date acntCreationDate)
-	{
-		this.acntCreationDate = acntCreationDate;
-	}
-
-	public Date getAcntCreationDate()
-	{
-		return acntCreationDate;
-	}
-
-	@Version
-	protected Integer	version;
-
-	public Integer getVersion()
-	{
-		return version;
+		this.acntType = acntType;
 	}
 
 	public void setVersion(Integer version)

@@ -25,16 +25,16 @@ public interface BookingRepository
 	long deleteBooking(long bookingId);
 
 	/**
-	 * @param bookingId
-	 * @return
-	 */
-	Booking findById(long bookingId);
-
-	/**
 	 * @param resourceId
 	 * @param startDateTime
 	 * @param endDateTime
 	 * @return
 	 */
 	List<Booking> findAllActiveBookingsForResource(ResourceId resourceId, Date startDateTime, Date endDateTime);
+
+	/**
+	 * @param bookingId
+	 * @return
+	 */
+	Booking findById(long bookingId);
 }

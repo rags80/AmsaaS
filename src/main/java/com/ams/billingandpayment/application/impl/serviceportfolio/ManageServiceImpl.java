@@ -23,37 +23,43 @@ public class ManageServiceImpl implements ManageService
 	@Autowired
 	private ServiceRepository	serviceRepository;
 
+	@Override
+	public List<Service> getAllServices()
+	{
+		return this.serviceRepository.findAll();
+	}
+
+	@Override
+	public Service getService(String svcCode)
+	{
+		return this.serviceRepository.findById(svcCode);
+	}
+
+	@Override
+	public Page<Service> getServicesNextPage(int index, int offset)
+	{
+		return this.serviceRepository.findNextPageData(new Page<Service>(index, offset));
+
+	}
+
+	@Override
 	public String registerService(Service svc)
 	{
 		return this.serviceRepository.createOrUpdate(svc);
 
 	}
 
-	public String updateServiceDetails(Service svc)
-	{
-		return this.serviceRepository.createOrUpdate(svc);
-	}
-
+	@Override
 	public void removeService(String svcCode)
 	{
 		this.serviceRepository.delete(svcCode);
 
 	}
 
-	public Service getService(String svcCode)
+	@Override
+	public String updateServiceDetails(Service svc)
 	{
-		return this.serviceRepository.findById(svcCode);
-	}
-
-	public List<Service> getAllServices()
-	{
-		return this.serviceRepository.findAll();
-	}
-
-	public Page<Service> getServicesNextPage(int index, int offset)
-	{
-		return this.serviceRepository.findNextPageData(new Page<Service>(index, offset));
-
+		return this.serviceRepository.createOrUpdate(svc);
 	}
 
 }

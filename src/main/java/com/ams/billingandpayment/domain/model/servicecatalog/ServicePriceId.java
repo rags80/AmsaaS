@@ -18,34 +18,10 @@ public class ServicePriceId implements Serializable
 	private String				service;
 	private String				srvcPlan;
 
-	public String getService()
-	{
-		return this.service;
-	}
-
-	public void setService(String service)
-	{
-		this.service = service;
-	}
-
-	public String getSrvcPlan()
-	{
-		return this.srvcPlan;
-	}
-
-	public void setSrvcPlan(String srvcPlan)
+	public ServicePriceId(String srvcPlan, String srvc)
 	{
 		this.srvcPlan = srvcPlan;
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.service == null) ? 0 : this.service.hashCode());
-		result = (prime * result) + ((this.srvcPlan == null) ? 0 : this.srvcPlan.hashCode());
-		return result;
+		this.service = srvc;
 	}
 
 	@Override
@@ -64,6 +40,7 @@ public class ServicePriceId implements Serializable
 			return false;
 		}
 		ServicePriceId other = (ServicePriceId) obj;
+
 		if (this.service == null)
 		{
 			if (other.service != null)
@@ -87,6 +64,36 @@ public class ServicePriceId implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public String getService()
+	{
+		return this.service;
+	}
+
+	public String getSrvcPlan()
+	{
+		return this.srvcPlan;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.service == null) ? 0 : this.service.hashCode());
+		result = (prime * result) + ((this.srvcPlan == null) ? 0 : this.srvcPlan.hashCode());
+		return result;
+	}
+
+	private void setService(String service)
+	{
+		this.service = service;
+	}
+
+	private void setSrvcPlan(String srvcPlan)
+	{
+		this.srvcPlan = srvcPlan;
 	}
 
 }

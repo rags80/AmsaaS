@@ -1,4 +1,4 @@
-package com.ams.sharedkernel.exception;
+package com.ams.sharedkernel.domain;
 
 public class DomainException extends RuntimeException
 {

@@ -10,6 +10,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,72 +44,76 @@ public class Person implements Serializable
 	private Collection<Bill>			persnBill;
 	private Collection<Transaction>	persnTransactions;
 	private Collection<Payment>		persnPayments;
-	private Collection<String>		persnRoles;
+	private Collection<UserRole>		persnRoles;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getPersnId()
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "acntHolder",targetEntity = Account.class,fetch = FetchType.LAZY)
+	public Collection<Account> getPersnAccounts()
 	{
-		return persnId;
-	}
-
-	public void setPersnId(Long id)
-	{
-		this.persnId = id;
-	}
-
-	public String getPersnFirstName()
-	{
-		return persnFirstName;
-	}
-
-	public void setPersnFirstName(String firstName)
-	{
-		this.persnFirstName = firstName;
-	}
-
-	public String getPersnLastName()
-	{
-		return persnLastName;
-	}
-
-	public void setPersnLastName(String lastName)
-	{
-		this.persnLastName = lastName;
-	}
-
-	@Embedded
-	public PersonDetail getPersnDetail()
-	{
-		return persnDetail;
-	}
-
-	public void setPersnDetail(PersonDetail detail)
-	{
-		this.persnDetail = detail;
+		return this.persnAccounts;
 	}
 
 	@Embedded
 	public Address getPersnAddress()
 	{
-		return persnAddress;
+		return this.persnAddress;
 	}
 
-	public void setPersnAddress(Address address)
+	@OneToMany(mappedBy = "billedPerson",fetch = FetchType.LAZY)
+	@JsonIgnore
+	public Collection<Bill> getPersnBill()
 	{
-		this.persnAddress = address;
+		return this.persnBill;
+	}
+
+	@Embedded
+	public PersonDetail getPersnDetail()
+	{
+		return this.persnDetail;
+	}
+
+	public String getPersnFirstName()
+	{
+		return this.persnFirstName;
+	}
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getPersnId()
+	{
+		return this.persnId;
+	}
+
+	public String getPersnLastName()
+	{
+		return this.persnLastName;
+	}
+
+	@OneToMany(mappedBy = "paymntPerson",targetEntity = Payment.class,cascade = CascadeType.ALL,
+				orphanRemoval = false,fetch = FetchType.LAZY)
+	public Collection<Payment> getPersnPayments()
+	{
+		return this.persnPayments;
+	}
+
+	@ElementCollection
+	@Enumerated(EnumType.STRING)
+	public Collection<UserRole> getPersnRoles()
+	{
+		return this.persnRoles;
 	}
 
 	@OneToOne(mappedBy = "srvcSubcrptnOfPerson",fetch = FetchType.LAZY)
 	@JsonIgnore
 	public ServiceSubscription getPersnServiceProfile()
 	{
-		return persnServiceProfile;
+		return this.persnServiceProfile;
 	}
 
-	public void setPersnServiceProfile(ServiceSubscription persnServiceProfile)
+	@OneToMany(mappedBy = "transPerson",cascade = CascadeType.ALL,orphanRemoval = false,
+				targetEntity = Transaction.class)
+	public Collection<Transaction> getPersnTransactions()
 	{
-		this.persnServiceProfile = persnServiceProfile;
+		return this.persnTransactions;
 	}
 
 	/**
@@ -120,17 +126,9 @@ public class Person implements Serializable
 		this.persnAccounts = accounts;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "acntHolder",targetEntity = Account.class,fetch = FetchType.LAZY)
-	public Collection<Account> getPersnAccounts()
+	public void setPersnAddress(Address address)
 	{
-		return persnAccounts;
-	}
-
-	@OneToMany(mappedBy = "billedPerson",fetch = FetchType.LAZY)
-	@JsonIgnore
-	public Collection<Bill> getPersnBill()
-	{
-		return persnBill;
+		this.persnAddress = address;
 	}
 
 	public void setPersnBill(Collection<Bill> param)
@@ -138,23 +136,24 @@ public class Person implements Serializable
 		this.persnBill = param;
 	}
 
-	@OneToMany(mappedBy = "transPerson",cascade = CascadeType.ALL,orphanRemoval = false,
-				targetEntity = Transaction.class)
-	public Collection<Transaction> getPersnTransactions()
+	public void setPersnDetail(PersonDetail detail)
 	{
-		return persnTransactions;
+		this.persnDetail = detail;
 	}
 
-	public void setPersnTransactions(Collection<Transaction> param)
+	public void setPersnFirstName(String firstName)
 	{
-		this.persnTransactions = param;
+		this.persnFirstName = firstName;
 	}
 
-	@OneToMany(mappedBy = "paymntPerson",targetEntity = Payment.class,cascade = CascadeType.ALL,
-				orphanRemoval = false,fetch = FetchType.LAZY)
-	public Collection<Payment> getPersnPayments()
+	public void setPersnId(Long id)
 	{
-		return persnPayments;
+		this.persnId = id;
+	}
+
+	public void setPersnLastName(String lastName)
+	{
+		this.persnLastName = lastName;
 	}
 
 	public void setPersnPayments(Collection<Payment> param)
@@ -162,15 +161,19 @@ public class Person implements Serializable
 		this.persnPayments = param;
 	}
 
-	@ElementCollection
-	public Collection<String> getPersnRoles()
-	{
-		return persnRoles;
-	}
-
-	public void setPersnRoles(Collection<String> persnRoles)
+	public void setPersnRoles(Collection<UserRole> persnRoles)
 	{
 		this.persnRoles = persnRoles;
+	}
+
+	public void setPersnServiceProfile(ServiceSubscription persnServiceProfile)
+	{
+		this.persnServiceProfile = persnServiceProfile;
+	}
+
+	public void setPersnTransactions(Collection<Transaction> param)
+	{
+		this.persnTransactions = param;
 	}
 
 }
