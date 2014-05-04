@@ -1,127 +1,102 @@
 package com.ams.finance.domain.model;
 
-import static javax.persistence.AccessType.PROPERTY;
+import com.ams.users.domain.model.Person;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Access;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
-
-import com.ams.users.domain.model.Person;
+import static javax.persistence.AccessType.PROPERTY;
 
 @Entity
 @Access(PROPERTY)
 @Table(name = "T_TRANSACTION")
-public class Transaction implements Serializable
-{
-	/**
-	 * 
-	 */
-	private static final long	serialVersionUID	= 1L;
-	private Long				transNumber;
-	private float				transAmount;
-	private Date				transDate;
-	private String				transType;
-	private String				transMode;
-	private Account			transAccount;
-	private Person				transPerson;
-	protected Integer			version;
+public class Transaction implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    protected Integer version;
+    private Long transNumber;
+    private float transAmount;
+    private Date transDate;
+    private String transType;
+    private String transMode;
+    private Account transAccount;
+    private Person transPerson;
 
-	public Transaction()
-	{}
+    public Transaction() {
+    }
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "Account_Number")
-	public Account getTransAccount()
-	{
-		return transAccount;
-	}
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "Account_Number")
+    public Account getTransAccount() {
+        return transAccount;
+    }
 
-	public float getTransAmount()
-	{
-		return transAmount;
-	}
+    public void setTransAccount(Account transAccount) {
+        this.transAccount = transAccount;
+    }
 
-	public Date getTransDate()
-	{
-		return transDate;
-	}
+    public float getTransAmount() {
+        return transAmount;
+    }
 
-	public String getTransMode()
-	{
-		return transMode;
-	}
+    public void setTransAmount(float transAmount) {
+        this.transAmount = transAmount;
+    }
 
-	@Id
-	@GeneratedValue
-	public Long getTransNumber()
-	{
-		return transNumber;
-	}
+    public Date getTransDate() {
+        return transDate;
+    }
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "Person_Id")
-	public Person getTransPerson()
-	{
-		return transPerson;
-	}
+    public void setTransDate(Date transDate) {
+        this.transDate = transDate;
+    }
 
-	public String getTransType()
-	{
-		return transType;
-	}
+    public String getTransMode() {
+        return transMode;
+    }
 
-	@Version
-	public Integer getVersion()
-	{
-		return version;
-	}
+    public void setTransMode(String transMode) {
+        this.transMode = transMode;
+    }
 
-	public void setTransAccount(Account transAccount)
-	{
-		this.transAccount = transAccount;
-	}
+    @Id
+    @GeneratedValue
+    public Long getTransNumber() {
+        return transNumber;
+    }
 
-	public void setTransAmount(float transAmount)
-	{
-		this.transAmount = transAmount;
-	}
+    public void setTransNumber(Long transNumber) {
+        this.transNumber = transNumber;
+    }
 
-	public void setTransDate(Date transDate)
-	{
-		this.transDate = transDate;
-	}
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "Person_Id")
+    public Person getTransPerson() {
+        return transPerson;
+    }
 
-	public void setTransMode(String transMode)
-	{
-		this.transMode = transMode;
-	}
+    public void setTransPerson(Person param) {
+        this.transPerson = param;
+    }
 
-	public void setTransNumber(Long transNumber)
-	{
-		this.transNumber = transNumber;
-	}
+    public String getTransType() {
+        return transType;
+    }
 
-	public void setTransPerson(Person param)
-	{
-		this.transPerson = param;
-	}
+    public void setTransType(String transType) {
+        this.transType = transType;
+    }
 
-	public void setTransType(String transType)
-	{
-		this.transType = transType;
-	}
+    @Version
+    public Integer getVersion() {
+        return version;
+    }
 
-	public void setVersion(Integer version)
-	{
-		this.version = version;
-	}
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
 }

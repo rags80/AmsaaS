@@ -4,16 +4,13 @@ import java.io.Serializable;
 
 /**
  * @author Raghavendra Badiger
- * 
  */
-public enum TimeUnit implements Serializable, Unit
-{
-	Hrs, Days, Weeks, FortNights, Months, QuarterYears, HalfYears, Years;
+public enum TimeUnit implements Serializable, Unit {
+    Hrs, Days, Weeks, FortNights, Months, QuarterYears, HalfYears, Years;
 
-	@Override
-	public Unit convertTo(Unit toUnit, Unit fromUnit)
-	{
-		return null;
-	}
+    @Override
+    public Unit convertTo(Unit toUnit, Unit fromUnit) {
+        return null;
+    }
 
 }

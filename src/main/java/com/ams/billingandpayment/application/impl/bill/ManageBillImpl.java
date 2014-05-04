@@ -1,6 +1,5 @@
 package com.ams.billingandpayment.application.impl.bill;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -8,14 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ams.billingandpayment.application.api.commandquery.BillDto;
 import com.ams.billingandpayment.application.api.datamapper.BillServiceDataAssembler;
 import com.ams.billingandpayment.application.api.service.bill.ManageBill;
 import com.ams.billingandpayment.domain.model.bill.Bill;
 import com.ams.billingandpayment.domain.model.bill.BillExceptionCode;
-import com.ams.billingandpayment.domain.model.bill.BillSpecification;
-import com.ams.billingandpayment.domain.model.bill.Payment;
-import com.ams.billingandpayment.domain.model.bill.TaxPolicy;
+import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
 import com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan;
 import com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice;
 import com.ams.billingandpayment.domain.model.servicecatalog.ServicePriceCategory;
@@ -29,13 +25,11 @@ import com.ams.billingandpayment.domain.service.TaxPolicyAdvisor;
 import com.ams.sharedkernel.application.api.ManageMail;
 import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
-import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
 import com.ams.users.domain.model.Person;
 import com.ams.users.domain.repository.PersonRepository;
 
 /**
  * @author Raghavendra Badiger
- * 
  */
 
 @Transactional(isolation = Isolation.DEFAULT)
@@ -77,57 +71,6 @@ public class ManageBillImpl implements ManageBill
 										getBillInstance();
 
 		this.billRepository.createBill(billForPeriod);
-	}
-
-	/**
-	 * Ad-hoc Billing operations
-	 */
-
-	@Override
-	public List<BillDto> getAllBills()
-	{
-		return Collections.emptyList();
-	}
-
-	@Override
-	public BillDto createNewBill(BillDto billSrvcData)
-	{
-		Person billedPerson = this.personRepository.findById(billSrvcData.getCustomerId());
-		Bill bill = new Bill(billedPerson, billSrvcData.getBillDate(), billSrvcData.getBillDueDate(),
-							new Period(billSrvcData.getBillPeriodFromDate(), billSrvcData.getBillPeriodToDate()));
-		bill.addBillItems(billSrvcData.getBillLineItems());
-
-		return this.bsdAssmblr.toBillDTO(this.billRepository.createBill(bill));
-	}
-
-	@Override
-	public BillDto addBillItems(BillDto billSrvcData)
-	{
-		Bill bill = new Bill();
-		bill.addBillItems(billSrvcData.getBillLineItems());
-		return this.bsdAssmblr.toBillDTO(bill);
-	}
-
-	@Override
-	public void deleteBill(long billNumber)
-	{
-		this.billRepository.deleteBill(billNumber);
-	}
-
-	/**
-	 * Payement for Bill operations
-	 */
-	@Override
-	public void payBill(Payment pymnt)
-	{
-		Bill bill = this.billRepository.findBill(pymnt.getPaymntForBill().getBillNumber());
-		bill.makePayment(pymnt);
-		this.billRepository.updateBill(bill);
-		String billPaymntSuccessMessage = this.manageMailService.getMailTemplate("BILL_PAYMENT_SUCCESS", bill.getBillNumber(),
-																	pymnt.getPaymntAmount());
-
-		String mailToParty = bill.getBilledPerson().getPersnDetail().getEmailId();
-		this.manageMailService.sendMail(mailToParty, BillSpecification.sourceEmailId, billPaymntSuccessMessage);
 	}
 
 	/*
@@ -187,7 +130,7 @@ public class ManageBillImpl implements ManageBill
 			if (this.isHeaderSet())
 			{
 				ServicePlan srvcPlan = this.bill.getBilledPerson().getPersnServiceProfile().getSubscribedSrvcsPlan();
-				String srvcPlanName = this.bill.getBilledPerson().getPersnServiceProfile().getSubscribedSrvcsPlan().getSrvcPlanName();
+				String srvcPlanName = srvcPlan.getSrvcPlanName();
 
 				List<ServicePrice> nonUsageServicePriceList = ManageBillImpl.this.servicePlanRepository.findAllServicePricesByCriteria(srvcPlanName, ServicePriceCategory.NON_USAGE.toString());
 
@@ -206,10 +149,15 @@ public class ManageBillImpl implements ManageBill
 																													nonUsageServicePrice);
 					TaxPolicy srvcTaxPolicy = ManageBillImpl.this.serviceTaxAdvisor.adviseTaxPolicy(nonUsageServicePrice.getService(), this.bill.getBilledPerson());
 
-					this.bill.addBillItem(nonUsageServicePrice.getService(),
-										Quantity.quantify(this.bill.getBillPeriod(), nonUsageServicePrice.getSrvcUnitOfMeasure()),
-										srvcChargePolicy.calculateServiceCharge(nonUsageServicePrice, this.bill.getBillDate(), this.bill.getBillPeriod()),
-										srvcTaxPolicy.calculateTax());
+					/*
+					 * this.bill.addBillItem(nonUsageServicePrice.getService
+					 * (), Quantity.quantify(this.bill.getBillPeriod(),
+					 * nonUsageServicePrice.getSrvcUnitOfMeasure()),
+					 * srvcChargePolicy
+					 * .calculateServiceCharge(nonUsageServicePrice,
+					 * this.bill.getBillDate(), this.bill.getBillPeriod()),
+					 * srvcTaxPolicy.calculateTax());
+					 */
 
 				}
 			}
@@ -246,8 +194,13 @@ public class ManageBillImpl implements ManageBill
 					ServiceChargePolicy srvcChargePolicy = ManageBillImpl.this.serviceChargePolicyAdvisor.adviseSrvcChargePolicyForUsage(this.bill.getBilledPerson(), this.bill.getBillPeriod(), srvcUsageEvent, subscbrSrvcPlan);
 					TaxPolicy srvcTaxPolicy = ManageBillImpl.this.serviceTaxAdvisor.adviseTaxPolicy(srvcUsageEvent, this.bill.getBilledPerson());
 
-					this.bill.addBillItem(srvcUsageEvent.getSrvc(), Quantity.quantify(srvcUsageEvent.getSrvcUsagePeriod(), srvcPrice.getSrvcUnitOfMeasure()), srvcChargePolicy.calculateServiceCharge(srvcUsageEvent, srvcPrice, this.bill.getBillDate(), this.bill.getBillPeriod()),
-										srvcTaxPolicy.calculateTax());
+					// this.bill.addBillItem(srvcUsageEvent.getSrvc(),
+					// Quantity.quantify(srvcUsageEvent.getSrvcUsagePeriod(),
+					// srvcPrice.getSrvcUnitOfMeasure()),
+					// srvcChargePolicy.calculateServiceCharge(srvcUsageEvent,
+					// srvcPrice, this.bill.getBillDate(),
+					// this.bill.getBillPeriod()),
+					// srvcTaxPolicy.calculateTax());
 				}
 			}
 			return this;

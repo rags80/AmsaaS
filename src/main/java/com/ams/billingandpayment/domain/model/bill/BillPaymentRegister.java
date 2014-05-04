@@ -1,135 +1,60 @@
 package com.ams.billingandpayment.domain.model.bill;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
+import com.ams.billingandpayment.domain.model.bill.BillSpecification.status;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
-import com.ams.billingandpayment.domain.model.bill.BillSpecification.status;
+import java.io.Serializable;
 
 @Embeddable
-public class BillPaymentRegister implements Serializable
-{
+class BillPaymentRegister implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long	serialVersionUID	= 1L;
-	private status				billPaymentStatus;
-	private BigDecimal			billAmountPaid;
-	private BigDecimal			billRemainingAmount;
-	private boolean			isDuePenaltyApplied;
-	private BigDecimal			billPenaltyAmount;
+    private static final long serialVersionUID = 1L;
+    private Money billCurrentBalance;
+    private Money billAmountPaid;
+    private status billPaymentStatus;
 
-	public BillPaymentRegister()
-	{
-		this.billPaymentStatus = status.UNPAID;
-		this.billAmountPaid = new BigDecimal(0);
-		this.billRemainingAmount = new BigDecimal(0);
-		this.isDuePenaltyApplied = false;
-		this.billPenaltyAmount = new BigDecimal(0);
-	}
+    public BillPaymentRegister(Money currentBalance) {
+        this.billCurrentBalance = currentBalance;
+        this.billAmountPaid = Money.ZERO;
+        this.billPaymentStatus = status.UNPAID;
+    }
 
 	/*
-	 * BILL DOMAIN FUNCTIONS
+     * BILL DOMAIN FUNCTIONS
 	 */
 
-	public BigDecimal getBillAmountPaid()
-	{
-		return this.billAmountPaid;
-	}
+    void updateBillPayment(Bill bill, Payment paymnt) {
 
-	@Enumerated(EnumType.STRING)
-	public status getBillPaymentStatus()
-	{
-		return this.billPaymentStatus;
-	}
+        this.billAmountPaid = this.billAmountPaid.add(paymnt.getPaymntAmount());
+        this.billCurrentBalance = bill.getBillNetAmount().subtract(this.billAmountPaid);
+        paymnt.setPaymntBalance(this.billCurrentBalance.getAmount());
+        this.updateBillPaymentStatus(bill);
+
+    }
+
+    void updateBillPaymentStatus(Bill bill) {
+
+        this.billPaymentStatus = (this.billCurrentBalance.compareTo(Money.ZERO) <= 0) ? status.PAID : (this.billCurrentBalance.compareTo(bill.getBillNetAmount()) == 0 ? status.UNPAID : status.PARTIALLY_PAID);
+    }
 
 	/*
 	 * ACCESSORS AND MUTATORS
 	 */
 
-	public BigDecimal getBillPenaltyAmount()
-	{
-		return this.billPenaltyAmount;
-	}
+    public Money getBillAmountPaid() {
+        return this.billAmountPaid;
+    }
 
-	public BigDecimal getBillRemainingAmount()
-	{
-		return this.billRemainingAmount;
-	}
+    @Enumerated(EnumType.STRING)
+    public status getBillPaymentStatus() {
+        return this.billPaymentStatus;
+    }
 
-	public boolean isDuePenaltyApplied()
-	{
-		return this.isDuePenaltyApplied;
-	}
-
-	public void setBillAmountPaid(BigDecimal billAmountPaid)
-	{
-		this.billAmountPaid = billAmountPaid;
-	}
-
-	public void setBillPaymentStatus(status billPaymentStatus)
-	{
-		this.billPaymentStatus = billPaymentStatus;
-	}
-
-	public void setBillPenaltyAmount(BigDecimal penaltyAmount)
-	{
-		this.billPenaltyAmount = penaltyAmount;
-	}
-
-	public void setBillRemainingAmount(BigDecimal billRemainingAmount)
-	{
-		this.billRemainingAmount = billRemainingAmount;
-	}
-
-	public void setDuePenaltyApplied(boolean isDuePenaltyApplied)
-	{
-		this.isDuePenaltyApplied = isDuePenaltyApplied;
-	}
-
-	protected void updateBillPayment(Bill bill, Payment paymnt)
-	{
-
-		if (!BillSpecification.isPaymentWithinDueDate(bill, paymnt)
-				&& !this.isDuePenaltyApplied)
-		{
-			this.isDuePenaltyApplied = true;
-			this.billPenaltyAmount = BillSpecification.billDuePenaltyAmount;
-			bill.setBillNote("Late payment penalty amount "
-					+ BillSpecification.billDuePenaltyAmount + " applied");
-		}
-
-		this.billAmountPaid = this.billAmountPaid.add(paymnt.getPaymntAmount());
-		this.billRemainingAmount = bill.getBillTotalAmount()
-									.subtract(this.billAmountPaid).add(this.billPenaltyAmount);
-
-		paymnt.setPaymntBalance(this.billRemainingAmount);
-		this.updateBillPaymentStatus(bill);
-		bill.getBillPayments().add(paymnt);
-	}
-
-	protected void updateBillPaymentStatus(Bill bill)
-	{
-		if (this.billRemainingAmount.compareTo(BigDecimal.ZERO) <= 0)
-		{
-			this.billPaymentStatus = status.PAID;
-		}
-
-		else if ((this.billRemainingAmount.compareTo(BigDecimal.ZERO) > 0)
-				&& (this.billRemainingAmount
-										.compareTo(bill.getBillTotalAmount()) < 0))
-		{
-			this.billPaymentStatus = status.PARTIALLY_PAID;
-		}
-
-		else if (this.billRemainingAmount.compareTo(bill.getBillTotalAmount()) <= 0)
-		{
-			this.billPaymentStatus = status.UNPAID;
-		}
-	}
+    public Money getBillCurrentBalance() {
+        return this.billCurrentBalance;
+    }
 
 }

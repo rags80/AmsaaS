@@ -2,96 +2,79 @@ package com.ams.finance.application.api.servicedata;
 
 import java.util.Date;
 
-public class AccountServiceData
-{
+public class AccountServiceData {
 
-	private long	number;
-	private String	name;
-	private String	type;
-	private String	currency;
-	private float	balance;
-	private String	detail;
-	private Date	creationDate;
-	private long	personId;
+    private long number;
+    private String name;
+    private String type;
+    private String currency;
+    private float balance;
+    private String detail;
+    private Date creationDate;
+    private long personId;
 
-	public float getBalance()
-	{
-		return balance;
-	}
+    public float getBalance() {
+        return balance;
+    }
 
-	public Date getCreationDate()
-	{
-		return creationDate;
-	}
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 
-	public String getCurrency()
-	{
-		return currency;
-	}
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	public String getDetail()
-	{
-		return detail;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public String getName()
-	{
-		return name;
-	}
+    public String getCurrency() {
+        return currency;
+    }
 
-	public long getNumber()
-	{
-		return number;
-	}
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
-	public long getPersonId()
-	{
-		return personId;
-	}
+    public String getDetail() {
+        return detail;
+    }
 
-	public String getType()
-	{
-		return type;
-	}
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
 
-	public void setBalance(float balance)
-	{
-		this.balance = balance;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCreationDate(Date creationDate)
-	{
-		this.creationDate = creationDate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCurrency(String currency)
-	{
-		this.currency = currency;
-	}
+    public long getNumber() {
+        return number;
+    }
 
-	public void setDetail(String detail)
-	{
-		this.detail = detail;
-	}
+    public void setNumber(long l) {
+        this.number = l;
+    }
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public long getPersonId() {
+        return personId;
+    }
 
-	public void setNumber(long l)
-	{
-		this.number = l;
-	}
+    public void setPersonId(long l) {
+        this.personId = l;
+    }
 
-	public void setPersonId(long l)
-	{
-		this.personId = l;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type)
-	{
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
 }

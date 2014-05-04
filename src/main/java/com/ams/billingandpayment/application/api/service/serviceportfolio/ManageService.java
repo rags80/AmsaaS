@@ -1,22 +1,21 @@
 package com.ams.billingandpayment.application.api.service.serviceportfolio;
 
-import java.util.List;
-
 import com.ams.billingandpayment.domain.model.servicecatalog.Service;
 import com.ams.sharedkernel.domain.repository.Page;
 
-public interface ManageService
-{
-	List<Service> getAllServices();
+import java.util.List;
 
-	Service getService(String svcCode);
+public interface ManageService {
+    List<Service> getAllServices();
 
-	Page<Service> getServicesNextPage(int index, int offset);
+    Service getService(String svcCode);
 
-	String registerService(Service svc);
+    Page<Service> getServicesNextPage(int index, int offset);
 
-	void removeService(String svcCode);
+    String registerService(Service svc);
 
-	String updateServiceDetails(Service svc);
+    void removeService(String svcCode);
+
+    String updateServiceDetails(Service svc);
 
 }

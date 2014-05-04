@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Access;
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -16,27 +17,20 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * @author Raghavendra Badiger
- * 
  */
 @Entity
 @Access(PROPERTY)
 @Table(name = "T_SERVICE")
+@Cacheable(true)
 public class Service implements Serializable
 {
 	/**
-	 * 
-	 */
+     *
+     */
 	private static final long	serialVersionUID	= 1L;
-
-	public static long getSerialversionuid()
-	{
-		return serialVersionUID;
-	}
-
 	private String				srvcCode;
 	private String				srvcName;
 	private String				srvcDescription;
-
 	private Set<ServicePrice>	srvcPriceSet;
 
 	public Service()
@@ -48,6 +42,11 @@ public class Service implements Serializable
 		this.srvcName = name;
 		this.srvcDescription = description;
 		this.srvcPriceSet = new HashSet<ServicePrice>();
+	}
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
 	}
 
 	/*
@@ -90,9 +89,19 @@ public class Service implements Serializable
 		return this.srvcCode;
 	}
 
+	private void setSrvcCode(String srvcCode)
+	{
+		this.srvcCode = srvcCode;
+	}
+
 	public String getSrvcDescription()
 	{
 		return this.srvcDescription;
+	}
+
+	private void setSrvcDescription(String srvcDescription)
+	{
+		this.srvcDescription = srvcDescription;
 	}
 
 	public String getSrvcName()
@@ -100,11 +109,22 @@ public class Service implements Serializable
 		return this.srvcName;
 	}
 
+	private void setSrvcName(String srvcName)
+	{
+		this.srvcName = srvcName;
+	}
+
 	@OneToMany(mappedBy = "service",targetEntity = ServicePrice.class)
 	@JsonIgnore
 	public Set<ServicePrice> getSrvcPriceSet()
 	{
 		return this.srvcPriceSet;
+	}
+
+	@JsonIgnore
+	private void setSrvcPriceSet(Set<ServicePrice> srvcPriceSet)
+	{
+		this.srvcPriceSet = srvcPriceSet;
 	}
 
 	@Override
@@ -124,27 +144,6 @@ public class Service implements Serializable
 	{
 		this.srvcName = name;
 		this.srvcDescription = descrptn;
-	}
-
-	private void setSrvcCode(String srvcCode)
-	{
-		this.srvcCode = srvcCode;
-	}
-
-	private void setSrvcDescription(String srvcDescription)
-	{
-		this.srvcDescription = srvcDescription;
-	}
-
-	private void setSrvcName(String srvcName)
-	{
-		this.srvcName = srvcName;
-	}
-
-	@JsonIgnore
-	private void setSrvcPriceSet(Set<ServicePrice> srvcPriceSet)
-	{
-		this.srvcPriceSet = srvcPriceSet;
 	}
 
 	@Override

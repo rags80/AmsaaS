@@ -1,248 +1,201 @@
 package com.ams.edocket.application.impl;
 
-import java.io.FileOutputStream;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Service;
-
 import com.ams.edocket.application.api.ManageDocument;
 import com.ams.edocket.application.api.file.File;
 import com.ams.edocket.application.api.file.Folder;
 import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.users.domain.model.Person;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Service;
+
+import java.io.FileOutputStream;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Raghavendra Badiger
- * 
  */
 
 @Service("ManageDocument")
-public final class ManageDocumentImpl implements ManageDocument
-{
-	static class FileRepository
-	{
-		static FileRepository resourceAtLocation(Person user, String path)
-		{
-			return new FileRepository(user, path);
+public final class ManageDocumentImpl implements ManageDocument {
+    @Override
+    public File deleteFile(Person owner, String reltvPath) {
+        throw new ServiceException("Functionality not implemented!!");
+    }
 
-		}
+    @Override
+    public List<File> getAllFilesFromFolder(Folder folder) {
+        throw new ServiceException("Functionality not implemented!!");
+    }
 
-		private String	reltvPath;
+    @Override
+    public Folder getFolderContents(Person user, String folderPath) {
 
-		private Person	fileOwner;
+        Folder folder = new Folder(folderPath.substring(folderPath.lastIndexOf("/") + 1), folderPath);
+        java.io.File[] filesNfolders = FileRepository.resourceAtLocation(user, folderPath).findAllFilesAndFolders();
 
-		private FileRepository()
-		{}
+        for (java.io.File fl : filesNfolders) {
+            if (fl.isDirectory()) {
+                folder.addFolder(new Folder(fl.getName(), folderPath + "/" + fl.getName(), new Date(fl.lastModified())));
 
-		private FileRepository(Person user, String path)
-		{
-			this.fileOwner = user;
-			this.reltvPath = path;
-		}
+            } else if (fl.isFile()) {
 
-		java.io.File createFolders()
-		{
-			java.io.File file = new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
-			if (file.mkdirs())
-			{
-				return file;
-			}
-			else
-			{
-				throw new ServiceException("Folder creation failed!!");
-			}
-		}
+                folder.addFile(new File(fl.getName(), FilenameUtils.getExtension(fl.getName()), fl.length(), new Date(fl.lastModified())));
+            }
 
-		public java.io.File deleteFolder()
-		{
-			java.io.File searchFolder = new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
-			if (searchFolder.isDirectory() && FileUtils.deleteQuietly(searchFolder))
-			{
-				return searchFolder;
-			}
-			else
-			{
-				throw new ServiceException("Folder:" + searchFolder + " delete failed!!");
-			}
+        }
 
-		}
+        return folder;
+    }
 
-		/**
-		 * 
-		 */
-		java.io.File[] findAllFilesAndFolders()
-		{
-			java.io.File searchFolder = new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
+    /**
+     * { name:My Pics, folders:[{name:festival},{name:outdoor},{name:funny}],
+     * files:[
+     * {name:profile-1.jpg,size:20kb,type:jpg,lastModifiedOn:15/04/2014},
+     * {name:profile-2.jpg,size:40kb,type:jpg,lastModifiedOn:15/03/2014} ] }
+     */
 
-			if (searchFolder.isDirectory())
-			{
-				return searchFolder.listFiles();
-			}
-			else
-			{
-				throw new ServiceException("Folder named:" + this.reltvPath + " doesn't exist!!");
-			}
+    @Override
+    public Folder newDocumentsFolder(Person folderOwner, String folderPath) {
+        java.io.File fl = FileRepository.resourceAtLocation(folderOwner, folderPath).createFolders();
+        if (fl != (null)) {
+            return new Folder(fl.getName(), folderPath);
+        } else {
+            throw new ServiceException("Folder creation failed!!");
+        }
+    }
 
-		}
+    @Override
+    public Folder removeDocumentsFolder(Person folderOwner, String folderPath) {
+        java.io.File fl = FileRepository.resourceAtLocation(folderOwner, folderPath).deleteFolder();
 
-		private String getActualResourcePath(Person user, String reltvPath)
-		{
-			/**
-			 * 
-			 * Implement strategy to find actual path from relative path of
-			 * folder of document owner
-			 * 
-			 * */
-			String actlpath = "D:/" + user.getPersnFirstName() + "/" + reltvPath;
-			System.out.println("Actual Path:" + actlpath);
-			return actlpath;
-		}
+        if (fl != null) {
+            return new Folder(fl.getName(), folderPath);
+        } else {
+            throw new ServiceException("Unable to delete folder:" + folderPath);
+        }
+    }
 
-		private String getActualResourcePath(Person user, String reltvPath, String fileName)
-		{
-			/**
-			 * 
-			 * Implement strategy to find actual path from relative path of
-			 * folder of document owner
-			 * 
-			 * */
-			String actlpath = "D:/" + user.getPersnFirstName() + "/" + reltvPath + "/" + fileName;
-			System.out.println("Actual Path:" + actlpath);
-			return actlpath;
-		}
+    @Override
+    public Folder saveFiles(Person fileOwner, Folder folder) {
+        try {
+            FileRepository.resourceAtLocation(fileOwner, folder.getPath()).storeFiles(folder.getFileList());
 
-		boolean storeFiles(List<File> fileList)
-		{
+        } catch (Exception e) {
 
-			Iterator<File> fileItr = fileList.iterator();
-			FileOutputStream fo;
+            e.printStackTrace();
+            throw new ServiceException("Files saving failed!!");
+        }
 
-			File file = fileItr.next();
+        throw new ServiceException("Functionality not implemented!!");
+    }
 
-			try
-			{
-				while (fileItr.hasNext())
-				{
-					fo = new FileOutputStream(new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath, file.getName())));
-					fo.write(file.getFileObject());
-					fo.close();
+    @Override
+    public Folder updateDocumentsFolderDetails(Folder folder) {
+        throw new ServiceException("Folder update functionality not implemented!!");
+    }
 
-				}
-			} catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-			return true;
-		}
+    @Override
+    public File updateFileDetails(File fileDetails) {
+        throw new ServiceException("Functionality not implemented!!");
+    }
 
-	}
+    static class FileRepository {
+        private String reltvPath;
+        private Person fileOwner;
 
-	@Override
-	public File deleteFile(Person owner, String reltvPath)
-	{
-		throw new ServiceException("Functionality not implemented!!");
-	}
+        private FileRepository() {
+        }
 
-	@Override
-	public List<File> getAllFilesFromFolder(Folder folder)
-	{
-		throw new ServiceException("Functionality not implemented!!");
-	}
+        private FileRepository(Person user, String path) {
+            this.fileOwner = user;
+            this.reltvPath = path;
+        }
 
-	@Override
-	public Folder getFolderContents(Person user, String folderPath)
-	{
+        static FileRepository resourceAtLocation(Person user, String path) {
+            return new FileRepository(user, path);
 
-		Folder folder = new Folder(folderPath.substring(folderPath.lastIndexOf("/") + 1), folderPath);
-		java.io.File[] filesNfolders = FileRepository.resourceAtLocation(user, folderPath).findAllFilesAndFolders();
+        }
 
-		for (java.io.File fl : filesNfolders)
-		{
-			if (fl.isDirectory())
-			{
-				folder.addFolder(new Folder(fl.getName(), folderPath + "/" + fl.getName(), new Date(fl.lastModified())));
+        java.io.File createFolders() {
+            java.io.File file = new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
+            if (file.mkdirs()) {
+                return file;
+            } else {
+                throw new ServiceException("Folder creation failed!!");
+            }
+        }
 
-			}
-			else if (fl.isFile())
-			{
+        public java.io.File deleteFolder() {
+            java.io.File searchFolder = new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
+            if (searchFolder.isDirectory() && FileUtils.deleteQuietly(searchFolder)) {
+                return searchFolder;
+            } else {
+                throw new ServiceException("Folder:" + searchFolder + " delete failed!!");
+            }
 
-				folder.addFile(new File(fl.getName(), FilenameUtils.getExtension(fl.getName()), fl.length(), new Date(fl.lastModified())));
-			}
+        }
 
-		}
+        /**
+         *
+         */
+        java.io.File[] findAllFilesAndFolders() {
+            java.io.File searchFolder = new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath));
 
-		return folder;
-	}
+            if (searchFolder.isDirectory()) {
+                return searchFolder.listFiles();
+            } else {
+                throw new ServiceException("Folder named:" + this.reltvPath + " doesn't exist!!");
+            }
 
-	/**
-	 * 
-	 * { name:My Pics, folders:[{name:festival},{name:outdoor},{name:funny}],
-	 * files:[
-	 * {name:profile-1.jpg,size:20kb,type:jpg,lastModifiedOn:15/04/2014},
-	 * {name:profile-2.jpg,size:40kb,type:jpg,lastModifiedOn:15/03/2014} ] }
-	 * 
-	 * */
+        }
 
-	@Override
-	public Folder newDocumentsFolder(Person folderOwner, String folderPath)
-	{
-		java.io.File fl = FileRepository.resourceAtLocation(folderOwner, folderPath).createFolders();
-		if (fl != (null))
-		{
-			return new Folder(fl.getName(), folderPath);
-		}
-		else
-		{
-			throw new ServiceException("Folder creation failed!!");
-		}
-	}
+        private String getActualResourcePath(Person user, String reltvPath) {
+            /**
+             *
+             * Implement strategy to find actual path from relative path of
+             * folder of document owner
+             *
+             * */
+            String actlpath = "D:/" + user.getPersnFirstName() + "/" + reltvPath;
+            System.out.println("Actual Path:" + actlpath);
+            return actlpath;
+        }
 
-	@Override
-	public Folder removeDocumentsFolder(Person folderOwner, String folderPath)
-	{
-		java.io.File fl = FileRepository.resourceAtLocation(folderOwner, folderPath).deleteFolder();
+        private String getActualResourcePath(Person user, String reltvPath, String fileName) {
+            /**
+             *
+             * Implement strategy to find actual path from relative path of
+             * folder of document owner
+             *
+             * */
+            String actlpath = "D:/" + user.getPersnFirstName() + "/" + reltvPath + "/" + fileName;
+            System.out.println("Actual Path:" + actlpath);
+            return actlpath;
+        }
 
-		if (fl != null)
-		{
-			return new Folder(fl.getName(), folderPath);
-		}
-		else
-		{
-			throw new ServiceException("Unable to delete folder:" + folderPath);
-		}
-	}
+        boolean storeFiles(List<File> fileList) {
 
-	@Override
-	public Folder saveFiles(Person fileOwner, Folder folder)
-	{
-		try
-		{
-			FileRepository.resourceAtLocation(fileOwner, folder.getPath()).storeFiles(folder.getFileList());
+            Iterator<File> fileItr = fileList.iterator();
+            FileOutputStream fo;
 
-		} catch (Exception e)
-		{
+            File file = fileItr.next();
 
-			e.printStackTrace();
-			throw new ServiceException("Files saving failed!!");
-		}
+            try {
+                while (fileItr.hasNext()) {
+                    fo = new FileOutputStream(new java.io.File(this.getActualResourcePath(this.fileOwner, this.reltvPath, file.getName())));
+                    fo.write(file.getFileObject());
+                    fo.close();
 
-		throw new ServiceException("Functionality not implemented!!");
-	}
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
 
-	@Override
-	public Folder updateDocumentsFolderDetails(Folder folder)
-	{
-		throw new ServiceException("Folder update functionality not implemented!!");
-	}
-
-	@Override
-	public File updateFileDetails(File fileDetails)
-	{
-		throw new ServiceException("Functionality not implemented!!");
-	}
+    }
 
 }

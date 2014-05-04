@@ -5,47 +5,47 @@
  *  
  */
 
-define(function(require) {
+define(function (require) {
     "use strict";
     return {
-	initPage : function() {
-	    $("#mainPageTabs").tabs();
+        initPage: function () {
+            $("#mainPageTabs").tabs();
 
-	    ko.bindingHandlers.datepicker = {
-		init : function(element, valueAccessor, allBindingsAccessor) {
+            ko.bindingHandlers.datepicker = {
+                init: function (element, valueAccessor, allBindingsAccessor) {
 
-		    /*
-		     * Initialize datepicker with some optional options
-		     */
+                    /*
+                     * Initialize datepicker with some optional options
+                     */
 
-		    $(element).datepicker({
-			dateFormat : 'd-M-yy'
-		    });
+                    $(element).datepicker({
+                        dateFormat: 'd-M-yy'
+                    });
 
-		    /*
-		     * Handle the field changing
-		     */
-		    ko.utils.registerEventHandler(element, "change", function() {
-			var observable = valueAccessor();
-			$(element).datepicker({
-			    dateFormat : 'd-M-yy'
-			});
-			observable($(element).datepicker("getDate"));
-		    });
+                    /*
+                     * Handle the field changing
+                     */
+                    ko.utils.registerEventHandler(element, "change", function () {
+                        var observable = valueAccessor();
+                        $(element).datepicker({
+                            dateFormat: 'd-M-yy'
+                        });
+                        observable($(element).datepicker("getDate"));
+                    });
 
-		},
+                },
 
-		update : function(element, valueAccessor) {
-		    var value = ko.utils.unwrapObservable(valueAccessor()), current = $(element).datepicker("getDate");
+                update: function (element, valueAccessor) {
+                    var value = ko.utils.unwrapObservable(valueAccessor()), current = $(element).datepicker("getDate");
 
-		    if (value - current !== 0) {
-			$(element).datepicker("setDate", value);
-		    }
-		}
+                    if (value - current !== 0) {
+                        $(element).datepicker("setDate", value);
+                    }
+                }
 
-	    };
+            };
 
-	}
+        }
     };
 
 });

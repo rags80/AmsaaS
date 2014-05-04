@@ -7,20 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController
-{
-	@RequestMapping("index.action")
-	public String loadHomePage(Model model)
-	{
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println("User Name:" + userDetails.getUsername() + "\n" + "Role:" + userDetails.getAuthorities());
+public class IndexController {
+    @RequestMapping("index.action")
+    public String loadHomePage(Model model) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("User Name:" + userDetails.getUsername() + "\n" + "Role:" + userDetails.getAuthorities());
 
-		return "index";
-	}
+        return "index";
+    }
 
-	@RequestMapping(value = "login.action")
-	public String loginPage(Model model)
-	{
-		return "login";
-	}
+    @RequestMapping(value = "login.action")
+    public String loginPage(Model model) {
+        return "login";
+    }
 }

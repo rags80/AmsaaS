@@ -1,111 +1,92 @@
 package com.ams.billingandpayment.application.api.commandquery;
 
+import com.ams.billingandpayment.domain.model.bill.BillItem;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.ams.billingandpayment.domain.model.bill.BillItem;
+public class BillDto {
+    private long billNumber;
+    private long customerId;
+    private Date billDate;
+    private Date billDueDate;
+    private Date billPeriodFromDate;
+    private Date billPeriodToDate;
+    private Double billTotalTax = 0.0;
+    private Double billTotalAmount = 0.0;
+    private List<BillItem> billLineItems = new ArrayList<BillItem>();
 
-public class BillDto
-{
-	private long			billNumber;
-	private long			customerId;
-	private Date			billDate;
-	private Date			billDueDate;
-	private Date			billPeriodFromDate;
-	private Date			billPeriodToDate;
-	private Double			billTotalTax		= 0.0;
-	private Double			billTotalAmount	= 0.0;
-	private List<BillItem>	billLineItems		= new ArrayList<BillItem>();
+    public Date getBillDate() {
+        return billDate;
+    }
 
-	public Date getBillDate()
-	{
-		return billDate;
-	}
+    public void setBillDate(Date billDate) {
+        this.billDate = billDate;
+    }
 
-	public Date getBillDueDate()
-	{
-		return billDueDate;
-	}
+    public Date getBillDueDate() {
+        return billDueDate;
+    }
 
-	public List<BillItem> getBillLineItems()
-	{
-		return billLineItems;
-	}
+    public void setBillDueDate(Date billDueDate) {
+        this.billDueDate = billDueDate;
+    }
 
-	public long getBillNumber()
-	{
-		return billNumber;
-	}
+    public List<BillItem> getBillLineItems() {
+        return billLineItems;
+    }
 
-	public Date getBillPeriodFromDate()
-	{
-		return billPeriodFromDate;
-	}
+    public void setBillLineItems(List<BillItem> billLineItems) {
+        this.billLineItems = billLineItems;
+    }
 
-	public Date getBillPeriodToDate()
-	{
-		return billPeriodToDate;
-	}
+    public long getBillNumber() {
+        return billNumber;
+    }
 
-	public Double getBillTotalAmount()
-	{
-		return billTotalAmount;
-	}
+    public void setBillNumber(long billNumber) {
+        this.billNumber = billNumber;
+    }
 
-	public Double getBillTotalTax()
-	{
-		return billTotalTax;
-	}
+    public Date getBillPeriodFromDate() {
+        return billPeriodFromDate;
+    }
 
-	public long getCustomerId()
-	{
-		return customerId;
-	}
+    public void setBillPeriodFromDate(Date billPeriodFromDate) {
+        this.billPeriodFromDate = billPeriodFromDate;
+    }
 
-	public void setBillDate(Date billDate)
-	{
-		this.billDate = billDate;
-	}
+    public Date getBillPeriodToDate() {
+        return billPeriodToDate;
+    }
 
-	public void setBillDueDate(Date billDueDate)
-	{
-		this.billDueDate = billDueDate;
-	}
+    public void setBillPeriodToDate(Date billPeriodToDate) {
+        this.billPeriodToDate = billPeriodToDate;
+    }
 
-	public void setBillLineItems(List<BillItem> billLineItems)
-	{
-		this.billLineItems = billLineItems;
-	}
+    public Double getBillTotalAmount() {
+        return billTotalAmount;
+    }
 
-	public void setBillNumber(long billNumber)
-	{
-		this.billNumber = billNumber;
-	}
+    public void setBillTotalAmount(Double billTotalAmount) {
+        this.billTotalAmount = billTotalAmount;
+    }
 
-	public void setBillPeriodFromDate(Date billPeriodFromDate)
-	{
-		this.billPeriodFromDate = billPeriodFromDate;
-	}
+    public Double getBillTotalTax() {
+        return billTotalTax;
+    }
 
-	public void setBillPeriodToDate(Date billPeriodToDate)
-	{
-		this.billPeriodToDate = billPeriodToDate;
-	}
+    public void setBillTotalTax(Double billTotalTaxAmount) {
+        this.billTotalTax = billTotalTaxAmount;
+    }
 
-	public void setBillTotalAmount(Double billTotalAmount)
-	{
-		this.billTotalAmount = billTotalAmount;
-	}
+    public long getCustomerId() {
+        return customerId;
+    }
 
-	public void setBillTotalTax(Double billTotalTaxAmount)
-	{
-		this.billTotalTax = billTotalTaxAmount;
-	}
-
-	public void setCustomerId(long customerId)
-	{
-		this.customerId = customerId;
-	}
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
 
 }

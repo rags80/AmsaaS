@@ -1,34 +1,33 @@
 package com.ams.billingandpayment.domain.repository;
 
-import java.util.List;
-import java.util.Set;
-
 import com.ams.billingandpayment.domain.model.bill.Bill;
 import com.ams.billingandpayment.domain.model.bill.Payment;
 
-public interface BillRepository
-{
+import java.util.List;
+import java.util.Set;
 
-	public Bill createBill(Bill bill);
+public interface BillRepository {
 
-	public void createBills(List<Bill> bills);
+    public Bill createBill(Bill bill);
 
-	public long deleteBill(long billNumber);
+    public void createBills(List<Bill> bills);
 
-	public void deleteBills(Set<Bill> bills);
+    public long deleteBill(long billNumber);
 
-	public Bill findBill(long billNumber);
+    public void deleteBills(Set<Bill> bills);
 
-	public Set<Bill> findBills(long userId);
+    public Bill findBill(long billNumber);
 
-	public List<Bill> findBillsByPaymentStatus();
+    public Set<Bill> findBills(long userId);
 
-	public Payment findPayment(long paymntNumber);
+    public List<Bill> findBillsByPaymentStatus();
 
-	public Set<Payment> findPayments(long billNumber);
+    public Payment findPayment(long paymntNumber);
 
-	public long updateBill(Bill bill);
+    public Set<Payment> findPayments(long billNumber);
 
-	public void updateBills(Set<Bill> bills);
+    public long updateBill(Bill bill);
+
+    public void updateBills(Set<Bill> bills);
 
 }

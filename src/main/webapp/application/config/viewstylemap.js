@@ -5,9 +5,9 @@
  *  
  */
 
-define(function(require) {
+define(function (require) {
     "use strict";
     return {
-	"gridStyle" : "../application/modules/common/views/girdstyle.css"
+        "gridStyle": "../application/modules/common/views/girdstyle.css"
     };
 });

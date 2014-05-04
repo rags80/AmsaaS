@@ -1,72 +1,59 @@
 package com.ams.billingandpayment.application.api.commandquery;
 
-public class ServicePriceCommand
-{
-	private String	srvcPlanName;
-	private String	srvcCode;
-	private String	srvcPriceCategory;
-	private Double	srvcPriceAmountValue;
-	private String	srvcPriceAmountCurrency;
-	private String	srvcPriceUnitOfMeasure;
+public class ServicePriceCommand {
+    private String srvcPlanName;
+    private String srvcCode;
+    private String srvcPriceCategory;
+    private Double srvcPriceAmountValue;
+    private String srvcPriceAmountCurrency;
+    private String srvcPriceUnitOfMeasure;
 
-	public String getSrvcCode()
-	{
-		return this.srvcCode;
-	}
+    public String getSrvcCode() {
+        return this.srvcCode;
+    }
 
-	public String getSrvcPlanName()
-	{
-		return this.srvcPlanName;
-	}
+    public void setSrvcCode(String srvcCode) {
+        this.srvcCode = srvcCode;
+    }
 
-	public String getSrvcPriceAmountCurrency()
-	{
-		return this.srvcPriceAmountCurrency;
-	}
+    public String getSrvcPlanName() {
+        return this.srvcPlanName;
+    }
 
-	public Double getSrvcPriceAmountValue()
-	{
-		return this.srvcPriceAmountValue;
-	}
+    public void setSrvcPlanName(String srvcPlanName) {
+        this.srvcPlanName = srvcPlanName;
+    }
 
-	public String getSrvcPriceCategory()
-	{
-		return this.srvcPriceCategory;
-	}
+    public String getSrvcPriceAmountCurrency() {
+        return this.srvcPriceAmountCurrency;
+    }
 
-	public String getSrvcPriceUnitOfMeasure()
-	{
-		return this.srvcPriceUnitOfMeasure;
-	}
+    public void setSrvcPriceAmountCurrency(String srvcPriceAmountCurrency) {
+        this.srvcPriceAmountCurrency = srvcPriceAmountCurrency;
+    }
 
-	public void setSrvcCode(String srvcCode)
-	{
-		this.srvcCode = srvcCode;
-	}
+    public Double getSrvcPriceAmountValue() {
+        return this.srvcPriceAmountValue;
+    }
 
-	public void setSrvcPlanName(String srvcPlanName)
-	{
-		this.srvcPlanName = srvcPlanName;
-	}
+    public void setSrvcPriceAmountValue(Double srvcPriceAmountValue) {
+        this.srvcPriceAmountValue = srvcPriceAmountValue;
+    }
 
-	public void setSrvcPriceAmountCurrency(String srvcPriceAmountCurrency)
-	{
-		this.srvcPriceAmountCurrency = srvcPriceAmountCurrency;
-	}
+    public String getSrvcPriceCategory() {
+        return this.srvcPriceCategory;
+    }
 
-	public void setSrvcPriceAmountValue(Double srvcPriceAmountValue)
-	{
-		this.srvcPriceAmountValue = srvcPriceAmountValue;
-	}
+    public void setSrvcPriceCategory(String srvcPriceCategory) {
+        this.srvcPriceCategory = srvcPriceCategory;
+    }
 
-	public void setSrvcPriceCategory(String srvcPriceCategory)
-	{
-		this.srvcPriceCategory = srvcPriceCategory;
-	}
+    public String getSrvcPriceUnitOfMeasure() {
+        return this.srvcPriceUnitOfMeasure;
+    }
 
-	public void setSrvcPriceUnitOfMeasure(String srvcPriceUnitOfMeasure)
-	{
-		this.srvcPriceUnitOfMeasure = srvcPriceUnitOfMeasure;
-	}
+    public void setSrvcPriceUnitOfMeasure(String srvcPriceUnitOfMeasure) {
+        this.srvcPriceUnitOfMeasure = srvcPriceUnitOfMeasure;
+    }
 
 }

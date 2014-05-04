@@ -1,138 +1,144 @@
 package com.ams.billingandpayment.domain.model.bill;
 
-import static javax.persistence.AccessType.PROPERTY;
-
 import java.io.Serializable;
-import java.math.BigDecimal;
 
-import javax.persistence.Access;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
+import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
+import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
 import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
+import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
 
-@Entity
-@Access(PROPERTY)
-@Table(name = "T_BILLITEM")
+@Embeddable
 public class BillItem implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long	serialVersionUID	= 1L;
-	private Long				billItemNumber;
-	private Bill				bill;
-	private BigDecimal			billItemTax		= new BigDecimal(0);
-	private BigDecimal			billItemAmount		= new BigDecimal(0);
-	private long				billItemQuantity	= 0;
-	private Service			billItemService;
+	private ServicePrice		servicePrice;
+	private Money				grossAmount;
+	private Tax		    		itemTax;
+	private Discount			itemDiscount;
+	private Money				netAmount;
+	private Quantity			quantity;
 
-	public BillItem()
-	{}
-
-	public BillItem(long itemQty, Service service)
+	public BillItem(ServicePrice srvcPrice, Quantity qty, TaxPolicy itemTaxPolicy,
+					DiscountPolicy itemDscntPolicy)
 	{
-		this.setBillItemQuantity(itemQty);
-		this.setBillItemService(service);
-		this.calculateBillItemAmount();
-
-	}
-
-	public BillItem(Service service)
-	{
-		this.setBillItemService(service);
-		this.calculateBillItemTax();
-		this.calculateBillItemAmount();
-	}
-
-	private BigDecimal calculateBillItemAmount()
-	{
-		if ((this.billItemService != null))
+		if ((srvcPrice != null) && (qty != null) && (itemTaxPolicy != null) && (itemDscntPolicy != null))
 		{
-
-			// this.billItemAmount = new
-			// BigDecimal(this.billItemService.getSrvcPrice() *
-			// this.billItemServiceUsage).add(calculateBillItemTax());
+			this.servicePrice = srvcPrice;
+			this.quantity = qty;
+			this.calculateItemNetAmount(srvcPrice, qty, itemTaxPolicy, itemDscntPolicy);
 		}
-		return billItemAmount;
+		else
+		{
+			throw new NullPointerException();
+		}
 
 	}
 
-	private BigDecimal calculateBillItemTax()
+	/*
+	 * BillItem Accessor methods
+	 */
+	public static long getSerialversionuid()
 	{
+		return serialVersionUID;
+	}
 
-		return this.billItemTax;
+	public void increaseQuantity(Quantity qty, TaxPolicy itemTaxPolicy, DiscountPolicy itemDscntPolicy)
+	{
+		this.quantity.add(qty);
+		this.calculateItemNetAmount(this.servicePrice, this.quantity, itemTaxPolicy, itemDscntPolicy);
 
 	}
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "BillNumber")
-	public Bill getBill()
+	private void calculateItemNetAmount(ServicePrice srvcPrice, Quantity qty, TaxPolicy taxPolicy, DiscountPolicy disntPolicy)
 	{
-		return bill;
+		Money price = srvcPrice.getSrvcPricePerUnit().copy();
+		this.grossAmount = price.multiplyBy(qty.getValue());
+		this.itemTax = taxPolicy.calculateTax(this.grossAmount);
+		this.itemDiscount = disntPolicy.calculateDiscount(this.grossAmount);
+		this.netAmount = this.grossAmount.copy().add(this.itemTax.getTaxAmount()).subtract(this.itemDiscount.getDiscntAmount());
 	}
 
-	public BigDecimal getBillItemAmount()
+	public Service getItemService()
 	{
-		return billItemAmount;
+		return this.servicePrice.getService();
 	}
 
-	@Id
-	@GeneratedValue
-	public Long getBillItemNumber()
+	public ServicePrice getServicePrice()
 	{
-		return billItemNumber;
+		return this.servicePrice;
 	}
 
-	public long getBillItemQuantity()
+	public String servicePrice()
 	{
-		return billItemQuantity;
+		return this.servicePrice.getSrvcPricePerUnit().toString() + "/" + this.servicePrice.getSrvcUnitOfMeasure().toString();
 	}
 
-	@ManyToOne(optional = false,targetEntity = Service.class)
-	@JoinColumn(name = "Service_Code")
-	public Service getBillItemService()
+	public Money getGrossAmount()
 	{
-		return billItemService;
+		return this.grossAmount;
 	}
 
-	public BigDecimal getBillItemTax()
+	public Tax getItemTax()
 	{
-		return billItemTax;
+		return this.itemTax;
 	}
 
-	public void setBill(Bill param)
+	public Discount getItemDiscount()
 	{
-		this.bill = param;
+		return this.itemDiscount;
 	}
 
-	public void setBillItemAmount(BigDecimal billItemAmount)
+	public Money getNetAmount()
 	{
-		this.billItemAmount = billItemAmount;
+		return this.netAmount;
 	}
 
-	public void setBillItemNumber(Long id)
+	public Quantity getQuantity()
 	{
-		this.billItemNumber = id;
+		return this.quantity;
 	}
 
-	public void setBillItemQuantity(long billItemQuantity)
+	@Override
+	public int hashCode()
 	{
-		this.billItemQuantity = billItemQuantity;
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((this.servicePrice == null) ? 0 : this.servicePrice.hashCode());
+		return result;
 	}
 
-	public void setBillItemService(Service param)
+	@Override
+	public boolean equals(Object obj)
 	{
-		this.billItemService = param;
-	}
-
-	public void setBillItemTax(BigDecimal billItemTax)
-	{
-		this.billItemTax = billItemTax;
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (!(obj instanceof BillItem))
+		{
+			return false;
+		}
+		BillItem other = (BillItem) obj;
+		if (this.servicePrice == null)
+		{
+			if (other.servicePrice != null)
+			{
+				return false;
+			}
+		}
+		else if (!this.servicePrice.equals(other.servicePrice))
+		{
+			return false;
+		}
+		return true;
 	}
 
 }

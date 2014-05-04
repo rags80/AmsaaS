@@ -1,122 +1,101 @@
 /**
- * 
+ *
  */
 package com.ams.booking.domain;
 
-import java.util.Date;
-
+import com.ams.sharedkernel.domain.DomainException;
 import org.joda.time.DateTime;
 
-import com.ams.sharedkernel.domain.DomainException;
+import java.util.Date;
 
 /**
  * @author Raghavendra Badiger
- * 
  */
 
-public class Booking
-{
-	private long		bookingId;
-	private String		bookingDetails;
-	private ResourceId	bookedResourceId;
-	private PersonId	bookingForPersonId;
-	private Date		bookingStartDateTime;
-	private Date		bookingEndDateTime;
+public class Booking {
+    private long bookingId;
+    private String bookingDetails;
+    private ResourceId bookedResourceId;
+    private PersonId bookingForPersonId;
+    private Date bookingStartDateTime;
+    private Date bookingEndDateTime;
 
-	/**
-	 * @param persnId
-	 * @param resourceId
-	 * @param startDateTime
-	 * @param endDateTime
-	 */
-	public Booking(PersonId persnId, ResourceId resourceId, Date startDateTime, Date endDateTime)
-	{
-		this.bookingForPersonId = persnId;
-		this.setBookedResourceId(resourceId);
-		this.bookingStartDateTime = startDateTime;
-		this.bookingEndDateTime = endDateTime;
-	}
+    /**
+     * @param persnId
+     * @param resourceId
+     * @param startDateTime
+     * @param endDateTime
+     */
+    public Booking(PersonId persnId, ResourceId resourceId, Date startDateTime, Date endDateTime) {
+        this.bookingForPersonId = persnId;
+        this.setBookedResourceId(resourceId);
+        this.bookingStartDateTime = startDateTime;
+        this.bookingEndDateTime = endDateTime;
+    }
 
-	/**
-	 * @return
-	 */
-	public boolean canBeCancelled()
-	{
+    /**
+     * @return
+     */
+    public boolean canBeCancelled() {
 
-		if (new DateTime(this.bookingStartDateTime).minusDays(1).isAfterNow())
-		{
-			return true;
-		}
-		else
-		{
-			throw new DomainException(BookingExceptionCode.CANCEL_FAILED.getExceptionDetails());
-		}
+        if (new DateTime(this.bookingStartDateTime).minusDays(1).isAfterNow()) {
+            return true;
+        } else {
+            throw new DomainException(BookingExceptionCode.CANCEL_FAILED.getExceptionDetails());
+        }
 
-	}
+    }
 
-	public ResourceId getBookedResourceId()
-	{
-		return this.bookedResourceId;
-	}
+    public ResourceId getBookedResourceId() {
+        return this.bookedResourceId;
+    }
 
-	public String getBookingDetails()
-	{
-		return this.bookingDetails;
-	}
+    public void setBookedResourceId(ResourceId bookedResourceId) {
+        this.bookedResourceId = bookedResourceId;
+    }
 
-	public Date getBookingEndDateTime()
-	{
-		return this.bookingEndDateTime;
-	}
+    public String getBookingDetails() {
+        return this.bookingDetails;
+    }
 
-	public PersonId getBookingForPersonId()
-	{
-		return this.bookingForPersonId;
-	}
+    public void setBookingDetails(String bookingDetails) {
+        this.bookingDetails = bookingDetails;
+    }
 
-	/**
-	 * 
-	 * ACCESSOR AND MUTATORS
-	 */
+    public Date getBookingEndDateTime() {
+        return this.bookingEndDateTime;
+    }
 
-	public long getBookingId()
-	{
-		return this.bookingId;
-	}
+    public void setBookingEndDateTime(Date bookingEndDateTime) {
+        this.bookingEndDateTime = bookingEndDateTime;
+    }
 
-	public Date getBookingStartDateTime()
-	{
-		return this.bookingStartDateTime;
-	}
+    public PersonId getBookingForPersonId() {
+        return this.bookingForPersonId;
+    }
 
-	public void setBookedResourceId(ResourceId bookedResourceId)
-	{
-		this.bookedResourceId = bookedResourceId;
-	}
+    public void setBookingForPersonId(PersonId bookingForPersonId) {
+        this.bookingForPersonId = bookingForPersonId;
+    }
 
-	public void setBookingDetails(String bookingDetails)
-	{
-		this.bookingDetails = bookingDetails;
-	}
+    /**
+     * ACCESSOR AND MUTATORS
+     */
 
-	public void setBookingEndDateTime(Date bookingEndDateTime)
-	{
-		this.bookingEndDateTime = bookingEndDateTime;
-	}
+    public long getBookingId() {
+        return this.bookingId;
+    }
 
-	public void setBookingForPersonId(PersonId bookingForPersonId)
-	{
-		this.bookingForPersonId = bookingForPersonId;
-	}
+    public void setBookingId(long bookingId) {
+        this.bookingId = bookingId;
+    }
 
-	public void setBookingId(long bookingId)
-	{
-		this.bookingId = bookingId;
-	}
+    public Date getBookingStartDateTime() {
+        return this.bookingStartDateTime;
+    }
 
-	public void setBookingStartDateTime(Date bookingStartDateTime)
-	{
-		this.bookingStartDateTime = bookingStartDateTime;
-	}
+    public void setBookingStartDateTime(Date bookingStartDateTime) {
+        this.bookingStartDateTime = bookingStartDateTime;
+    }
 
 }
