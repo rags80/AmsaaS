@@ -1,9 +1,10 @@
 package com.ams.billingandpayment.ports.adapter.rest.springmvc.controller;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageService;
-import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.model.services.Service;
 import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.repository.Page;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

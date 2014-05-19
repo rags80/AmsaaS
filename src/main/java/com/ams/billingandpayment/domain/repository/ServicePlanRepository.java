@@ -1,27 +1,30 @@
 package com.ams.billingandpayment.domain.repository;
 
-import com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan;
-import com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice;
-import com.ams.sharedkernel.domain.repository.Page;
-import com.ams.sharedkernel.domain.repository.Repository;
-
 import java.util.List;
 import java.util.Map;
 
-public interface ServicePlanRepository extends Repository<ServicePlan, String> {
+import com.ams.billingandpayment.domain.model.services.ServicePlan;
+import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.sharedkernel.domain.repository.Page;
+import com.ams.sharedkernel.domain.repository.Repository;
 
-    void deleteServicePriceOfPlan(String srvcPlanName, String srvcCode);
+public interface ServicePlanRepository extends Repository<ServicePlan, String>
+{
 
-    List<ServicePrice> findAllServicePriceByPlanName(String srvcPlanName);
+	ServicePlan findServicePlanOfPerson(long billedPersonId);
 
-    List<ServicePrice> findAllServicePricesByCriteria(Map criteriaMap);
+	void deleteServicePriceOfPlan(String srvcPlanName, String srvcCode);
 
-    List<ServicePrice> findAllServicePricesByCriteria(String srvcPlanName, String string);
+	List<ServicePrice> findAllServicePriceByPlanName(String srvcPlanName);
 
-    Page<ServicePrice> findNextPageOfServicePrices(String srvcPlanName, int startIndex, int offset);
+	List<ServicePrice> findAllServicePricesByCriteria(Map criteriaMap);
 
-    ServicePrice findServicePriceByCriteria(String srvcPlanName, String srvcCode);
+	List<ServicePrice> findAllServicePricesByCriteria(String srvcPlanName, String string);
 
-    String saveOrUpdateServicePriceToPlan(ServicePrice srvcPrice);
+	Page<ServicePrice> findNextPageOfServicePrices(String srvcPlanName, int startIndex, int offset);
+
+	ServicePrice findServicePriceByCriteria(String srvcPlanName, String srvcCode);
+
+	String saveOrUpdateServicePriceToPlan(ServicePrice srvcPrice);
 
 }

@@ -3,7 +3,7 @@
  */
 package com.ams.booking.domain;
 
-import com.ams.sharedkernel.domain.ExceptionCode;
+import com.ams.sharedkernel.domain.exception.ExceptionCode;
 
 /**
  * @author Raghavendra Badiger

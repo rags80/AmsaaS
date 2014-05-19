@@ -1,19 +1,31 @@
 package com.ams.billingandpayment.domain.model.bill;
 
-import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
-import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
-import com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice;
-import com.ams.sharedkernel.domain.model.measuresandunits.Money;
-import com.ams.sharedkernel.domain.model.measuresandunits.Period;
-import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
-import com.ams.users.domain.model.Person;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+import com.ams.billingandpayment.domain.model.bill.exception.BillExceptionCode;
+import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
+import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
+import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.sharedkernel.domain.exception.DomainException;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
+import com.ams.sharedkernel.domain.model.measuresandunits.Period;
+import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
+import com.ams.users.domain.model.Person;
 
 /**
  * @author Raghavendra Badiger
@@ -22,154 +34,253 @@ import java.util.List;
 @Entity
 @Access(AccessType.FIELD)
 @Table(name = "T_BILL")
-public class Bill implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Bill implements Serializable
+{
+	private static final long	serialVersionUID	= 1L;
 
-    private Person billedPerson;
-    private Date billDate;
-    private Date billDueDate;
-    private Period billPeriod;
-    private Money billPreviousBalance;
-    private Money billPenaltyAmount;
-    private Money billGrossAmount;
-    private Tax billTotalTax;
-    private Discount billDiscountAmount;
-    private Money billNetAmount;
-    private BillPaymentRegister billPaymentRegister;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long				billId;
+	private long				billedPersonId;
+	private Date				billDate;
+	private Date				billDueDate;
+	private Period				billPeriod;
+	private Money				billPreviousBalance;
+	private Money				billPenaltyAmount;
+	private Money				billGrossAmount;
+	private Tax				billTotalTax;
+	private Discount			billTotalDiscount;
+	private Money				billNetAmount;
+	private BillPaymentRegister	billPaymentRegister;
 
-    @ElementCollection
-    @CollectionTable(name = "T_BILLITEM", joinColumns = @JoinColumn(name = "Bill_No"))
-    private List<BillItem> billItems;
-    private List<Payment> billPayments;
+	@ElementCollection
+	@CollectionTable(name = "T_BILLITEM",joinColumns = @JoinColumn(name = "Bill_No"))
+	private List<BillItem>		billItems;
+	private List<Payment>		billPayments;
 
-    public Bill(Person billedPersn, Date billDate, Date billDueDate, Period billPeriod) {
-        this.billedPerson = billedPersn;
-        this.billDate = billDate;
-        this.billDueDate = billDueDate;
-        this.billPeriod = billPeriod;
-        this.billPreviousBalance = Money.ZERO;
-        this.billPenaltyAmount = Money.ZERO;
-        this.billGrossAmount = Money.ZERO;
-        this.billTotalTax = Tax.DEFAULT_TAX;
-        this.billDiscountAmount = Discount.DEFAULT_DISCOUNT;
-        this.billNetAmount = Money.ZERO;
-        this.billPaymentRegister = new BillPaymentRegister(this.billNetAmount);
-        this.billItems = new ArrayList<BillItem>();
-        this.billPayments = new ArrayList<Payment>();
-    }
+	private Bill()
+	{}
 
 	/*
-     * Bill Domain Logic Functions
+	 * 
+	 * Bill Domain Logic Functions
 	 */
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
+	public static class BillBuilder
+	{
+		public final Bill	bill			= new Bill();
+		private boolean	isHeaderSet	= false;
 
-    public Bill addBillItem(ServicePrice srvcPrice, Quantity qty, DiscountPolicy itemDscntPolicy, TaxPolicy itemTaxPolicy) {
+		public boolean isHeaderSet()
+		{
+			return this.isHeaderSet;
+		}
 
-        BillItem item = this.find(srvcPrice);
+		public BillBuilder header(Person billedPersn, Date billDate, Date billDueDate, Period billPeriod,
+								BillPaymentRegister bpRegister)
+		{
 
-        if (item == null) {
-            this.billItems.add(new BillItem(srvcPrice, qty, itemTaxPolicy, itemDscntPolicy));
-        } else {
-            item.increaseQuantity(qty, itemTaxPolicy, itemDscntPolicy);
-        }
+			if ((billedPersn != null) && (billDate != null) && (billDueDate != null) && (billPeriod != null) && (bpRegister != null))
+			{
+				if (billDueDate.after(billDate))
+				{
+					this.bill.billedPersonId = billedPersn.getPersnId();
+					this.bill.billDate = billDate;
+					this.bill.billDueDate = billDueDate;
+					this.bill.billPeriod = billPeriod;
+					this.bill.billPaymentRegister = bpRegister;
+					this.bill.billPreviousBalance = bpRegister.getBillCurrentBalance();
+					this.bill.billPenaltyAmount = bpRegister.getBillCurrentBalance().compareTo(Money.ZERO) > 0 ? BillSpecification.getPenaltyAmount() : Money.ZERO;
+					this.bill.billGrossAmount = Money.ZERO;
+					this.bill.billTotalTax = Tax.ZERO_TAX;
+					this.bill.billTotalDiscount = Discount.ZERO_DISCOUNT;
+					this.bill.billNetAmount = Money.ZERO;
+					this.bill.billItems = new ArrayList<BillItem>();
+					this.bill.billPayments = new ArrayList<Payment>();
+					this.isHeaderSet = true;
+					return this;
+				}
+				else
+				{
+					throw new DomainException("BillDate can't be after or equal to BillDueDate!!");
+				}
+			}
+			else
+			{
+				throw new DomainException(BillExceptionCode.HEADER_NULL_ARGUMENT.getExceptionDetails());
+			}
+		}
 
-        this.recalculateBillGrossAmount();
-        return this;
-    }
+		public BillBuilder addLineItem(ServicePrice srvcPrice, Quantity qty, DiscountPolicy itemDscntPolicy, TaxPolicy itemTaxPolicy)
+		{
+			if (this.isHeaderSet)
+			{
+				this.bill.addBillItem(srvcPrice, qty, itemDscntPolicy, itemTaxPolicy);
+				return this;
+			}
+			else
+			{
+				throw new DomainException(BillExceptionCode.HEADER_NOT_SET.getExceptionDetails());
+			}
 
-    private BillItem find(ServicePrice sp) {
-        for (BillItem item : this.billItems) {
-            if (sp.equals(item.getServicePrice())) {
-                return item;
-            }
-        }
+		}
 
-        return null;
-    }
+		public Bill getBillInstance(DiscountPolicy billDiscntPolicy, TaxPolicy billTaxPolicy)
+		{
+			if (this.isHeaderSet)
+			{
+				this.bill.calculateBillNetAmount(billDiscntPolicy, billTaxPolicy);
+				return this.bill;
+			}
+			else
+			{
+				throw new DomainException(BillExceptionCode.HEADER_NOT_SET.getExceptionDetails());
+			}
 
-    public Bill addBillPreviousBalance(Money prevBal) {
+		}
 
-        this.billPreviousBalance = prevBal;
-        return this;
-    }
+	}
 
-    public Bill addBillPenaltyAmount(Money pnlty) {
-        this.billPenaltyAmount = pnlty;
-        return this;
-    }
+	private void addBillItem(ServicePrice srvcPrice, Quantity qty, DiscountPolicy itemDscntPolicy, TaxPolicy itemTaxPolicy)
+	{
 
-    private void recalculateBillGrossAmount() {
-        for (BillItem item : this.billItems) {
-            this.billGrossAmount.add(item.getNetAmount());
-        }
-    }
+		BillItem item = this.find(srvcPrice);
 
-    private void calculateBillNetAmount() {
+		if (item == null)
+		{
+			this.billItems.add(new BillItem(srvcPrice, qty, itemTaxPolicy, itemDscntPolicy));
+		}
+		else
+		{
+			item.increaseQuantity(qty, itemTaxPolicy, itemDscntPolicy);
+		}
 
-    }
+		this.recalculateBillGrossAmount();
+
+	}
+
+	private BillItem find(ServicePrice sp)
+	{
+		for (BillItem item : this.billItems)
+		{
+			if (sp.equals(item.getServicePrice()))
+			{
+				return item;
+			}
+		}
+
+		return null;
+	}
+
+	private void recalculateBillGrossAmount()
+	{
+		this.billGrossAmount = Money.ZERO;
+		for (BillItem item : this.billItems)
+		{
+			System.out.println("Item net amount in Bill:" + item.getNetAmount());
+			this.billGrossAmount = this.billGrossAmount.add(item.getNetAmount());
+		}
+		System.out.println("Bill Gross amount:" + this.billGrossAmount);
+	}
+
+	private void calculateBillNetAmount(DiscountPolicy billDiscntPolicy, TaxPolicy billTaxPolicy)
+	{
+		this.billTotalDiscount = billDiscntPolicy.calculateDiscount(this.billGrossAmount);
+		System.out.println("Bill Discount amount:" + this.billTotalDiscount.getDiscntAmount());
+		Money grossAfterDiscount = this.billGrossAmount.subtract(this.billTotalDiscount.getDiscntAmount());
+		System.out.println("Bill gross after discount amount:" + grossAfterDiscount);
+		this.billTotalTax = billTaxPolicy.calculateTax(grossAfterDiscount);
+		System.out.println("Bill Tax amount:" + this.billTotalTax.getTaxAmount());
+
+		this.billNetAmount = grossAfterDiscount.add(this.billTotalTax.getTaxAmount());
+		System.out.println("Bill Net amount:" + this.billNetAmount);
+
+		this.billPaymentRegister.updateCurrentBalance(this);
+		System.out.println("Bill Current Balance:" + this.billPaymentRegister.getBillCurrentBalance());
+		System.out.println("Bill Status:" + this.billPaymentRegister.getBillPaymentStatus());
+	}
+
+	public void makePayment(Payment pymnt)
+	{
+
+	}
 
 	/*
 	 * Bill Accessor Functions
 	 */
+	public long getBillId()
+	{
+		return this.billId;
+	}
 
-    public void makePayment(Payment pymnt) {
-        // TODO Auto-generated method stub
+	public long getBilledPersonId()
+	{
+		return this.billedPersonId;
+	}
 
-    }
+	public Date getBillDate()
+	{
+		return this.billDate;
+	}
 
-    public Person getBilledPerson() {
-        return this.billedPerson;
-    }
+	public Date getBillDueDate()
+	{
+		return this.billDueDate;
+	}
 
-    public Date getBillDate() {
-        return this.billDate;
-    }
+	public Period getBillPeriod()
+	{
+		return this.billPeriod;
+	}
 
-    public Date getBillDueDate() {
-        return this.billDueDate;
-    }
+	public Money getBillPreviousBalance()
+	{
+		return this.billPreviousBalance;
+	}
 
-    public Period getBillPeriod() {
-        return this.billPeriod;
-    }
+	public Money getBillPenaltyAmount()
+	{
+		return this.billPenaltyAmount;
+	}
 
-    public Money getBillPreviousBalance() {
-        return this.billPreviousBalance;
-    }
+	public Collection<BillItem> getBillItems()
+	{
+		return this.billItems;
+	}
 
-    public Money getBillPenaltyAmount() {
-        return this.billPenaltyAmount;
-    }
+	public Money getBillNetAmount()
+	{
+		return this.billNetAmount;
+	}
 
-    public Collection<BillItem> getBillItems() {
-        return this.billItems;
-    }
+	public BillPaymentRegister getBillPaymentRegister()
+	{
+		return this.billPaymentRegister;
+	}
 
-    public Money getBillNetAmount() {
-        return this.billNetAmount;
-    }
+	public Tax getBillTotalTax()
+	{
+		return this.billTotalTax;
+	}
 
-    public Tax getBillTotalTax() {
-        return this.billTotalTax;
-    }
+	public Discount getBillTotalDiscount()
+	{
+		return this.billTotalDiscount;
+	}
 
-    public Discount getBillDiscountAmount() {
-        return this.billDiscountAmount;
-    }
+	public Money getBillGrossAmount()
+	{
+		return this.billGrossAmount;
+	}
 
-    public Money getBillGrossAmount() {
-        return this.billGrossAmount;
-    }
+	public List<Payment> getBillPayments()
+	{
+		return this.billPayments;
+	}
 
-    public List<Payment> getBillPayments() {
-        return this.billPayments;
-    }
-
-    public BillPaymentRegister getBillPaymentRegister() {
-        return this.billPaymentRegister;
-    }
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
+	}
 
 }

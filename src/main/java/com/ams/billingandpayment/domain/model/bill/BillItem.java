@@ -6,8 +6,8 @@ import javax.persistence.Embeddable;
 
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
 import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
-import com.ams.billingandpayment.domain.model.servicecatalog.Service;
-import com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice;
+import com.ams.billingandpayment.domain.model.services.Service;
+import com.ams.billingandpayment.domain.model.services.ServicePrice;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
 
@@ -17,7 +17,7 @@ public class BillItem implements Serializable
 	private static final long	serialVersionUID	= 1L;
 	private ServicePrice		servicePrice;
 	private Money				grossAmount;
-	private Tax		    		itemTax;
+	private Tax				itemTax;
 	private Discount			itemDiscount;
 	private Money				netAmount;
 	private Quantity			quantity;
@@ -29,7 +29,10 @@ public class BillItem implements Serializable
 		{
 			this.servicePrice = srvcPrice;
 			this.quantity = qty;
+			System.out.println("Item Qty:" + this.quantity);
+			System.out.println("Service Price:" + this.servicePrice());
 			this.calculateItemNetAmount(srvcPrice, qty, itemTaxPolicy, itemDscntPolicy);
+
 		}
 		else
 		{
@@ -38,28 +41,34 @@ public class BillItem implements Serializable
 
 	}
 
-	/*
-	 * BillItem Accessor methods
-	 */
-	public static long getSerialversionuid()
+	void increaseQuantity(Quantity qty, TaxPolicy itemTaxPolicy, DiscountPolicy itemDscntPolicy)
 	{
-		return serialVersionUID;
-	}
-
-	public void increaseQuantity(Quantity qty, TaxPolicy itemTaxPolicy, DiscountPolicy itemDscntPolicy)
-	{
-		this.quantity.add(qty);
+		System.out.println("Increase qty");
+		this.quantity = this.quantity.add(qty);
+		System.out.println("BillItem Qty:" + this.getQuantity());
 		this.calculateItemNetAmount(this.servicePrice, this.quantity, itemTaxPolicy, itemDscntPolicy);
 
 	}
 
 	private void calculateItemNetAmount(ServicePrice srvcPrice, Quantity qty, TaxPolicy taxPolicy, DiscountPolicy disntPolicy)
 	{
-		Money price = srvcPrice.getSrvcPricePerUnit().copy();
-		this.grossAmount = price.multiplyBy(qty.getValue());
+		this.grossAmount = srvcPrice.getSrvcPricePerUnit().multiplyBy(qty.getValue());
+		System.out.println("Item gross amount:" + this.grossAmount);
 		this.itemTax = taxPolicy.calculateTax(this.grossAmount);
+		System.out.println("Item tax amount:" + this.itemTax.getTaxAmount());
 		this.itemDiscount = disntPolicy.calculateDiscount(this.grossAmount);
-		this.netAmount = this.grossAmount.copy().add(this.itemTax.getTaxAmount()).subtract(this.itemDiscount.getDiscntAmount());
+		System.out.println("Item discount amount:" + this.itemDiscount.getDiscntAmount());
+		this.netAmount = (this.grossAmount.subtract(this.itemDiscount.getDiscntAmount())).add(this.itemTax.getTaxAmount());
+		System.out.println("Item net amount:" + this.netAmount);
+	}
+
+	/*
+	 * BillItem Accessor methods
+	 */
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
 	}
 
 	public Service getItemService()

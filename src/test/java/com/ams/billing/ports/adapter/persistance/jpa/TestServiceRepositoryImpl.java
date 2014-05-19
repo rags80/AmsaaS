@@ -3,9 +3,10 @@
  */
 package com.ams.billing.ports.adapter.persistance.jpa;
 
-import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.model.services.Service;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.sharedkernel.domain.repository.Page;
+
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class TestServiceRepositoryImpl {
 
     /**
      * Test method for
-     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.servicecatalog.Service)}
+     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServiceRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.services.Service)}
      * .
      */
     @Test

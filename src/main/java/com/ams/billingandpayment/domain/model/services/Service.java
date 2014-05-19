@@ -1,4 +1,4 @@
-package com.ams.billingandpayment.domain.model.servicecatalog;
+package com.ams.billingandpayment.domain.model.services;
 
 import static javax.persistence.AccessType.PROPERTY;
 

@@ -7,10 +7,10 @@
 		<class>com.ams.billingandpayment.domain.model.bill.BillItem</class>
 		<class>com.ams.billingandpayment.domain.model.bill.BillPaymentRegister</class>
 		<class>com.ams.billingandpayment.domain.model.bill.Payment</class>
-		<class>com.ams.billingandpayment.domain.model.servicecatalog.Service</class>
-		<class>com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan</class>
-		<class>com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice</class>
-		<class>com.ams.billingandpayment.domain.model.servicecatalog.ServiceSubscription</class>
+		<class>com.ams.billingandpayment.domain.model.services.Service</class>
+		<class>com.ams.billingandpayment.domain.model.services.ServicePlan</class>
+		<class>com.ams.billingandpayment.domain.model.services.ServicePrice</class>
+		<class>com.ams.billingandpayment.domain.model.services.ServiceSubscription</class>
 		<class>com.ams.finance.domain.model.Account</class>
 		<class>com.ams.finance.domain.model.AccountDetail</class>
 		<class>com.ams.finance.domain.model.Transaction</class>
@@ -23,6 +23,7 @@
 		<class>com.ams.users.domain.model.PersonDetail</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>
+			<property name="hibernate.cache.use_query_cache" value="true"/>
 			<property name="hibernate.cache.use_second_level_cache" value="true"/>
 			<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory"/>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />

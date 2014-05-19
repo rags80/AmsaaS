@@ -1,11 +1,12 @@
 package com.ams.billingandpayment.application.api.service.bill;
 
-import com.ams.billingandpayment.domain.model.schedule.Schedule;
-import com.ams.users.domain.model.Person;
-
 import java.util.List;
 
-public interface ManageBillRunSchedule {
+import com.ams.billingandpayment.domain.model.schedule.BillSchedule;
+import com.ams.users.domain.model.Person;
 
-    boolean newBillRunSchedule(List<Person> billableUserList, Schedule schedule);
+public interface ManageBillRunSchedule
+{
+
+	boolean scheduleNewBillRunJob(List<Person> billableUserList, BillSchedule schedule);
 }

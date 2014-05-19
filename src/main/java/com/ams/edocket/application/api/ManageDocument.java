@@ -3,30 +3,32 @@
  */
 package com.ams.edocket.application.api;
 
+import java.util.List;
+
 import com.ams.edocket.application.api.file.File;
 import com.ams.edocket.application.api.file.Folder;
 import com.ams.users.domain.model.Person;
 
-import java.util.List;
-
 /**
  * @author Raghavendra Badiger
  */
-public interface ManageDocument {
-    File deleteFile(Person fileOwner, String filePath);
+public interface ManageDocument
+{
 
-    List<File> getAllFilesFromFolder(Folder folder);
+	File deleteFile(Person fileOwner, String filePath);
 
-    Folder getFolderContents(Person folderOwner, String folderPath);
+	List<File> getAllFilesFromFolder(Folder folder);
 
-    Folder newDocumentsFolder(Person folderOwner, String folderPath);
+	Folder getFolderContents(Person folderOwner, String folderPath);
 
-    Folder removeDocumentsFolder(Person folderOwner, String folderPath);
+	Folder newDocumentsFolder(Person folderOwner, String folderPath);
 
-    Folder saveFiles(Person fileOwner, Folder fileData);
+	Folder removeDocumentsFolder(Person folderOwner, String folderPath);
 
-    Folder updateDocumentsFolderDetails(Folder folderData);
+	Folder saveFiles(Person fileOwner, Folder fileData);
 
-    File updateFileDetails(File fileDetails);
+	Folder updateDocumentsFolderDetails(Folder folderData);
+
+	File updateFileDetails(File fileDetails);
 
 }

@@ -1,9 +1,10 @@
 package com.ams.billingandpayment.application.impl.serviceportfolio;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageService;
-import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.model.services.Service;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.sharedkernel.domain.repository.Page;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 

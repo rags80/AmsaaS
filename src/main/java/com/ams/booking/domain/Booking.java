@@ -3,7 +3,8 @@
  */
 package com.ams.booking.domain;
 
-import com.ams.sharedkernel.domain.DomainException;
+import com.ams.sharedkernel.domain.exception.DomainException;
+
 import org.joda.time.DateTime;
 
 import java.util.Date;

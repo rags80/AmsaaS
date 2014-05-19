@@ -1,33 +1,42 @@
 package com.ams.billingandpayment.domain.repository;
 
-import com.ams.billingandpayment.domain.model.bill.Bill;
-import com.ams.billingandpayment.domain.model.bill.Payment;
-
 import java.util.List;
 import java.util.Set;
 
-public interface BillRepository {
+import com.ams.billingandpayment.domain.model.bill.Bill;
+import com.ams.billingandpayment.domain.model.bill.BillPaymentRegister;
+import com.ams.billingandpayment.domain.model.bill.Payment;
+import com.ams.users.domain.model.Person;
 
-    public Bill createBill(Bill bill);
+public interface BillRepository
+{
 
-    public void createBills(List<Bill> bills);
+	public Bill createBill(Bill bill);
 
-    public long deleteBill(long billNumber);
+	public void createBills(List<Bill> bills);
 
-    public void deleteBills(Set<Bill> bills);
+	public long deleteBill(long billNumber);
 
-    public Bill findBill(long billNumber);
+	public void deleteBills(Set<Bill> bills);
 
-    public Set<Bill> findBills(long userId);
+	public Bill findBill(long billNumber);
 
-    public List<Bill> findBillsByPaymentStatus();
+	public Set<Bill> findBills(long userId);
 
-    public Payment findPayment(long paymntNumber);
+	public List<Bill> findBillsByPaymentStatus();
 
-    public Set<Payment> findPayments(long billNumber);
+	public Payment findPayment(long paymntNumber);
 
-    public long updateBill(Bill bill);
+	public Set<Payment> findPayments(long billNumber);
 
-    public void updateBills(Set<Bill> bills);
+	public long updateBill(Bill bill);
+
+	public void updateBills(Set<Bill> bills);
+
+	/**
+	 * @param billedPerson
+	 * @return
+	 */
+	public BillPaymentRegister findBillPaymentRegisterFor(Person billedPerson);
 
 }

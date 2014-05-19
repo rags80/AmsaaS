@@ -1,8 +1,9 @@
 package com.ams.billingandpayment.ports.adapter.persistance.jpa;
 
-import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.model.services.Service;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.sharedkernel.domain.repository.Page;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
+
 import java.util.List;
 
 @Repository("ServiceRepository")

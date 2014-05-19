@@ -1,6 +1,6 @@
 package com.ams.billingandpayment.application.api.service.serviceportfolio;
 
-import com.ams.billingandpayment.domain.model.servicecatalog.Service;
+import com.ams.billingandpayment.domain.model.services.Service;
 import com.ams.sharedkernel.domain.repository.Page;
 
 import java.util.List;

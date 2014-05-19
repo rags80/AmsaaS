@@ -3,9 +3,10 @@
  */
 package com.ams.billing.ports.adapter.persistance.jpa;
 
-import com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan;
+import com.ams.billingandpayment.domain.model.services.ServicePlan;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.sharedkernel.domain.repository.Page;
+
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class TestServicePlanRepository {
 
     /**
      * Test method for
-     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.servicecatalog.ServicePlan)}
+     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.services.ServicePlan)}
      * .
      */
     @Test
@@ -143,7 +144,7 @@ public class TestServicePlanRepository {
 
     /**
      * Test method for
-     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#saveOrUpdateServicePriceToPlan(com.ams.billingandpayment.domain.model.servicecatalog.ServicePrice)}
+     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#saveOrUpdateServicePriceToPlan(com.ams.billingandpayment.domain.model.services.ServicePrice)}
      * .
      */
     @Test
