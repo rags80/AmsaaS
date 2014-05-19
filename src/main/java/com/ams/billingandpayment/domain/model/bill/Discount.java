@@ -2,6 +2,9 @@ package com.ams.billingandpayment.domain.model.bill;
 
 import java.io.Serializable;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
@@ -11,7 +14,12 @@ public class Discount implements Serializable
 {
 	public static final Discount	ZERO_DISCOUNT		= new Discount(Money.ZERO, "Zero! Discount");
 	private static final long	serialVersionUID	= 1L;
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "DiscountAmount_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "DiscountAmount_Currency"))
+	})
 	private Money				discntAmount;
+	@Column(name = "Discount_Description")
 	private String				discntDescription;
 
 	public Discount(Money discntAmnt, String descrptn)

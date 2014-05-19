@@ -6,6 +6,7 @@ package com.ams.billingandpayment.domain.model.services;
 import java.io.Serializable;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 public class ServicePriceId implements Serializable

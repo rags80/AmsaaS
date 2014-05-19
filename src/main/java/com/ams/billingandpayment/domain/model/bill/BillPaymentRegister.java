@@ -2,16 +2,27 @@ package com.ams.billingandpayment.domain.model.bill;
 
 import java.io.Serializable;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 
 /**
- * @author Raghavendra Badiger
  * 
+ * @author Raghavendra Badiger
  */
 @Entity
+@Access(AccessType.FIELD)
+@Table(name = "T_BILLPAYMENT_REGISTER")
 public class BillPaymentRegister implements Serializable
 {
 
@@ -21,10 +32,25 @@ public class BillPaymentRegister implements Serializable
 	}
 
 	private static final long	serialVersionUID	= 1L;
+
 	@Id
 	private long				personId;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "CurrentBalance_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "CurrentBalance_Currency"))
+	})
 	private Money				billCurrentBalance;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "AmountPaid_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "AmountPaid_Currency"))
+	})
 	private Money				billAmountPaid;
+
+	@Enumerated(EnumType.STRING)
 	private Status				billPaymentStatus;
 
 	public BillPaymentRegister(long persnId)
@@ -44,10 +70,7 @@ public class BillPaymentRegister implements Serializable
 	void updateCurrentBalance(Bill bill)
 	{
 		this.billCurrentBalance = bill.getBillNetAmount();
-		if (!this.billCurrentBalance.equals(Money.ZERO))
-		{
-			this.billPaymentStatus = Status.UNPAID;
-		}
+		this.updateBillPaymentStatus(bill);
 	}
 
 	void updateOnBillPayment(Bill bill, Payment paymnt)
@@ -55,7 +78,6 @@ public class BillPaymentRegister implements Serializable
 
 		this.billAmountPaid = this.billAmountPaid.add(paymnt.getPaymntAmount());
 		this.billCurrentBalance = this.billCurrentBalance.subtract(this.billAmountPaid);
-		paymnt.setPaymntBalance(this.billCurrentBalance.getAmount());
 		this.updateBillPaymentStatus(bill);
 
 	}

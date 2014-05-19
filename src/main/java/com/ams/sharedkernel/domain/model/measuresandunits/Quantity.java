@@ -10,15 +10,19 @@ import javax.persistence.Enumerated;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.exception.InvalidUnitException;
 
+/**
+ * 
+ * @author Raghavendra Badiger
+ */
 @Embeddable
 public class Quantity implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
-	@Column(name = "Qty-Value")
+	@Column(name = "Qty_Value")
 	private BigDecimal			value;
 
-	@Column(name = "Qty-Unit")
+	@Column(name = "Qty_Unit")
 	@Enumerated(EnumType.STRING)
 	private Unit				unit;
 
@@ -140,7 +144,8 @@ public class Quantity implements Serializable
 	}
 
 	/*
-	 * ACCESSOR & MUTATORS
+	 * 
+	 * ACCESSOR FUNCTIONS
 	 */
 
 	public Unit getUnit()
@@ -148,21 +153,9 @@ public class Quantity implements Serializable
 		return this.unit;
 	}
 
-	@SuppressWarnings("unused")
-	private void setUnit(TimeUnit unit)
-	{
-		this.unit = unit;
-	}
-
 	public BigDecimal getValue()
 	{
 		return this.value;
-	}
-
-	@SuppressWarnings("unused")
-	private void setValue(BigDecimal value)
-	{
-		this.value = value;
 	}
 
 	@Override

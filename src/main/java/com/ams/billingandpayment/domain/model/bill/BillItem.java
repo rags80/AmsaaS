@@ -2,6 +2,9 @@ package com.ams.billingandpayment.domain.model.bill;
 
 import java.io.Serializable;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
@@ -16,9 +19,17 @@ public class BillItem implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 	private ServicePrice		servicePrice;
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "ItemGrossAmount_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "ItemGrossAmount_Currency"))
+	})
 	private Money				grossAmount;
 	private Tax				itemTax;
 	private Discount			itemDiscount;
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "ItemNetAmount_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "ItemNetAmount_Currency"))
+	})
 	private Money				netAmount;
 	private Quantity			quantity;
 
@@ -36,7 +47,7 @@ public class BillItem implements Serializable
 		}
 		else
 		{
-			throw new NullPointerException();
+			throw new NullPointerException("BillItem arguements shouldn't be null!!");
 		}
 
 	}

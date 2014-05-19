@@ -7,6 +7,7 @@ import java.util.Currency;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +23,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.TimeUnit;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 
@@ -52,6 +54,7 @@ public class ServicePrice implements Serializable
 	@Enumerated(EnumType.STRING)
 	private ServicePriceCategory		srvcPriceCategory;
 
+	@Embedded
 	private Money					srvcPricePerUnit;
 
 	@Enumerated(EnumType.STRING)
@@ -86,6 +89,7 @@ public class ServicePrice implements Serializable
 	}
 
 	/*
+	 * 
 	 * Domain functions
 	 */
 

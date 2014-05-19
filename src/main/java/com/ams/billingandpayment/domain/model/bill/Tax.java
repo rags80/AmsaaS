@@ -2,6 +2,9 @@ package com.ams.billingandpayment.domain.model.bill;
 
 import java.io.Serializable;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
@@ -11,7 +14,13 @@ public class Tax implements Serializable
 {
 	public static final Tax		ZERO_TAX			= new Tax(Money.ZERO, "Zero! Tax");
 	private static final long	serialVersionUID	= 1L;
+
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "TaxAmount_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "TaxAmount_Currency"))
+	})
 	private Money				taxAmount;
+	@Column(name = "Tax_Description")
 	private String				taxDescription;
 
 	public Tax(Money taxAmount, String description)

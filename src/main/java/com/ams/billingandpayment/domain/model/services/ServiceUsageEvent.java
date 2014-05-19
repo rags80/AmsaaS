@@ -8,6 +8,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.users.domain.model.Person;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 @Table(name = "T_SERVICEUSAGE_EVENTS")
@@ -27,7 +28,7 @@ public class ServiceUsageEvent implements Serializable
 	}
 
 	/*
-	 * SERVICE CHARGE ACCESSOR FUNCTIONS
+	 * SERVICE USAGE EVENT ACCESSOR FUNCTIONS
 	 */
 
 	public Service getSrvc()

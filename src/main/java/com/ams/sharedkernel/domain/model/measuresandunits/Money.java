@@ -7,20 +7,26 @@ import java.util.Currency;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 
 import com.ams.sharedkernel.domain.exception.DomainException;
 import com.ams.sharedkernel.domain.model.measuresandunits.exception.InvalidCurrencyException;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
+
 @Embeddable
 public class Money implements Serializable, Comparable<Money>
 {
 
-	public static final Currency	DEFAULT_CURRENCY	= Currency.getInstance("INR");
-	public static final Money	ZERO				= new Money(BigDecimal.ZERO, DEFAULT_CURRENCY);
 	private static final long	serialVersionUID	= 1L;
+
+	@Transient
+	public static final Currency	DEFAULT_CURRENCY	= Currency.getInstance("INR");
+	@Transient
+	public static final Money	ZERO				= new Money(BigDecimal.ZERO, DEFAULT_CURRENCY);
 	private BigDecimal			amount;
 	private Currency			currency;
 

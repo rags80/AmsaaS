@@ -1,101 +1,84 @@
 package com.ams.billingandpayment.domain.model.bill;
 
-import com.ams.finance.domain.model.Transaction;
-import com.ams.users.domain.model.Person;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-import static javax.persistence.AccessType.PROPERTY;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.ams.finance.domain.model.Transaction;
+import com.ams.sharedkernel.domain.model.measuresandunits.Money;
+import com.ams.users.domain.model.Person;
 
 @Entity
 @Table(name = "T_PAYMENT")
-@Access(PROPERTY)
-public class Payment implements Serializable {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    private Long paymntId;
-    private BigDecimal paymntAmount;
-    private BigDecimal paymntBalance;
-    private String paymntMethod;
-    private Date paymntDate;
-    private Transaction paymntTransaction;
-    private Bill paymntForBill;
-    private Person paymntPerson;
+@Access(AccessType.FIELD)
+public class Payment implements Serializable
+{
 
-    public BigDecimal getPaymntAmount() {
-        return this.paymntAmount;
-    }
+	private static final long	serialVersionUID	= 1L;
+	@Id
+	@GeneratedValue
+	private Long				paymntId;
+	private Money				paymntAmount;
+	private String				paymntMethod;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date				paymntDate;
+	@OneToOne(cascade = CascadeType.PERSIST,optional = false)
+	private Transaction			paymntTransaction;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "Person_Id")
+	private Person				paymntPerson;
 
-    public void setPaymntAmount(BigDecimal paymntAmount) {
-        this.paymntAmount = paymntAmount;
-    }
+	public Payment(Money payAmnt, String payMethod, Date payDate, Transaction payTransRef,
+				Person payPerson)
+	{
 
-    public BigDecimal getPaymntBalance() {
-        return paymntBalance;
-    }
+		this.paymntAmount = payAmnt;
+		this.paymntMethod = payMethod;
+		this.paymntDate = payDate;
+		this.paymntTransaction = payTransRef;
+		this.paymntPerson = payPerson;
+	}
 
-    public void setPaymntBalance(BigDecimal paymntBalance) {
-        this.paymntBalance = paymntBalance;
-    }
+	public Money getPaymntAmount()
+	{
+		return this.paymntAmount;
+	}
 
-    public Date getPaymntDate() {
-        return this.paymntDate;
-    }
+	public Date getPaymntDate()
+	{
+		return this.paymntDate;
+	}
 
-    public void setPaymntDate(Date paymntDate) {
-        this.paymntDate = paymntDate;
-    }
+	public Long getPaymntId()
+	{
+		return this.paymntId;
+	}
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Bill_Number")
-    public Bill getPaymntForBill() {
-        return this.paymntForBill;
-    }
+	public String getPaymntMethod()
+	{
+		return this.paymntMethod;
+	}
 
-    public void setPaymntForBill(Bill paymntForBill) {
-        this.paymntForBill = paymntForBill;
-    }
+	public Person getPaymntPerson()
+	{
+		return this.paymntPerson;
+	}
 
-    @Id
-    @GeneratedValue
-    public Long getPaymntId() {
-        return paymntId;
-    }
-
-    public void setPaymntId(Long paymntId) {
-        this.paymntId = paymntId;
-    }
-
-    public String getPaymntMethod() {
-        return this.paymntMethod;
-    }
-
-    public void setPaymntMethod(String paymntMethod) {
-        this.paymntMethod = paymntMethod;
-    }
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "Person_Id")
-    public Person getPaymntPerson() {
-        return this.paymntPerson;
-    }
-
-    public void setPaymntPerson(Person paymntPerson) {
-        this.paymntPerson = paymntPerson;
-    }
-
-    @OneToOne(cascade = CascadeType.PERSIST, optional = false)
-    public Transaction getPaymntTransaction() {
-        return this.paymntTransaction;
-    }
-
-    public void setPaymntTransaction(Transaction paymntTransaction) {
-        this.paymntTransaction = paymntTransaction;
-    }
+	public Transaction getPaymntTransaction()
+	{
+		return this.paymntTransaction;
+	}
 
 }

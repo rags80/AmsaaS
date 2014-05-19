@@ -30,6 +30,7 @@ import com.ams.users.domain.model.Person;
 import com.ams.users.domain.repository.PersonRepository;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 
@@ -56,8 +57,6 @@ public class ManageBillImpl implements ManageBill
 	@Autowired
 	private DiscountPolicyAdvisor			discountPolicyAdvisor;
 
-	private final String				billingPartyEmailId	= "admin@amsaas.com";
-
 	/**
 	 * 
 	 * Periodic Billing operations
@@ -74,8 +73,6 @@ public class ManageBillImpl implements ManageBill
 		Bill billForPeriod = billBldr.getBillInstance(this.discountPolicyAdvisor.adviseBillDiscountPolicy(srvcSubscriber, billPeriod), this.taxPolicyAdvisor.adviseBillTaxPolicy(srvcSubscriber, billPeriod));
 		this.billRepository.createBill(billForPeriod);
 
-		// this.manageMailService.sendMail(srvcSubscriber.getPersnDetail().getEmailId(),
-		// this.billingPartyEmailId, "");
 	}
 
 	/*
@@ -88,7 +85,7 @@ public class ManageBillImpl implements ManageBill
 		if (billBldr.isHeaderSet())
 		{
 			Period billPeriod = billBldr.bill.getBillPeriod();
-			ServicePlan srvcPlan = this.srvcPlanRepository.findServicePlanOfPerson(billBldr.bill.getBilledPersonId());
+			ServicePlan srvcPlan = this.srvcPlanRepository.findServicePlanOfPerson(billBldr.bill.getBilledPerson().getPersnId());
 
 			List<ServicePrice> nonUsageServicePriceList = this.srvcPlanRepository.findAllServicePricesByCriteria(srvcPlan.getSrvcPlanName(), ServicePriceCategory.NON_USAGE.toString());
 
@@ -99,7 +96,7 @@ public class ManageBillImpl implements ManageBill
 				{
 					TaxPolicy srvcTaxPolicy = this.taxPolicyAdvisor.adviseServiceTaxPolicy(nonUsageServicePrice.getService());
 
-					DiscountPolicy srvcDiscntPolicy = this.discountPolicyAdvisor.adviseServiceDiscountPolicy(billBldr.bill.getBilledPersonId(), billBldr.bill.getBillPeriod(),
+					DiscountPolicy srvcDiscntPolicy = this.discountPolicyAdvisor.adviseServiceDiscountPolicy(billBldr.bill.getBilledPerson(), billBldr.bill.getBillPeriod(),
 																							srvcPlan,
 																							nonUsageServicePrice);
 					Quantity qty = Period.convertTo(billPeriod, nonUsageServicePrice.getSrvcUnitOfMeasure());
@@ -122,14 +119,14 @@ public class ManageBillImpl implements ManageBill
 		{
 
 			Period billPeriod = billBldr.bill.getBillPeriod();
-			long persnId = billBldr.bill.getBilledPersonId();
-			List<ServiceUsageEvent> srvcUsageEventList = this.srvcUsageEventRepository.findAllForCustomerWithinPeriod(persnId, billPeriod);
+			Person persn = billBldr.bill.getBilledPerson();
+			List<ServiceUsageEvent> srvcUsageEventList = this.srvcUsageEventRepository.findAllForCustomerWithinPeriod(persn.getPersnId(), billPeriod);
 
 			for (ServiceUsageEvent srvcUsageEvent : srvcUsageEventList)
 			{
-				ServicePlan subscbrSrvcPlan = this.srvcPlanRepository.findServicePlanOfPerson(persnId);
+				ServicePlan subscbrSrvcPlan = this.srvcPlanRepository.findServicePlanOfPerson(persn.getPersnId());
 				ServicePrice srvcPrice = this.srvcPlanRepository.findServicePriceByCriteria(subscbrSrvcPlan.getSrvcPlanName(), srvcUsageEvent.getSrvc().getSrvcCode());
-				DiscountPolicy srvcDiscountPolicy = this.discountPolicyAdvisor.adviseServiceDiscountPolicy(persnId, billPeriod, subscbrSrvcPlan, srvcPrice);
+				DiscountPolicy srvcDiscountPolicy = this.discountPolicyAdvisor.adviseServiceDiscountPolicy(persn, billPeriod, subscbrSrvcPlan, srvcPrice);
 				TaxPolicy srvcTaxPolicy = this.taxPolicyAdvisor.adviseServiceTaxPolicy(srvcUsageEvent.getSrvc());
 				Quantity qty = Period.convertTo(srvcUsageEvent.getSrvcUsagePeriod(), srvcPrice.getSrvcUnitOfMeasure());
 				billBldr.addLineItem(srvcPrice, qty, srvcDiscountPolicy, srvcTaxPolicy);

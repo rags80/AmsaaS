@@ -8,14 +8,22 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.ams.billingandpayment.domain.model.bill.exception.BillExceptionCode;
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
@@ -41,21 +49,53 @@ public class Bill implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long				billId;
-	private long				billedPersonId;
+	@ManyToOne
+	@JoinColumn(name = "BilledPerson_Id")
+	private Person				billedPerson;
+	@Temporal(TemporalType.DATE)
 	private Date				billDate;
+	@Temporal(TemporalType.DATE)
 	private Date				billDueDate;
+	@Embedded
 	private Period				billPeriod;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "PrevBal_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "PrevBal_Currency"))
+	})
 	private Money				billPreviousBalance;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "Penalty_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "Penalty_Currency"))
+	})
 	private Money				billPenaltyAmount;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "GrossAmount_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "GrossAmount_Currency"))
+	})
 	private Money				billGrossAmount;
+	@Embedded
 	private Tax				billTotalTax;
+	@Embedded
 	private Discount			billTotalDiscount;
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "NetAmount_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "NetAmount_Currency"))
+	})
 	private Money				billNetAmount;
+	@OneToOne
+	@JoinColumn(name = "BillPayReg_Id")
 	private BillPaymentRegister	billPaymentRegister;
 
 	@ElementCollection
 	@CollectionTable(name = "T_BILLITEM",joinColumns = @JoinColumn(name = "Bill_No"))
 	private List<BillItem>		billItems;
+	@ElementCollection
+	@CollectionTable(name = "T_BILLPAYMENTS",joinColumns = @JoinColumn(name = "Bill_No"))
 	private List<Payment>		billPayments;
 
 	private Bill()
@@ -84,7 +124,7 @@ public class Bill implements Serializable
 			{
 				if (billDueDate.after(billDate))
 				{
-					this.bill.billedPersonId = billedPersn.getPersnId();
+					this.bill.billedPerson = billedPersn;
 					this.bill.billDate = billDate;
 					this.bill.billDueDate = billDueDate;
 					this.bill.billPeriod = billPeriod;
@@ -213,9 +253,9 @@ public class Bill implements Serializable
 		return this.billId;
 	}
 
-	public long getBilledPersonId()
+	public Person getBilledPerson()
 	{
-		return this.billedPersonId;
+		return this.billedPerson;
 	}
 
 	public Date getBillDate()

@@ -1,12 +1,11 @@
 package com.ams.billingandpayment.domain.model.services;
 
-import static javax.persistence.AccessType.PROPERTY;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,22 +18,19 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  * @author Raghavendra Badiger
  */
 @Entity
-@Access(PROPERTY)
+@Access(AccessType.FIELD)
 @Table(name = "T_SERVICE")
 @Cacheable(true)
 public class Service implements Serializable
 {
-	/**
-     *
-     */
 	private static final long	serialVersionUID	= 1L;
+	@Id
 	private String				srvcCode;
 	private String				srvcName;
 	private String				srvcDescription;
-	private Set<ServicePrice>	srvcPriceSet;
 
-	public Service()
-	{}
+	@OneToMany(mappedBy = "service",targetEntity = ServicePrice.class)
+	private Set<ServicePrice>	srvcPriceSet;
 
 	public Service(String code, String name, String description)
 	{
@@ -44,14 +40,37 @@ public class Service implements Serializable
 		this.srvcPriceSet = new HashSet<ServicePrice>();
 	}
 
-	public static long getSerialversionuid()
+	public void modifyServiceDetails(String name, String descrptn)
 	{
-		return serialVersionUID;
+		this.srvcName = name;
+		this.srvcDescription = descrptn;
 	}
 
 	/*
-	 * ACCESSOR & MUTATORS
+	 * 
+	 * ACCESSOR FUNCTIONS
 	 */
+
+	public String getSrvcCode()
+	{
+		return this.srvcCode;
+	}
+
+	public String getSrvcName()
+	{
+		return this.srvcName;
+	}
+
+	public String getSrvcDescription()
+	{
+		return this.srvcDescription;
+	}
+
+	@JsonIgnore
+	public Set<ServicePrice> getSrvcPriceSet()
+	{
+		return this.srvcPriceSet;
+	}
 
 	@Override
 	public boolean equals(Object obj)
@@ -83,50 +102,6 @@ public class Service implements Serializable
 		return true;
 	}
 
-	@Id
-	public String getSrvcCode()
-	{
-		return this.srvcCode;
-	}
-
-	private void setSrvcCode(String srvcCode)
-	{
-		this.srvcCode = srvcCode;
-	}
-
-	public String getSrvcDescription()
-	{
-		return this.srvcDescription;
-	}
-
-	private void setSrvcDescription(String srvcDescription)
-	{
-		this.srvcDescription = srvcDescription;
-	}
-
-	public String getSrvcName()
-	{
-		return this.srvcName;
-	}
-
-	private void setSrvcName(String srvcName)
-	{
-		this.srvcName = srvcName;
-	}
-
-	@OneToMany(mappedBy = "service",targetEntity = ServicePrice.class)
-	@JsonIgnore
-	public Set<ServicePrice> getSrvcPriceSet()
-	{
-		return this.srvcPriceSet;
-	}
-
-	@JsonIgnore
-	private void setSrvcPriceSet(Set<ServicePrice> srvcPriceSet)
-	{
-		this.srvcPriceSet = srvcPriceSet;
-	}
-
 	@Override
 	public int hashCode()
 	{
@@ -136,20 +111,15 @@ public class Service implements Serializable
 		return result;
 	}
 
-	/**
-	 * @param string
-	 * @param string2
-	 */
-	public void modifyServiceDetails(String name, String descrptn)
-	{
-		this.srvcName = name;
-		this.srvcDescription = descrptn;
-	}
-
 	@Override
 	public String toString()
 	{
 		return "Service [srvcCode=" + this.srvcCode + ", srvcName=" + this.srvcName + ", srvcDescription=" + this.srvcDescription + "]";
+	}
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
 	}
 
 }

@@ -6,7 +6,9 @@
 		<class>com.ams.billingandpayment.domain.model.bill.Bill</class>
 		<class>com.ams.billingandpayment.domain.model.bill.BillItem</class>
 		<class>com.ams.billingandpayment.domain.model.bill.BillPaymentRegister</class>
+		<class>com.ams.billingandpayment.domain.model.bill.Discount</class>
 		<class>com.ams.billingandpayment.domain.model.bill.Payment</class>
+		<class>com.ams.billingandpayment.domain.model.bill.Tax</class>
 		<class>com.ams.billingandpayment.domain.model.services.Service</class>
 		<class>com.ams.billingandpayment.domain.model.services.ServicePlan</class>
 		<class>com.ams.billingandpayment.domain.model.services.ServicePrice</class>
@@ -17,7 +19,6 @@
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Money</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Period</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Quantity</class>
-		<class>com.ams.sharedkernel.domain.model.measuresandunits.Rate</class>
 		<class>com.ams.users.domain.model.Address</class>
 		<class>com.ams.users.domain.model.Person</class>
 		<class>com.ams.users.domain.model.PersonDetail</class>

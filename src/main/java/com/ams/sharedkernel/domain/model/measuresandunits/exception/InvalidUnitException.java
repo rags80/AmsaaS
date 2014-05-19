@@ -2,20 +2,24 @@ package com.ams.sharedkernel.domain.model.measuresandunits.exception;
 
 import com.ams.sharedkernel.domain.exception.DomainException;
 
-public class InvalidUnitException extends DomainException {
+/**
+ * 
+ * @author Raghavendra Badiger
+ */
+public class InvalidUnitException extends DomainException
+{
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-    public InvalidUnitException() {
+	public InvalidUnitException()
+	{
 
-    }
+	}
 
-    public InvalidUnitException(String msg) {
-        super(msg);
+	public InvalidUnitException(String msg)
+	{
+		super(msg);
 
-    }
+	}
 
 }

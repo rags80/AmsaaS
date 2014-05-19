@@ -1,5 +1,8 @@
 package com.ams.billingandpayment.domain.model.bill;
 
+import java.math.BigDecimal;
+import java.util.Currency;
+
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 
 public class BillSpecification
@@ -12,12 +15,9 @@ public class BillSpecification
 		return payment.getPaymntDate().before(bill.getBillDueDate());
 	}
 
-	/**
-	 * @return
-	 */
 	public static Money getPenaltyAmount()
 	{
-		return null;
+		return new Money(BigDecimal.valueOf(50), Currency.getInstance("INR"));
 	}
 
 }

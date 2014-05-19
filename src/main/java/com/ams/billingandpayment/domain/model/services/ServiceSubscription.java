@@ -21,6 +21,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.ams.users.domain.model.Person;
 
 /**
+ * 
  * Entity implementation class for Entity: ServiceProfile
  */
 
@@ -45,12 +46,8 @@ public class ServiceSubscription implements Serializable
 	private Status		srvcSubcrptnStatus;
 	private ServicePlan	subscribedSrvcsPlan;
 
-	public ServiceSubscription()
-	{
-		super();
-	}
-
 	/*
+	 * 
 	 * PERSON SERVICE PROFILE DOMAIN LOGIC
 	 */
 
