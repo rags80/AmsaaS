@@ -15,14 +15,15 @@ import com.ams.billingandpayment.domain.model.bill.BillPaymentRegister;
 import com.ams.billingandpayment.domain.model.bill.exception.BillExceptionCode;
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
 import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
-import com.ams.billingandpayment.domain.model.services.ServicePlan;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
-import com.ams.billingandpayment.domain.model.services.ServicePrice.ServicePriceCategory;
-import com.ams.billingandpayment.domain.model.services.ServiceUsageEvent;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEvent;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice.ServicePriceCategory;
 import com.ams.billingandpayment.domain.repository.BillRepository;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.billingandpayment.domain.repository.ServiceUsageEventRepository;
 import com.ams.billingandpayment.domain.service.DiscountPolicyAdvisor;
+import com.ams.billingandpayment.domain.service.ServicePriceSpecAdvisor;
 import com.ams.billingandpayment.domain.service.TaxPolicyAdvisor;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
@@ -56,6 +57,9 @@ public class ManageBillImpl implements ManageBill
 
 	@Autowired
 	private DiscountPolicyAdvisor			discountPolicyAdvisor;
+
+	@Autowired
+	private ServicePriceSpecAdvisor		srvcPriceSpecAdvsr;
 
 	/**
 	 * 
@@ -92,7 +96,7 @@ public class ManageBillImpl implements ManageBill
 			for (ServicePrice nonUsageServicePrice : nonUsageServicePriceList)
 			{
 
-				if (nonUsageServicePrice.getSrvcPriceSpec().isApplicableFor(billPeriod))
+				if (nonUsageServicePrice.getSrvcPriceSpec(this.srvcPriceSpecAdvsr).isApplicableFor(billPeriod))
 				{
 					TaxPolicy srvcTaxPolicy = this.taxPolicyAdvisor.adviseServiceTaxPolicy(nonUsageServicePrice.getService());
 

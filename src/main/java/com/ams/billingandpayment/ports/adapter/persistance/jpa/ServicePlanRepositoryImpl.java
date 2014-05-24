@@ -12,8 +12,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ams.billingandpayment.domain.model.services.ServicePlan;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.sharedkernel.domain.repository.Page;
 

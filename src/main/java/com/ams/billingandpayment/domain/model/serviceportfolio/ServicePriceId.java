@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ams.billingandpayment.domain.model.services;
+package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
 
@@ -22,6 +22,16 @@ public class ServicePriceId implements Serializable
 	{
 		this.srvcPlan = srvcPlan;
 		this.service = srvc;
+	}
+
+	public String getService()
+	{
+		return this.service;
+	}
+
+	public String getSrvcPlan()
+	{
+		return this.srvcPlan;
 	}
 
 	@Override
@@ -64,16 +74,6 @@ public class ServicePriceId implements Serializable
 			return false;
 		}
 		return true;
-	}
-
-	public String getService()
-	{
-		return this.service;
-	}
-
-	public String getSrvcPlan()
-	{
-		return this.srvcPlan;
 	}
 
 	@Override

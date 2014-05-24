@@ -6,14 +6,21 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
 @Embeddable
 public class Discount implements Serializable
 {
 	public static final Discount	ZERO_DISCOUNT		= new Discount(Money.ZERO, "Zero! Discount");
 	private static final long	serialVersionUID	= 1L;
+
+	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "amount",column = @Column(name = "DiscountAmount_Amount")),
 			@AttributeOverride(name = "currency",column = @Column(name = "DiscountAmount_Currency"))

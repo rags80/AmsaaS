@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 import com.ams.billingandpayment.domain.model.bill.exception.BillExceptionCode;
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
 import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
 import com.ams.sharedkernel.domain.exception.DomainException;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
@@ -47,8 +47,8 @@ public class Bill implements Serializable
 	private static final long	serialVersionUID	= 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long				billId;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long				billNumber;
 	@ManyToOne
 	@JoinColumn(name = "BilledPerson_Id")
 	private Person				billedPerson;
@@ -248,9 +248,9 @@ public class Bill implements Serializable
 	/*
 	 * Bill Accessor Functions
 	 */
-	public long getBillId()
+	public long getBillNumber()
 	{
-		return this.billId;
+		return this.billNumber;
 	}
 
 	public Person getBilledPerson()

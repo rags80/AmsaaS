@@ -5,6 +5,10 @@ import java.util.Currency;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
 public class BillSpecification
 {
 

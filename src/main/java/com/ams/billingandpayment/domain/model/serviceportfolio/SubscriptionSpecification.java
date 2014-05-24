@@ -1,9 +1,13 @@
-package com.ams.billingandpayment.domain.model.services;
+package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.util.Date;
 
 import com.ams.sharedkernel.domain.specification.Specification;
 
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
 public class SubscriptionSpecification implements Specification<ServiceSubscription>
 {
 

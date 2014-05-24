@@ -1,8 +1,8 @@
 package com.ams.billingandpayment.application.api.service.serviceportfolio;
 
 import com.ams.billingandpayment.application.api.dto.ServicePriceCommand;
-import com.ams.billingandpayment.domain.model.services.ServicePlan;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
 import com.ams.sharedkernel.domain.repository.Page;
 
 import java.util.List;

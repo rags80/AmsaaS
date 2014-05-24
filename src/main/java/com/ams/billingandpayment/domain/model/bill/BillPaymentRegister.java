@@ -85,7 +85,7 @@ public class BillPaymentRegister implements Serializable
 	private void updateBillPaymentStatus(Bill bill)
 	{
 
-		this.billPaymentStatus = (this.billCurrentBalance.compareTo(Money.ZERO) == 0) ? Status.PAID : (this.billCurrentBalance.compareTo(bill.getBillNetAmount()) == 0 ? Status.UNPAID : (this.billCurrentBalance.compareTo(Money.ZERO) < 0) ? Status.OVERLY_PAID : Status.PARTIALLY_PAID);
+		this.billPaymentStatus = ((this.billCurrentBalance.equals(Money.ZERO) && bill.getBillNetAmount().equals(Money.ZERO)) ? Status.NOT_APPLICABLE : this.billCurrentBalance.equals(Money.ZERO) ? Status.PAID : (this.billCurrentBalance.compareTo(bill.getBillNetAmount()) == 0 ? Status.UNPAID : (this.billCurrentBalance.compareTo(Money.ZERO) < 0) ? Status.OVERLY_PAID : Status.PARTIALLY_PAID));
 	}
 
 	/*

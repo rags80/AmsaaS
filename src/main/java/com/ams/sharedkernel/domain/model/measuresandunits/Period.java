@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -25,11 +23,9 @@ public class Period implements Serializable
 	private static final long	serialVersionUID	= 1L;
 
 	@Column(name = "Period_fromDate")
-	@Temporal(TemporalType.TIMESTAMP)
 	private DateTime			fromDate;
 
 	@Column(name = "Period_toDate")
-	@Temporal(TemporalType.TIMESTAMP)
 	private DateTime			toDate;
 
 	public Period(DateTime fromDate, DateTime toDate)

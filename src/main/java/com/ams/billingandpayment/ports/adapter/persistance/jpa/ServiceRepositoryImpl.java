@@ -1,6 +1,6 @@
 package com.ams.billingandpayment.ports.adapter.persistance.jpa;
 
-import com.ams.billingandpayment.domain.model.services.Service;
+import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.sharedkernel.domain.repository.Page;
 

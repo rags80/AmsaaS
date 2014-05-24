@@ -9,29 +9,25 @@
 		<class>com.ams.billingandpayment.domain.model.bill.Discount</class>
 		<class>com.ams.billingandpayment.domain.model.bill.Payment</class>
 		<class>com.ams.billingandpayment.domain.model.bill.Tax</class>
-		<class>com.ams.billingandpayment.domain.model.services.Service</class>
-		<class>com.ams.billingandpayment.domain.model.services.ServicePlan</class>
-		<class>com.ams.billingandpayment.domain.model.services.ServicePrice</class>
-		<class>com.ams.billingandpayment.domain.model.services.ServiceSubscription</class>
-		<class>com.ams.finance.domain.model.Account</class>
+		<class>com.ams.billingandpayment.domain.model.serviceportfolio.Service</class>
+		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan</class>
+		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice</class>
+		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServiceSubscription</class>
+		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEvent</class>
+		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEventId</class>
 		<class>com.ams.finance.domain.model.AccountDetail</class>
-		<class>com.ams.finance.domain.model.Transaction</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Money</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Period</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Quantity</class>
 		<class>com.ams.users.domain.model.Address</class>
+		<class>com.ams.users.domain.model.LoginDetails</class>
 		<class>com.ams.users.domain.model.Person</class>
 		<class>com.ams.users.domain.model.PersonDetail</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
-		<properties>
-			<property name="hibernate.cache.use_query_cache" value="true"/>
-			<property name="hibernate.cache.use_second_level_cache" value="true"/>
-			<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory"/>
-			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
-			<property name="eclipselink.ddl-generation.output-mode"
-				value="sql-script" />
-			<property name="eclipselink.application-location" value="C:\Users\Moni\Desktop" />
-		</properties>
-
+		<!-- <properties> <property name="hibernate.cache.use_query_cache" value="true" 
+			/> <property name="hibernate.cache.use_second_level_cache" value="true" /> 
+			<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory" 
+			/> <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" 
+			/> </properties> -->
 	</persistence-unit>
 </persistence>

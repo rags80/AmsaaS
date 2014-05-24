@@ -1,4 +1,4 @@
-package com.ams.billingandpayment.domain.model.services;
+package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -6,6 +6,8 @@ import java.util.Currency;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -42,22 +44,27 @@ public class ServicePrice implements Serializable
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "srvcPlanName")
+	@JoinColumn(name = "ServicePlan_Name")
 	private ServicePlan				srvcPlan;
 
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "srvcCode")
+	@JoinColumn(name = "Service_Code")
 	private Service				service;
 
-	@Column(nullable = false)
+	@Column(nullable = false,name = "SrvcPriceCategory")
 	@Enumerated(EnumType.STRING)
 	private ServicePriceCategory		srvcPriceCategory;
 
 	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "amount",column = @Column(name = "SrvcPricePerUnit_Amount")),
+			@AttributeOverride(name = "currency",column = @Column(name = "SrvcPricePerUnit_Currency"))
+	})
 	private Money					srvcPricePerUnit;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "SrvcUnitOfMeasure")
 	private TimeUnit				srvcUnitOfMeasure;
 
 	@Transient
@@ -65,26 +72,25 @@ public class ServicePrice implements Serializable
 
 	public ServicePrice(ServicePlan srvcPlan, Service srvc, String srvcPriceCategory,
 					BigDecimal pricePerUnit, String currencyCode,
-					String unitOfMeasure, ServicePriceSpecAdvisor spsAdvsr)
+					String unitOfMeasure)
 	{
 		this.srvcPlan = srvcPlan;
 		this.service = srvc;
 		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
 		this.srvcPricePerUnit = new Money(pricePerUnit, Currency.getInstance(currencyCode));
 		this.srvcUnitOfMeasure = TimeUnit.valueOf(unitOfMeasure);
-		this.srvcPriceSpec = spsAdvsr.adviseSpec(this.srvcPlan, this.service);
+
 	}
 
 	public ServicePrice(ServicePlan servicePlan, Service srvc, String srvcPriceCategory,
 					Money srvcPrice,
-					String unitOfMeasure, ServicePriceSpecAdvisor spsAdvsr)
+					String unitOfMeasure)
 	{
 		this.srvcPlan = servicePlan;
 		this.service = srvc;
 		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
 		this.srvcPricePerUnit = srvcPrice;
 		this.srvcUnitOfMeasure = TimeUnit.valueOf(unitOfMeasure);
-		this.srvcPriceSpec = spsAdvsr.adviseSpec(this.srvcPlan, this.service);
 
 	}
 
@@ -128,8 +134,9 @@ public class ServicePrice implements Serializable
 		return this.srvcUnitOfMeasure;
 	}
 
-	public ServicePriceSpecification getSrvcPriceSpec()
+	public ServicePriceSpecification getSrvcPriceSpec(ServicePriceSpecAdvisor spsAdvsr)
 	{
+		this.srvcPriceSpec = spsAdvsr.adviseSpec(this);
 		return this.srvcPriceSpec;
 	}
 
@@ -204,6 +211,11 @@ public class ServicePrice implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
 	}
 
 }

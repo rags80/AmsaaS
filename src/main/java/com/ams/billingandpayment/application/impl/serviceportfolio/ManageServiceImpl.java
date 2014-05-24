@@ -1,7 +1,7 @@
 package com.ams.billingandpayment.application.impl.serviceportfolio;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageService;
-import com.ams.billingandpayment.domain.model.services.Service;
+import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
 import com.ams.sharedkernel.domain.repository.Page;
 

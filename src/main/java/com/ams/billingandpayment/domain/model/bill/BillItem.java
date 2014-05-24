@@ -6,31 +6,66 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
 import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
-import com.ams.billingandpayment.domain.model.services.Service;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
 
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
 @Embeddable
 public class BillItem implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
+
+	@ManyToOne
+	@JoinColumns({ @JoinColumn(name = "SrvcPlan_Name",referencedColumnName = "ServicePlan_Name"), @JoinColumn(name = "Srvc_Code",referencedColumnName = "Service_Code") })
 	private ServicePrice		servicePrice;
+
+	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "amount",column = @Column(name = "ItemGrossAmount_Amount")),
 			@AttributeOverride(name = "currency",column = @Column(name = "ItemGrossAmount_Currency"))
 	})
 	private Money				grossAmount;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "taxDescription",column = @Column(name = "ItemTax_Description")),
+			@AttributeOverride(name = "taxAmount.amount",column = @Column(name = "ItemTax_Amount")),
+			@AttributeOverride(name = "taxAmount.currency",column = @Column(name = "ItemTax_Currency"))
+	})
 	private Tax				itemTax;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "discntDescription",column = @Column(name = "ItemDiscnt_Description")),
+			@AttributeOverride(name = "discntAmount.amount",column = @Column(name = "ItemDiscnt_Amount")),
+			@AttributeOverride(name = "discntAmount.currency",column = @Column(name = "ItemDiscnt_Currency"))
+	})
 	private Discount			itemDiscount;
+
+	@Embedded
 	@AttributeOverrides({
 			@AttributeOverride(name = "amount",column = @Column(name = "ItemNetAmount_Amount")),
 			@AttributeOverride(name = "currency",column = @Column(name = "ItemNetAmount_Currency"))
 	})
 	private Money				netAmount;
+
+	@Embedded
+	@AttributeOverrides({
+			@AttributeOverride(name = "value",column = @Column(name = "ItemQty_Value")),
+			@AttributeOverride(name = "unit",column = @Column(name = "ItemQty_Unit"))
+	})
 	private Quantity			quantity;
 
 	public BillItem(ServicePrice srvcPrice, Quantity qty, TaxPolicy itemTaxPolicy,

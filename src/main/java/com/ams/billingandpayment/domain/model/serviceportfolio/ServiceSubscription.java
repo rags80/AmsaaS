@@ -1,4 +1,4 @@
-package com.ams.billingandpayment.domain.model.services;
+package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,10 +21,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.ams.users.domain.model.Person;
 
 /**
+ * @author Raghavendra Badiger
  * 
- * Entity implementation class for Entity: ServiceProfile
  */
-
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(name = "T_SERVICESUBSCRIPTION")

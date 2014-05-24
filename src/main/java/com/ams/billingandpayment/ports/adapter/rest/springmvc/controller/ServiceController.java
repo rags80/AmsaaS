@@ -1,7 +1,7 @@
 package com.ams.billingandpayment.ports.adapter.rest.springmvc.controller;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageService;
-import com.ams.billingandpayment.domain.model.services.Service;
+import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
 import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.repository.Page;
 

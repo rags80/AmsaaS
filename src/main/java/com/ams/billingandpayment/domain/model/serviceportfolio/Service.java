@@ -1,4 +1,4 @@
-package com.ams.billingandpayment.domain.model.services;
+package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 @Entity

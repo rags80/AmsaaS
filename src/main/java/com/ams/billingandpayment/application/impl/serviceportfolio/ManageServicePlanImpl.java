@@ -9,12 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ams.billingandpayment.application.api.dto.ServicePriceCommand;
 import com.ams.billingandpayment.application.api.service.serviceportfolio.InvalidServicePricePlanException;
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageServicePlan;
-import com.ams.billingandpayment.domain.model.services.Service;
-import com.ams.billingandpayment.domain.model.services.ServicePlan;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
-import com.ams.billingandpayment.domain.service.ServicePriceSpecAdvisor;
 import com.ams.sharedkernel.domain.repository.Page;
 
 @Transactional
@@ -23,13 +22,10 @@ public class ManageServicePlanImpl implements ManageServicePlan
 {
 
 	@Autowired
-	private ServiceRepository		serviceRepository;
+	private ServiceRepository	serviceRepository;
 
 	@Autowired
-	private ServicePlanRepository		servicePlanRepository;
-
-	@Autowired
-	private ServicePriceSpecAdvisor	srvcPriceSpecAdvsr;
+	private ServicePlanRepository	servicePlanRepository;
 
 	@Override
 	public List<ServicePlan> getAllServicePlans()
@@ -91,8 +87,7 @@ public class ManageServicePlanImpl implements ManageServicePlan
 													srvc,
 													srvcPriceCommand.getSrvcPriceAmountValue(),
 													srvcPriceCommand.getSrvcPriceAmountCurrency(),
-													srvcPriceCommand.getSrvcPriceUnitOfMeasure(),
-													this.srvcPriceSpecAdvsr);
+													srvcPriceCommand.getSrvcPriceUnitOfMeasure());
 
 		return this.servicePlanRepository.saveOrUpdateServicePriceToPlan(srvcRate);
 

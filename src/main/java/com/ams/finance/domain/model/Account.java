@@ -1,149 +1,189 @@
 package com.ams.finance.domain.model;
 
-import com.ams.users.domain.model.Person;
+import static javax.persistence.AccessType.PROPERTY;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import static javax.persistence.AccessType.PROPERTY;
+import javax.persistence.Access;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
-@Entity
+import com.ams.users.domain.model.Person;
+
+// @Entity
 @Access(PROPERTY)
 @Table(name = "T_ACCOUNT")
-public class Account implements Serializable {
-    /**
+public class Account implements Serializable
+{
+	/**
      *
      */
-    private static final long serialVersionUID = 1L;
-    @Version
-    protected Integer version;
-    private Long acntNumber;
-    private String acntName;
-    private String acntType;
-    private String acntCurrency;
-    private float acntBalance;
-    private AccountDetail acntDetail;
-    private Date acntCreationDate;
-    private Set<Transaction> acntTransactions;
-    private Person acntHolder;
+	private static final long	serialVersionUID	= 1L;
+	@Version
+	protected Integer			version;
+	private Long				acntNumber;
+	private String				acntName;
+	private String				acntType;
+	private String				acntCurrency;
+	private float				acntBalance;
+	private AccountDetail		acntDetail;
+	private Date				acntCreationDate;
+	private Set<Transaction>		acntTransactions;
+	private Person				acntHolder;
 
-    public Account() {
-    }
+	public Account()
+	{}
 
-    public void addTransaction(Transaction tran) {
-        if (tran.getTransType().equalsIgnoreCase("credit")) {
-            this.creditAmount(tran.getTransAmount());
-        } else if (tran.getTransType().equalsIgnoreCase("debit")) {
-            this.debitAmount(tran.getTransAmount());
-        }
+	public void addTransaction(Transaction tran)
+	{
+		if (tran.getTransType().equalsIgnoreCase("credit"))
+		{
+			this.creditAmount(tran.getTransAmount());
+		}
+		else if (tran.getTransType().equalsIgnoreCase("debit"))
+		{
+			this.debitAmount(tran.getTransAmount());
+		}
 
-        this.getAcntTransactions().add(tran);
-    }
+		this.getAcntTransactions().add(tran);
+	}
 
-    private void creditAmount(float amount) {
-        this.acntBalance += amount;
-    }
+	private void creditAmount(float amount)
+	{
+		this.acntBalance += amount;
+	}
 
-    private void debitAmount(float amount) {
-        this.acntBalance -= amount;
-    }
+	private void debitAmount(float amount)
+	{
+		this.acntBalance -= amount;
+	}
 
-    public float getAcntBalance() {
-        return acntBalance;
-    }
+	public float getAcntBalance()
+	{
+		return this.acntBalance;
+	}
 
-    public void setAcntBalance(float balance) {
-        this.acntBalance = balance;
-    }
+	public void setAcntBalance(float balance)
+	{
+		this.acntBalance = balance;
+	}
 
-    public Date getAcntCreationDate() {
-        return acntCreationDate;
-    }
+	public Date getAcntCreationDate()
+	{
+		return this.acntCreationDate;
+	}
 
-    public void setAcntCreationDate(Date acntCreationDate) {
-        this.acntCreationDate = acntCreationDate;
-    }
+	public void setAcntCreationDate(Date acntCreationDate)
+	{
+		this.acntCreationDate = acntCreationDate;
+	}
 
-    public String getAcntCurrency() {
-        return acntCurrency;
-    }
+	public String getAcntCurrency()
+	{
+		return this.acntCurrency;
+	}
 
-    public void setAcntCurrency(String acntCurrency) {
-        this.acntCurrency = acntCurrency;
-    }
+	public void setAcntCurrency(String acntCurrency)
+	{
+		this.acntCurrency = acntCurrency;
+	}
 
-    @Embedded
-    public AccountDetail getAcntDetail() {
-        return acntDetail;
-    }
+	@Embedded
+	public AccountDetail getAcntDetail()
+	{
+		return this.acntDetail;
+	}
 
-    public void setAcntDetail(AccountDetail detail) {
-        this.acntDetail = detail;
-    }
+	public void setAcntDetail(AccountDetail detail)
+	{
+		this.acntDetail = detail;
+	}
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "Person_Id")
-    public Person getAcntHolder() {
-        return acntHolder;
-    }
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "Person_Id")
+	public Person getAcntHolder()
+	{
+		return this.acntHolder;
+	}
 
-    public void setAcntHolder(Person person) {
-        this.acntHolder = person;
-    }
+	public void setAcntHolder(Person person)
+	{
+		this.acntHolder = person;
+	}
 
-    public String getAcntName() {
-        return acntName;
-    }
+	public String getAcntName()
+	{
+		return this.acntName;
+	}
 
-    public void setAcntName(String acntName) {
-        this.acntName = acntName;
-    }
+	public void setAcntName(String acntName)
+	{
+		this.acntName = acntName;
+	}
 
-    @Id
-    public Long getAcntNumber() {
-        return acntNumber;
-    }
+	@Id
+	public Long getAcntNumber()
+	{
+		return this.acntNumber;
+	}
 
-    public void setAcntNumber(Long acntNumber) {
-        this.acntNumber = acntNumber;
-    }
+	public void setAcntNumber(Long acntNumber)
+	{
+		this.acntNumber = acntNumber;
+	}
 
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Transaction.class,
-            mappedBy = "transAccount")
-    public Set<Transaction> getAcntTransactions() {
-        return acntTransactions;
-    }
+	@OneToMany(cascade = CascadeType.ALL,targetEntity = Transaction.class,
+				mappedBy = "transAccount")
+	public Set<Transaction> getAcntTransactions()
+	{
+		return this.acntTransactions;
+	}
 
-    public void setAcntTransactions(Set<Transaction> transactions) {
-        Iterator<Transaction> i = transactions.iterator();
-        while (i.hasNext()) {
-            Transaction t = i.next();
-            if (t.getTransType().equals("credit")) {
-                this.creditAmount(t.getTransAmount());
-            } else if (t.getTransType().equals("debit")) {
-                this.debitAmount(t.getTransAmount());
-            }
-        }
-        this.acntTransactions = transactions;
-    }
+	public void setAcntTransactions(Set<Transaction> transactions)
+	{
+		Iterator<Transaction> i = transactions.iterator();
+		while (i.hasNext())
+		{
+			Transaction t = i.next();
+			if (t.getTransType().equals("credit"))
+			{
+				this.creditAmount(t.getTransAmount());
+			}
+			else if (t.getTransType().equals("debit"))
+			{
+				this.debitAmount(t.getTransAmount());
+			}
+		}
+		this.acntTransactions = transactions;
+	}
 
-    public String getAcntType() {
-        return acntType;
-    }
+	public String getAcntType()
+	{
+		return this.acntType;
+	}
 
-    public void setAcntType(String acntType) {
-        this.acntType = acntType;
-    }
+	public void setAcntType(String acntType)
+	{
+		this.acntType = acntType;
+	}
 
-    public Integer getVersion() {
-        return version;
-    }
+	public Integer getVersion()
+	{
+		return this.version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+	public void setVersion(Integer version)
+	{
+		this.version = version;
+	}
 
 }

@@ -20,6 +20,10 @@ import com.ams.finance.domain.model.Transaction;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.users.domain.model.Person;
 
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
 @Entity
 @Table(name = "T_PAYMENT")
 @Access(AccessType.FIELD)
@@ -35,7 +39,7 @@ public class Payment implements Serializable
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				paymntDate;
 	@OneToOne(cascade = CascadeType.PERSIST,optional = false)
-	private Transaction			paymntTransaction;
+	// private Transaction paymntTransaction;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "Person_Id")
 	private Person				paymntPerson;
@@ -47,7 +51,7 @@ public class Payment implements Serializable
 		this.paymntAmount = payAmnt;
 		this.paymntMethod = payMethod;
 		this.paymntDate = payDate;
-		this.paymntTransaction = payTransRef;
+		// this.paymntTransaction = payTransRef;
 		this.paymntPerson = payPerson;
 	}
 
@@ -76,9 +80,9 @@ public class Payment implements Serializable
 		return this.paymntPerson;
 	}
 
-	public Transaction getPaymntTransaction()
-	{
-		return this.paymntTransaction;
-	}
+	/*
+	 * public Transaction getPaymntTransaction() { return
+	 * this.paymntTransaction; }
+	 */
 
 }

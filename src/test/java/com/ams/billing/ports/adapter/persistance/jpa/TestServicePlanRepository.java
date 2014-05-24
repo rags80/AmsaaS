@@ -3,7 +3,7 @@
  */
 package com.ams.billing.ports.adapter.persistance.jpa;
 
-import com.ams.billingandpayment.domain.model.services.ServicePlan;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.sharedkernel.domain.repository.Page;
 
@@ -67,7 +67,7 @@ public class TestServicePlanRepository {
 
     /**
      * Test method for
-     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.services.ServicePlan)}
+     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#createOrUpdate(com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan)}
      * .
      */
     @Test
@@ -144,7 +144,7 @@ public class TestServicePlanRepository {
 
     /**
      * Test method for
-     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#saveOrUpdateServicePriceToPlan(com.ams.billingandpayment.domain.model.services.ServicePrice)}
+     * {@link com.ams.billingandpayment.ports.adapter.persistance.jpa.ServicePlanRepositoryImpl#saveOrUpdateServicePriceToPlan(com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice)}
      * .
      */
     @Test

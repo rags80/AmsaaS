@@ -3,8 +3,8 @@ package com.ams.billingandpayment.domain.repository;
 import java.util.List;
 import java.util.Map;
 
-import com.ams.billingandpayment.domain.model.services.ServicePlan;
-import com.ams.billingandpayment.domain.model.services.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
 import com.ams.sharedkernel.domain.repository.Page;
 import com.ams.sharedkernel.domain.repository.Repository;
 

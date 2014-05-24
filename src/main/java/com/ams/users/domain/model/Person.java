@@ -1,99 +1,85 @@
 package com.ams.users.domain.model;
 
-import static javax.persistence.AccessType.PROPERTY;
-
 import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Access;
-import javax.persistence.CascadeType;
+import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-import com.ams.billingandpayment.domain.model.bill.Bill;
-import com.ams.billingandpayment.domain.model.bill.Payment;
-import com.ams.billingandpayment.domain.model.services.ServiceSubscription;
-import com.ams.finance.domain.model.Account;
-import com.ams.finance.domain.model.Transaction;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServiceSubscription;
 
 @Entity
-@Access(PROPERTY)
+@Access(AccessType.FIELD)
 @Table(name = "T_PERSON")
 public class Person implements Serializable
 {
-	private static final long		serialVersionUID	= 1L;
-	private Long					persnId;
-	private String					persnFirstName;
-	private String					persnLastName;
-	private PersonDetail			persnDetail;
-	private Address				persnAddress;
-	private ServiceSubscription		persnServiceProfile;
-	private Collection<Account>		persnAccounts;
-	private Collection<Bill>			persnBill;
-	private Collection<Transaction>	persnTransactions;
-	private Collection<Payment>		persnPayments;
-	private Collection<UserRole>		persnRoles;
+	private static final long	serialVersionUID	= 1L;
 
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "acntHolder",targetEntity = Account.class,fetch = FetchType.LAZY)
-	public Collection<Account> getPersnAccounts()
-	{
-		return this.persnAccounts;
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long				persnId;
 
-	/**
-	 * @param accounts
-	 *             the accounts to set
-	 */
-	public void setPersnAccounts(Collection<Account> accounts)
-	{
+	private String				persnFirstName;
 
-		this.persnAccounts = accounts;
-	}
+	private String				persnLastName;
 
 	@Embedded
+	private PersonDetail		persnDetail;
+
+	@Embedded
+	private Address			persnAddress;
+
+	@OneToOne
+	private ServiceSubscription	persnServiceProfile;
+
+	@Embedded
+	private LoginDetails		persnLoginDetails;
+
+	@ElementCollection
+	@Enumerated(EnumType.STRING)
+	private Collection<UserRole>	persnRoles;
+
+	public Person(String firstName, String lastName)
+	{
+		this.persnFirstName = firstName;
+		this.persnLastName = lastName;
+	}
+
+	public void setPersnDetails(PersonDetail detail)
+	{
+		this.persnDetail = detail;
+	}
+
+	public void setAddress(Address address)
+	{
+		this.persnAddress = address;
+	}
+
+	public void updateLoginDetails(String userName, String passwd)
+	{
+		this.persnLoginDetails = new LoginDetails(userName, passwd);
+	}
+
 	public Address getPersnAddress()
 	{
 		return this.persnAddress;
 	}
 
-	public void setPersnAddress(Address address)
-	{
-		this.persnAddress = address;
-	}
-
-	@OneToMany(mappedBy = "billedPerson",fetch = FetchType.LAZY)
-	@JsonIgnore
-	public Collection<Bill> getPersnBill()
-	{
-		return this.persnBill;
-	}
-
-	public void setPersnBill(Collection<Bill> param)
-	{
-		this.persnBill = param;
-	}
-
-	@Embedded
 	public PersonDetail getPersnDetail()
 	{
 		return this.persnDetail;
-	}
-
-	public void setPersnDetail(PersonDetail detail)
-	{
-		this.persnDetail = detail;
 	}
 
 	public String getPersnFirstName()
@@ -101,21 +87,9 @@ public class Person implements Serializable
 		return this.persnFirstName;
 	}
 
-	public void setPersnFirstName(String firstName)
-	{
-		this.persnFirstName = firstName;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getPersnId()
 	{
 		return this.persnId;
-	}
-
-	public void setPersnId(Long id)
-	{
-		this.persnId = id;
 	}
 
 	public String getPersnLastName()
@@ -123,57 +97,25 @@ public class Person implements Serializable
 		return this.persnLastName;
 	}
 
-	public void setPersnLastName(String lastName)
-	{
-		this.persnLastName = lastName;
-	}
-
-	@OneToMany(mappedBy = "paymntPerson",targetEntity = Payment.class,cascade = CascadeType.ALL,
-				orphanRemoval = false,fetch = FetchType.LAZY)
-	public Collection<Payment> getPersnPayments()
-	{
-		return this.persnPayments;
-	}
-
-	public void setPersnPayments(Collection<Payment> param)
-	{
-		this.persnPayments = param;
-	}
-
-	@ElementCollection
-	@Enumerated(EnumType.STRING)
 	public Collection<UserRole> getPersnRoles()
 	{
 		return this.persnRoles;
 	}
 
-	public void setPersnRoles(Collection<UserRole> persnRoles)
-	{
-		this.persnRoles = persnRoles;
-	}
-
-	@OneToOne(mappedBy = "srvcSubcrptnOfPerson",fetch = FetchType.LAZY)
 	@JsonIgnore
 	public ServiceSubscription getPersnServiceProfile()
 	{
 		return this.persnServiceProfile;
 	}
 
-	public void setPersnServiceProfile(ServiceSubscription persnServiceProfile)
+	public LoginDetails getPersnLoginDetails()
 	{
-		this.persnServiceProfile = persnServiceProfile;
+		return this.persnLoginDetails;
 	}
 
-	@OneToMany(mappedBy = "transPerson",cascade = CascadeType.ALL,orphanRemoval = false,
-				targetEntity = Transaction.class)
-	public Collection<Transaction> getPersnTransactions()
+	public static long getSerialversionuid()
 	{
-		return this.persnTransactions;
-	}
-
-	public void setPersnTransactions(Collection<Transaction> param)
-	{
-		this.persnTransactions = param;
+		return serialVersionUID;
 	}
 
 }

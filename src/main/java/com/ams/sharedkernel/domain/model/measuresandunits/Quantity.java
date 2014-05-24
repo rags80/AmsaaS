@@ -24,7 +24,7 @@ public class Quantity implements Serializable
 
 	@Column(name = "Qty_Unit")
 	@Enumerated(EnumType.STRING)
-	private Unit				unit;
+	private TimeUnit			unit;
 
 	public Quantity(BigDecimal qty, TimeUnit qtUnit)
 	{
@@ -148,7 +148,7 @@ public class Quantity implements Serializable
 	 * ACCESSOR FUNCTIONS
 	 */
 
-	public Unit getUnit()
+	public TimeUnit getUnit()
 	{
 		return this.unit;
 	}

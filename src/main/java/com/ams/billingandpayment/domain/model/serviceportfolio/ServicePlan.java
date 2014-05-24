@@ -1,4 +1,4 @@
-package com.ams.billingandpayment.domain.model.services;
+package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,22 +14,21 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.ams.billingandpayment.domain.model.services.ServiceSubscription.Status;
-import com.ams.billingandpayment.domain.service.ServicePriceSpecAdvisor;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServiceSubscription.Status;
 
 /**
  * @author Raghavendra Badiger
  */
 
 @Entity
-@Access(AccessType.PROPERTY)
+@Access(AccessType.FIELD)
 @Table(name = "T_SERVICEPLAN")
 public class ServicePlan implements Serializable
 {
@@ -38,14 +37,15 @@ public class ServicePlan implements Serializable
      */
 	private static final long	serialVersionUID	= 1L;
 
+	@Id
 	private String				srvcPlanName;
 	private String				srvcPlanDescription;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date				srvcPlanCreatDate;
+	@Enumerated(EnumType.STRING)
 	private Status				srvcPlanStatus;
+	@OneToMany(targetEntity = ServicePrice.class,mappedBy = "srvcPlan")
 	private Set<ServicePrice>	srvcPriceSet;
-
-	public ServicePlan()
-	{}
 
 	public ServicePlan(String planName, String description, Date planCreatDate, String status)
 	{
@@ -61,9 +61,9 @@ public class ServicePlan implements Serializable
 	 * SERVICE PLAN DOMAIN FUNCTIONS
 	 */
 
-	public ServicePrice servicePriceToPlan(String srvcPriceCategory, Service srvc, Double chargeAmount, String chargeCurrency, String chargeUnit, ServicePriceSpecAdvisor spsAdvisr)
+	public ServicePrice servicePriceToPlan(String srvcPriceCategory, Service srvc, Double chargeAmount, String chargeCurrency, String chargeUnit)
 	{
-		ServicePrice psp = new ServicePrice(this, srvc, srvcPriceCategory, BigDecimal.valueOf(chargeAmount), chargeCurrency, chargeUnit, spsAdvisr);
+		ServicePrice psp = new ServicePrice(this, srvc, srvcPriceCategory, BigDecimal.valueOf(chargeAmount), chargeCurrency, chargeUnit);
 		this.srvcPriceSet.add(psp);
 		return psp;
 	}
@@ -77,7 +77,7 @@ public class ServicePlan implements Serializable
 
 	/*
 	 * 
-	 * ACCESSOR & MUTATOR FUNCTIONS
+	 * ACCESSOR FUNCTIONS
 	 */
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
@@ -87,56 +87,24 @@ public class ServicePlan implements Serializable
 		return this.srvcPlanCreatDate;
 	}
 
-	@SuppressWarnings("unused")
-	@JsonDeserialize
-	private void setSrvcPlanCreatDate(Date srvcPlanCreatDate)
-	{
-		this.srvcPlanCreatDate = srvcPlanCreatDate;
-	}
-
 	public String getSrvcPlanDescription()
 	{
 		return this.srvcPlanDescription;
 	}
 
-	public void setSrvcPlanDescription(String srvcPlanDescription)
-	{
-		this.srvcPlanDescription = srvcPlanDescription;
-	}
-
-	@Id
 	public String getSrvcPlanName()
 	{
 		return this.srvcPlanName;
 	}
 
-	@SuppressWarnings("unused")
-	private void setSrvcPlanName(String srvcPlanName)
-	{
-		this.srvcPlanName = srvcPlanName;
-	}
-
-	@Enumerated(EnumType.STRING)
 	public Status getSrvcPlanStatus()
 	{
 		return this.srvcPlanStatus;
 	}
 
-	public void setSrvcPlanStatus(Status srvcPlanStatus)
-	{
-		this.srvcPlanStatus = srvcPlanStatus;
-	}
-
-	@OneToMany(mappedBy = "srvcPlan",targetEntity = ServicePrice.class)
-	@JsonIgnore
 	public Set<ServicePrice> getSrvcPriceSet()
 	{
 		return this.srvcPriceSet;
-	}
-
-	private void setSrvcPriceSet(Set<ServicePrice> srvcPriceSet)
-	{
-		this.srvcPriceSet = srvcPriceSet;
 	}
 
 	@Override
@@ -205,6 +173,11 @@ public class ServicePlan implements Serializable
 			return false;
 		}
 		return true;
+	}
+
+	public static long getSerialversionuid()
+	{
+		return serialVersionUID;
 	}
 
 }
