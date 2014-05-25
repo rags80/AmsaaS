@@ -136,8 +136,15 @@ public class ServicePrice implements Serializable
 
 	public ServicePriceSpecification getSrvcPriceSpec(ServicePriceSpecAdvisor spsAdvsr)
 	{
-		this.srvcPriceSpec = spsAdvsr.adviseSpec(this);
-		return this.srvcPriceSpec;
+		if (this.srvcPriceSpec != null)
+		{
+			return this.srvcPriceSpec;
+		}
+		else
+		{
+			return this.srvcPriceSpec = spsAdvsr.adviseSpec(this);
+		}
+
 	}
 
 	@Override
