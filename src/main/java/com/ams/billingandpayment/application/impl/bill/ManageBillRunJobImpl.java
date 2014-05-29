@@ -1,12 +1,12 @@
 package com.ams.billingandpayment.application.impl.bill;
 
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ams.billingandpayment.application.api.service.bill.ManageBill;
 import com.ams.billingandpayment.application.api.service.bill.ManageBillRunJob;
 import com.ams.billingandpayment.domain.model.schedule.BillSchedule;
-import com.ams.users.domain.model.Person;
+import com.ams.users.domain.repository.PersonRepository;
 
 /**
  * @author Raghavendra Badiger
@@ -15,17 +15,16 @@ import com.ams.users.domain.model.Person;
 @org.springframework.stereotype.Service("ManageBillRunSchedule")
 public class ManageBillRunJobImpl implements ManageBillRunJob
 {
+	@Autowired
+	private PersonRepository	persnRepo;
 
-	@Override
-	public boolean scheduleNewBillRunJob(List<Person> billableUserList, BillSchedule schedule)
-	{
-		return false;
-	}
+	@Autowired
+	private ManageBill		manageBill;
 
 	@Override
 	public boolean scheduleNewBillRunJob(BillSchedule schedule)
 	{
-		// TODO Auto-generated method stub
+
 		return false;
 	}
 

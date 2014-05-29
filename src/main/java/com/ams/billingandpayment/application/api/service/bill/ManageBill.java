@@ -1,24 +1,26 @@
 package com.ams.billingandpayment.application.api.service.bill;
 
+import java.util.Date;
+
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.users.domain.model.Person;
 
-import java.util.Date;
-
 /**
+ * 
  * @author Raghavendra Badiger
  */
-public interface ManageBill {
+public interface ManageBill
+{
 
-    /**
-     * Periodic Billing operations
-     */
-    void billSubscriberForPeriod(Person srvcSubscriber, Period billPeriod, Date billDate, Date billDueDate);
+	/**
+	 * Periodic Billing operations
+	 */
+	void billSubscriberForPeriod(Person srvcSubscriber, Period billPeriod, Date billDate, Date billDueDate);
 
-    /**
-     * Ad-hoc Billing operations
-     */
-    /*
+	/**
+	 * Ad-hoc Billing operations
+	 */
+	/*
 	 * BillDto createNewBill(BillDto billSrvcData);
 	 * 
 	 * BillDto addBillItems(BillDto billSrvcData);
@@ -29,6 +31,6 @@ public interface ManageBill {
 	 * 
 	 * /** Payement for Bill operations
 	 */
-    // void payBill(Payment paymnt);
+	// void payBill(Payment paymnt);
 
 }
