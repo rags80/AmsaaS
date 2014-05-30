@@ -2,6 +2,8 @@ package com.ams.billingandpayment.domain.model.bill;
 
 import java.io.Serializable;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -23,6 +25,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
  * 
  */
 @Embeddable
+@Access(AccessType.FIELD)
 public class BillItem implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;

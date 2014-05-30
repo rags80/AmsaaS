@@ -2,7 +2,10 @@ package com.ams.sharedkernel.domain.model.measuresandunits;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -18,19 +21,20 @@ import org.joda.time.Years;
  * 
  */
 @Embeddable
+@Access(AccessType.FIELD)
 public class Period implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
 
 	@Column(name = "Period_fromDate")
-	private DateTime			fromDate;
+	private Date				fromDate;
 
 	@Column(name = "Period_toDate")
-	private DateTime			toDate;
+	private Date				toDate;
 
-	public Period(DateTime fromDate, DateTime toDate)
+	public Period(Date fromDate, Date toDate)
 	{
-		if (toDate.isAfter(fromDate))
+		if (toDate.after(fromDate))
 		{
 			this.fromDate = fromDate;
 			this.toDate = toDate;
@@ -46,32 +50,35 @@ public class Period implements Serializable
 
 		BigDecimal value;
 
+		DateTime frmDate = new DateTime(period.getFromDate());
+		DateTime toDate = new DateTime(period.getToDate());
+
 		switch (unit)
 		{
 
 		case Hrs:
-			value = BigDecimal.valueOf(Hours.hoursBetween(period.getFromDate(), period.getToDate()).getHours());
+			value = BigDecimal.valueOf(Hours.hoursBetween(frmDate, toDate).getHours());
 			break;
 		case Days:
-			value = BigDecimal.valueOf(Days.daysBetween(period.getFromDate(), period.getToDate()).getDays());
+			value = BigDecimal.valueOf(Days.daysBetween(frmDate, toDate).getDays());
 			break;
 		case Weeks:
-			value = BigDecimal.valueOf(Weeks.weeksBetween(period.getFromDate(), period.getToDate()).getWeeks());
+			value = BigDecimal.valueOf(Weeks.weeksBetween(frmDate, toDate).getWeeks());
 			break;
 		case FortNights:
-			value = BigDecimal.valueOf(Weeks.weeksBetween(period.getFromDate(), period.getToDate()).getWeeks() / 2);
+			value = BigDecimal.valueOf(Weeks.weeksBetween(frmDate, toDate).getWeeks() / 2);
 			break;
 		case Months:
-			value = BigDecimal.valueOf(Months.monthsBetween(period.getFromDate(), period.getToDate()).getMonths());
+			value = BigDecimal.valueOf(Months.monthsBetween(frmDate, toDate).getMonths());
 			break;
 		case Years:
-			value = BigDecimal.valueOf(Years.yearsBetween(period.getFromDate(), period.getToDate()).getYears());
+			value = BigDecimal.valueOf(Years.yearsBetween(frmDate, toDate).getYears());
 			break;
 		case QuarterYears:
-			value = BigDecimal.valueOf(Years.yearsBetween(period.getFromDate(), period.getToDate()).getYears() * 4);
+			value = BigDecimal.valueOf(Years.yearsBetween(frmDate, toDate).getYears() * 4);
 			break;
 		case HalfYears:
-			value = BigDecimal.valueOf(Years.yearsBetween(period.getFromDate(), period.getToDate()).getYears() * 2);
+			value = BigDecimal.valueOf(Years.yearsBetween(frmDate, toDate).getYears() * 2);
 			break;
 
 		default:
@@ -87,12 +94,12 @@ public class Period implements Serializable
 	 * Accessor Methods
 	 */
 
-	public DateTime getFromDate()
+	public Date getFromDate()
 	{
 		return this.fromDate;
 	}
 
-	public DateTime getToDate()
+	public Date getToDate()
 	{
 		return this.toDate;
 	}

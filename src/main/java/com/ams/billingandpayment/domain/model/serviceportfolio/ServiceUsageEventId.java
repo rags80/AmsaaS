@@ -4,10 +4,9 @@
 package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Embeddable;
-
-import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 
 /**
  * @author Raghavendra Badiger
@@ -19,7 +18,16 @@ public class ServiceUsageEventId implements Serializable
 	private static final long	serialVersionUID	= 1L;
 	private String				srvc;
 	private long				srvcUser;
-	private Period				srvcUsagePeriod;
+	private Date				fromDate;
+	private Date				toDate;
+
+	public ServiceUsageEventId(String srvc, long usr, Date frmDate, Date toDate)
+	{
+		this.srvc = srvc;
+		this.srvcUser = usr;
+		this.fromDate = frmDate;
+		this.toDate = toDate;
+	}
 
 	public String getSrvc()
 	{
@@ -41,14 +49,14 @@ public class ServiceUsageEventId implements Serializable
 		this.srvcUser = srvcUser;
 	}
 
-	public Period getSrvcUsagePeriod()
+	public Date getFromDate()
 	{
-		return this.srvcUsagePeriod;
+		return this.fromDate;
 	}
 
-	public void setSrvcUsagePeriod(Period srvcUsagePeriod)
+	public Date getToDate()
 	{
-		this.srvcUsagePeriod = srvcUsagePeriod;
+		return this.toDate;
 	}
 
 	public static long getSerialversionuid()

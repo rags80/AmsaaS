@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.ams.sharedkernel.ports.adapter.rest.springmvc.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.ams.sharedkernel.application.api.exception.ServiceException;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 @ControllerAdvice

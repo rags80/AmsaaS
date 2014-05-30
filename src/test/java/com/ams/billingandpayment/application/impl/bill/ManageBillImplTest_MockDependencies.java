@@ -15,7 +15,6 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -137,7 +136,7 @@ public class ManageBillImplTest_MockDependencies
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy HH:mm:ss");
 		this.billDate = sdf.parse("01-04-2014 00:00:00");
 		this.billDueDate = sdf.parse("20-04-2014 00:00:00");
-		this.billPeriod = new Period(new DateTime(2014, 03, 01, 00, 00), new DateTime(2014, 04, 01, 00, 00));
+		this.billPeriod = new Period(sdf.parse("01-03-2014 00:00:00"), sdf.parse("01-04-2014 00:00:00"));
 		this.billPayReg = new BillPaymentRegister(1L);
 
 		this.srvcPlan = new ServicePlan("ECONOMY-PLAN", "Economy plan", new Date(), Status.ACTIVE.toString());
@@ -177,7 +176,7 @@ public class ManageBillImplTest_MockDependencies
 		this.usageSrvcPriceList.add(srvcprice3);
 
 		List<ServiceUsageEvent> sueList = new ArrayList<ServiceUsageEvent>(3);
-		sueList.add(new ServiceUsageEvent(this.subscrbr, this.s3, new Period(new DateTime(2014, 03, 02, 13, 00), new DateTime(2014, 03, 02, 17, 00))));
+		sueList.add(new ServiceUsageEvent(this.subscrbr, this.s3, new Period(sdf.parse("01-03-2014 13:00:00"), sdf.parse("01-03-2014 17:00:00"))));
 
 		when(this.mockBillRepo.findBillPaymentRegisterFor(this.subscrbr)).thenReturn(this.billPayReg);
 

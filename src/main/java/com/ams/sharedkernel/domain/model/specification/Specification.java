@@ -1,4 +1,4 @@
-package com.ams.sharedkernel.domain.specification;
+package com.ams.sharedkernel.domain.model.specification;
 
 public interface Specification<T> {
 

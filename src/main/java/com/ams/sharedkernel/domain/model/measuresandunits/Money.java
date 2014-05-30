@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Currency;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
-import com.ams.sharedkernel.domain.exception.DomainException;
+import com.ams.sharedkernel.domain.model.exception.DomainException;
 import com.ams.sharedkernel.domain.model.measuresandunits.exception.InvalidCurrencyException;
 
 /**
@@ -18,6 +20,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.exception.InvalidCurre
  */
 
 @Embeddable
+@Access(AccessType.FIELD)
 public class Money implements Serializable, Comparable<Money>
 {
 

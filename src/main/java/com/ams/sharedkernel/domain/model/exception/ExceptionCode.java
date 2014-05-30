@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ams.sharedkernel.domain.exception;
+package com.ams.sharedkernel.domain.model.exception;
 
 /**
  * 

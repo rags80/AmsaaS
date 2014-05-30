@@ -2,6 +2,8 @@ package com.ams.billingandpayment.domain.model.bill;
 
 import java.io.Serializable;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.Money;
  * 
  */
 @Embeddable
+@Access(AccessType.FIELD)
 public class Tax implements Serializable
 {
 	public static final Tax		ZERO_TAX			= new Tax(Money.ZERO, "Zero! Tax");

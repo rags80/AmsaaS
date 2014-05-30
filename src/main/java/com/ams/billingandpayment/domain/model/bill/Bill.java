@@ -29,7 +29,7 @@ import com.ams.billingandpayment.domain.model.bill.exception.BillExceptionCode;
 import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
 import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
-import com.ams.sharedkernel.domain.exception.DomainException;
+import com.ams.sharedkernel.domain.model.exception.DomainException;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;

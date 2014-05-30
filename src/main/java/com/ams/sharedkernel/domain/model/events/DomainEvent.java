@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ams.sharedkernel.domain.events;
+package com.ams.sharedkernel.domain.model.events;
 
 import java.util.Date;
 

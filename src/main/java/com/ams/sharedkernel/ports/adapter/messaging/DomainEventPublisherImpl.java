@@ -2,9 +2,9 @@ package com.ams.sharedkernel.ports.adapter.messaging;
 
 import java.util.Map;
 
-import com.ams.sharedkernel.domain.events.DomainEvent;
-import com.ams.sharedkernel.domain.events.DomainEventListener;
-import com.ams.sharedkernel.domain.events.DomainEventPublisher;
+import com.ams.sharedkernel.domain.model.events.DomainEvent;
+import com.ams.sharedkernel.domain.service.events.DomainEventListener;
+import com.ams.sharedkernel.domain.service.events.DomainEventPublisher;
 
 /**
  * @author Raghavendra Badiger

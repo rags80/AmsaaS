@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ams.sharedkernel.domain.events.DomainEventPublisher;
+import com.ams.sharedkernel.domain.service.events.DomainEventPublisher;
 import com.ams.users.application.api.ManageUser;
 import com.ams.users.domain.model.Person;
 import com.ams.users.domain.model.events.UserCreatedEvent;
@@ -23,7 +23,7 @@ public class ManageUserImpl implements ManageUser
 	private PersonRepository		personRepository;
 
 	@Autowired
-	private DomainEventPublisher	domainEventPublisher;
+	private DomainEventPublisher	usrEventPublisher;
 
 	@Override
 	public void deleteUser(long userId)
@@ -52,7 +52,7 @@ public class ManageUserImpl implements ManageUser
 	public void registerUser(Person user)
 	{
 		this.personRepository.createOrUpdate(user);
-		this.domainEventPublisher.raiseEvent(new UserCreatedEvent(user));
+		this.usrEventPublisher.raiseEvent(new UserCreatedEvent(user));
 
 	}
 

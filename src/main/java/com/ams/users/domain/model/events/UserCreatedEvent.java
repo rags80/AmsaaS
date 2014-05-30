@@ -1,6 +1,6 @@
 package com.ams.users.domain.model.events;
 
-import com.ams.sharedkernel.domain.events.DomainEvent;
+import com.ams.sharedkernel.domain.model.events.DomainEvent;
 import com.ams.users.domain.model.Person;
 
 import java.util.Date;

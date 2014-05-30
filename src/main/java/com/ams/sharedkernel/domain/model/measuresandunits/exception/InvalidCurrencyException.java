@@ -1,6 +1,6 @@
 package com.ams.sharedkernel.domain.model.measuresandunits.exception;
 
-import com.ams.sharedkernel.domain.exception.DomainException;
+import com.ams.sharedkernel.domain.model.exception.DomainException;
 
 /**
  * 

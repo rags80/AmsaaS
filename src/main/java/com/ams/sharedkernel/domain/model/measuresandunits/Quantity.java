@@ -3,6 +3,8 @@ package com.ams.sharedkernel.domain.model.measuresandunits;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
@@ -15,6 +17,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.exception.InvalidUnitE
  * @author Raghavendra Badiger
  */
 @Embeddable
+@Access(AccessType.FIELD)
 public class Quantity implements Serializable
 {
 	private static final long	serialVersionUID	= 1L;
