@@ -8,15 +8,18 @@ import java.util.Date;
 /**
  * @author Raghavendra Badiger
  */
-public class DomainEvent {
+public class DomainEvent
+{
 
-    protected Date occuredOn;
+	protected Date	occuredOn;
 
-    public  Date getOccuredOn() {
-        return this.occuredOn;
-    }
+	public Date getOccuredOn()
+	{
+		return this.occuredOn;
+	}
 
-    protected void setOccuredOn(Date occuredOn) {
-        this.occuredOn = occuredOn;
-    }
+	protected void setOccuredOn(Date occuredOn)
+	{
+		this.occuredOn = occuredOn;
+	}
 }

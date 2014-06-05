@@ -5,7 +5,8 @@ import com.ams.sharedkernel.domain.model.events.DomainEvent;
 /**
  * @author Raghavendra Badiger
  */
-public interface DomainEventListener {
+public interface DomainEventListener
+{
 
-    <E extends DomainEvent> void handleEvent(E event);
+	<E extends DomainEvent> void handleEvent(E event);
 }

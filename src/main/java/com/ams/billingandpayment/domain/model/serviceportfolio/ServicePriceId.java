@@ -9,14 +9,16 @@ import java.io.Serializable;
  * 
  * @author Raghavendra Badiger
  */
+
 public class ServicePriceId implements Serializable
 {
-	/**
-     *
-     */
 	private static final long	serialVersionUID	= 1L;
-	private String				service;
+
 	private String				srvcPlan;
+	private String				service;
+
+	private ServicePriceId()
+	{}
 
 	public ServicePriceId(String srvcPlan, String srvc)
 	{

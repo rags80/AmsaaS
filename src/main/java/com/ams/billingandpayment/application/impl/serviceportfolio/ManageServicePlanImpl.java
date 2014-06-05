@@ -12,8 +12,10 @@ import com.ams.billingandpayment.application.api.service.serviceportfolio.Manage
 import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice.ServicePriceCategory;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
+import com.ams.sharedkernel.domain.model.measuresandunits.TimeUnit;
 import com.ams.sharedkernel.domain.repository.Page;
 
 @Transactional
@@ -69,7 +71,7 @@ public class ManageServicePlanImpl implements ManageServicePlan
 	public String registerServicePlan(ServicePlan srvcPlan)
 	{
 
-		return this.servicePlanRepository.createOrUpdate(srvcPlan);
+		return this.servicePlanRepository.create(srvcPlan);
 
 	}
 
@@ -83,12 +85,18 @@ public class ManageServicePlanImpl implements ManageServicePlan
 		ServicePlan srvcPlan = this.servicePlanRepository.findById(srvcPriceCommand.getSrvcPlanName());
 		Service srvc = this.serviceRepository.findById(srvcPriceCommand.getSrvcCode());
 
-		ServicePrice srvcRate = srvcPlan.servicePriceToPlan(srvcPriceCommand.getSrvcPriceCategory(),
-													srvc,
-													srvcPriceCommand.getSrvcPriceAmountValue(),
-													srvcPriceCommand.getSrvcPriceAmountCurrency(),
-													srvcPriceCommand.getSrvcPriceUnitOfMeasure());
+		System.out.println("Srvc Code:" + srvc.getSrvcCode() + "\n" + "Srvcplan:" + srvcPlan.getSrvcPlanName());
 
+		/*
+		 * ServicePrice srvcRate =
+		 * srvcPlan.servicePriceToPlan(srvcPriceCommand
+		 * .getSrvcPriceCategory(), srvc,
+		 * srvcPriceCommand.getSrvcPriceAmountValue(),
+		 * srvcPriceCommand.getSrvcPriceAmountCurrency(),
+		 * srvcPriceCommand.getSrvcPriceUnitOfMeasure());
+		 */
+
+		ServicePrice srvcRate = new ServicePrice(srvcPlan, srvc, ServicePriceCategory.USAGE.toString(), BigDecimal.valueOf(1000.0), "INR", TimeUnit.Months.toString());
 		return this.servicePlanRepository.saveOrUpdateServicePriceToPlan(srvcRate);
 
 	}
@@ -119,7 +127,7 @@ public class ManageServicePlanImpl implements ManageServicePlan
 	@Override
 	public String updateServicePlanDetails(ServicePlan srvcPlan)
 	{
-		return this.servicePlanRepository.createOrUpdate(srvcPlan);
+		return this.servicePlanRepository.update(srvcPlan);
 	}
 
 	@Override

@@ -33,6 +33,9 @@ public class Money implements Serializable, Comparable<Money>
 	private BigDecimal			amount;
 	private Currency			currency;
 
+	public Money()
+	{}
+
 	public Money(BigDecimal amt, Currency curncy)
 	{
 		this.amount = amt;

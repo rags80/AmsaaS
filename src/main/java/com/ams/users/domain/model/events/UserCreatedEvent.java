@@ -8,26 +8,30 @@ import java.util.Date;
 /**
  * @author Raghavendra Badiger
  */
-public class UserCreatedEvent extends DomainEvent {
+public class UserCreatedEvent extends DomainEvent
+{
 
-    private Person createdUser;
+	private Person	createdUser;
 
-    /**
-     * @param user
-     */
+	/**
+	 * @param user
+	 */
 
-    public UserCreatedEvent(Person user) {
-        this.setCreatedUser(user);
-        this.setOccuredOn(new Date());
+	public UserCreatedEvent(Person user)
+	{
+		this.setCreatedUser(user);
+		this.setOccuredOn(new Date());
 
-    }
+	}
 
-    public Person getCreatedUser() {
-        return this.createdUser;
-    }
+	public Person getCreatedUser()
+	{
+		return this.createdUser;
+	}
 
-    private void setCreatedUser(Person createdUser) {
-        this.createdUser = createdUser;
-    }
+	private void setCreatedUser(Person createdUser)
+	{
+		this.createdUser = createdUser;
+	}
 
 }

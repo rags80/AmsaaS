@@ -5,10 +5,11 @@ import com.ams.users.domain.model.Person;
 
 import java.util.List;
 
-public interface PersonRepository extends Repository<Person, Long> {
+public interface PersonRepository extends Repository<Person, Long>
+{
 
-    public List<Person> findAllByCriteria(String... criterias);
+	public List<Person> findAllByCriteria(String... criterias);
 
-    public List<Person> findAllByIds(long[] personIds);
+	public List<Person> findAllByIds(long[] personIds);
 
 }

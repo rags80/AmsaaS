@@ -32,6 +32,9 @@ public class Period implements Serializable
 	@Column(name = "Period_toDate")
 	private Date				toDate;
 
+	Period()
+	{}
+
 	public Period(Date fromDate, Date toDate)
 	{
 		if (toDate.after(fromDate))

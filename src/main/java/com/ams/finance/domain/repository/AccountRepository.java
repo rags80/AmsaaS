@@ -6,18 +6,19 @@ import com.ams.sharedkernel.domain.repository.Repository;
 
 import java.util.List;
 
-public interface AccountRepository extends Repository<Account, Long> {
+public interface AccountRepository extends Repository<Account, Long>
+{
 
-    public void createTransaction(Transaction transaction);
+	public void createTransaction(Transaction transaction);
 
-    public void deleteTransaction(Long transNumber);
+	public void deleteTransaction(Long transNumber);
 
-    public List<Account> findAccountsByCustomerId(Long custId);
+	public List<Account> findAccountsByCustomerId(Long custId);
 
-    public Transaction findTransactionById(long transNumber);
+	public Transaction findTransactionById(long transNumber);
 
-    public List<Transaction> findTransactionsByAcntNumber(long acntNumber);
+	public List<Transaction> findTransactionsByAcntNumber(long acntNumber);
 
-    public void updateTransaction(Transaction transaction);
+	public void updateTransaction(Transaction transaction);
 
 }

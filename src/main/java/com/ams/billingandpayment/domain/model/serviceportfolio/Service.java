@@ -1,15 +1,12 @@
 package com.ams.billingandpayment.domain.model.serviceportfolio;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -30,15 +27,27 @@ public class Service implements Serializable
 	private String				srvcName;
 	private String				srvcDescription;
 
-	@OneToMany(mappedBy = "service",targetEntity = ServicePrice.class)
-	private Set<ServicePrice>	srvcPriceSet;
+	/*
+	 * @OneToMany(mappedBy = "service",targetEntity = ServicePrice.class)
+	 * private Set<ServicePrice> srvcPriceSet;
+	 */
+
+	Service()
+	{
+		super();
+	}
 
 	public Service(String code, String name, String description)
 	{
 		this.srvcCode = code;
 		this.srvcName = name;
 		this.srvcDescription = description;
-		this.srvcPriceSet = new HashSet<ServicePrice>();
+		// this.srvcPriceSet = new HashSet<ServicePrice>();
+	}
+
+	void updateSrvcPrice(ServicePrice sp)
+	{
+		// this.srvcPriceSet.add(sp);
 	}
 
 	public void modifyServiceDetails(String name, String descrptn)
@@ -68,11 +77,9 @@ public class Service implements Serializable
 	}
 
 	@JsonIgnore
-	public Set<ServicePrice> getSrvcPriceSet()
-	{
-		return this.srvcPriceSet;
-	}
-
+	/*
+	 * public Set<ServicePrice> getSrvcPriceSet() { return this.srvcPriceSet; }
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

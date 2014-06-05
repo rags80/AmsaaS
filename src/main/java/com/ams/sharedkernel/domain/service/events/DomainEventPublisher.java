@@ -8,12 +8,13 @@ import com.ams.sharedkernel.domain.model.events.DomainEvent;
 /**
  * @author Raghavendra Badiger
  */
-public interface DomainEventPublisher {
+public interface DomainEventPublisher
+{
 
-    void deRegisterEventListener(DomainEventListener del);
+	void deRegisterEventListener(DomainEventListener del);
 
-    <DE extends DomainEvent> void raiseEvent(DE domainEvent);
+	<DE extends DomainEvent> void raiseEvent(DE domainEvent);
 
-    void registerEventListener(DomainEventListener del);
+	void registerEventListener(DomainEventListener del);
 
 }

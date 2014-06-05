@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -43,13 +44,13 @@ public class ServicePrice implements Serializable
 	}
 
 	@Id
-	@ManyToOne
-	@JoinColumn(name = "ServicePlan_Name")
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "ServicePlan_Name",referencedColumnName = "srvcPlanName")
 	private ServicePlan				srvcPlan;
 
 	@Id
-	@ManyToOne
-	@JoinColumn(name = "Service_Code")
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "Service_Code",referencedColumnName = "srvcCode")
 	private Service				service;
 
 	@Column(nullable = false,name = "SrvcPriceCategory")
@@ -61,21 +62,28 @@ public class ServicePrice implements Serializable
 			@AttributeOverride(name = "amount",column = @Column(name = "SrvcPricePerUnit_Amount")),
 			@AttributeOverride(name = "currency",column = @Column(name = "SrvcPricePerUnit_Currency"))
 	})
+	@Column(nullable = false)
 	private Money					srvcPricePerUnit;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "SrvcUnitOfMeasure")
+	@Column(name = "SrvcUnitOfMeasure",nullable = false)
 	private TimeUnit				srvcUnitOfMeasure;
 
 	@Transient
 	private ServicePriceSpecification	srvcPriceSpec;
 
+	ServicePrice()
+	{
+		super();
+	}
+
 	public ServicePrice(ServicePlan srvcPlan, Service srvc, String srvcPriceCategory,
 					BigDecimal pricePerUnit, String currencyCode,
 					String unitOfMeasure)
 	{
-		this.srvcPlan = srvcPlan;
+
 		this.service = srvc;
+		this.srvcPlan = srvcPlan;
 		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
 		this.srvcPricePerUnit = new Money(pricePerUnit, Currency.getInstance(currencyCode));
 		this.srvcUnitOfMeasure = TimeUnit.valueOf(unitOfMeasure);
@@ -86,8 +94,9 @@ public class ServicePrice implements Serializable
 					Money srvcPrice,
 					String unitOfMeasure)
 	{
-		this.srvcPlan = servicePlan;
+
 		this.service = srvc;
+		this.srvcPlan = servicePlan;
 		this.srvcPriceCategory = ServicePriceCategory.valueOf(srvcPriceCategory);
 		this.srvcPricePerUnit = srvcPrice;
 		this.srvcUnitOfMeasure = TimeUnit.valueOf(unitOfMeasure);
@@ -145,79 +154,6 @@ public class ServicePrice implements Serializable
 			return this.srvcPriceSpec = spsAdvsr.adviseSpec(this);
 		}
 
-	}
-
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((this.service == null) ? 0 : this.service.hashCode());
-		result = (prime * result) + ((this.srvcPlan == null) ? 0 : this.srvcPlan.hashCode());
-		result = (prime * result) + ((this.srvcPriceCategory == null) ? 0 : this.srvcPriceCategory.hashCode());
-		result = (prime * result) + ((this.srvcPricePerUnit == null) ? 0 : this.srvcPricePerUnit.hashCode());
-		result = (prime * result) + ((this.srvcUnitOfMeasure == null) ? 0 : this.srvcUnitOfMeasure.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-		{
-			return true;
-		}
-		if (obj == null)
-		{
-			return false;
-		}
-		if (!(obj instanceof ServicePrice))
-		{
-			return false;
-		}
-		ServicePrice other = (ServicePrice) obj;
-		if (this.service == null)
-		{
-			if (other.service != null)
-			{
-				return false;
-			}
-		}
-		else if (!this.service.equals(other.service))
-		{
-			return false;
-		}
-		if (this.srvcPlan == null)
-		{
-			if (other.srvcPlan != null)
-			{
-				return false;
-			}
-		}
-		else if (!this.srvcPlan.equals(other.srvcPlan))
-		{
-			return false;
-		}
-		if (this.srvcPriceCategory != other.srvcPriceCategory)
-		{
-			return false;
-		}
-		if (this.srvcPricePerUnit == null)
-		{
-			if (other.srvcPricePerUnit != null)
-			{
-				return false;
-			}
-		}
-		else if (!this.srvcPricePerUnit.equals(other.srvcPricePerUnit))
-		{
-			return false;
-		}
-		if (this.srvcUnitOfMeasure != other.srvcUnitOfMeasure)
-		{
-			return false;
-		}
-		return true;
 	}
 
 	public static long getSerialversionuid()

@@ -5,17 +5,18 @@ import com.ams.sharedkernel.domain.repository.Page;
 
 import java.util.List;
 
-public interface ManageService {
-    List<Service> getAllServices();
+public interface ManageService
+{
+	List<Service> getAllServices();
 
-    Service getService(String svcCode);
+	Service getService(String svcCode);
 
-    Page<Service> getServicesNextPage(int index, int offset);
+	Page<Service> getServicesNextPage(int index, int offset);
 
-    String registerService(Service svc);
+	String registerService(Service svc);
 
-    void removeService(String svcCode);
+	void removeService(String svcCode);
 
-    String updateServiceDetails(Service svc);
+	String updateServiceDetails(Service svc);
 
 }

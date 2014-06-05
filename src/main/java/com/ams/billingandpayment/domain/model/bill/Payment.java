@@ -44,6 +44,9 @@ public class Payment implements Serializable
 	@JoinColumn(name = "Person_Id")
 	private Person				paymntPerson;
 
+	Payment()
+	{}
+
 	public Payment(Money payAmnt, String payMethod, Date payDate, Transaction payTransRef,
 				Person payPerson)
 	{

@@ -71,6 +71,9 @@ public class BillItem implements Serializable
 	})
 	private Quantity			quantity;
 
+	BillItem()
+	{}
+
 	public BillItem(ServicePrice srvcPrice, Quantity qty, TaxPolicy itemTaxPolicy,
 					DiscountPolicy itemDscntPolicy)
 	{

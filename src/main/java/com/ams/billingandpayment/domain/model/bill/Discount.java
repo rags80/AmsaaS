@@ -32,6 +32,9 @@ public class Discount implements Serializable
 	@Column(name = "Discount_Description")
 	private String				discntDescription;
 
+	Discount()
+	{}
+
 	public Discount(Money discntAmnt, String descrptn)
 	{
 		this.discntAmount = discntAmnt;

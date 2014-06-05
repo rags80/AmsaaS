@@ -3,8 +3,6 @@ package com.ams.billingandpayment.domain.model.serviceportfolio;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -12,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,8 +41,11 @@ public class ServicePlan implements Serializable
 	private Date				srvcPlanCreatDate;
 	@Enumerated(EnumType.STRING)
 	private Status				srvcPlanStatus;
-	@OneToMany(targetEntity = ServicePrice.class,mappedBy = "srvcPlan")
-	private Set<ServicePrice>	srvcPriceSet;
+
+	// @OneToMany private Set<ServicePrice> srvcPriceSet;
+
+	ServicePlan()
+	{}
 
 	public ServicePlan(String planName, String description, Date planCreatDate, String status)
 	{
@@ -53,7 +53,7 @@ public class ServicePlan implements Serializable
 		this.srvcPlanDescription = description;
 		this.srvcPlanCreatDate = planCreatDate;
 		this.srvcPlanStatus = Status.valueOf(status);
-		this.srvcPriceSet = new HashSet<ServicePrice>();
+		// this.srvcPriceSet = new HashSet<ServicePrice>();
 	}
 
 	/*
@@ -64,7 +64,8 @@ public class ServicePlan implements Serializable
 	public ServicePrice servicePriceToPlan(String srvcPriceCategory, Service srvc, Double chargeAmount, String chargeCurrency, String chargeUnit)
 	{
 		ServicePrice psp = new ServicePrice(this, srvc, srvcPriceCategory, BigDecimal.valueOf(chargeAmount), chargeCurrency, chargeUnit);
-		this.srvcPriceSet.add(psp);
+		// this.srvcPriceSet.add(psp);
+		// srvc.updateSrvcPrice(psp);
 		return psp;
 	}
 
@@ -102,10 +103,9 @@ public class ServicePlan implements Serializable
 		return this.srvcPlanStatus;
 	}
 
-	public Set<ServicePrice> getSrvcPriceSet()
-	{
-		return this.srvcPriceSet;
-	}
+	/*
+	 * public Set<ServicePrice> getSrvcPriceSet() { return this.srvcPriceSet; }
+	 */
 
 	@Override
 	public int hashCode()

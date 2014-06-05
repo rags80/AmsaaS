@@ -51,6 +51,9 @@ public class Person implements Serializable
 	@Enumerated(EnumType.STRING)
 	private Collection<UserRole>	persnRoles;
 
+	Person()
+	{}
+
 	public Person(String firstName, String lastName)
 	{
 		this.persnFirstName = firstName;

@@ -3,14 +3,18 @@ package com.ams.sharedkernel.domain.repository;
 import java.io.Serializable;
 import java.util.List;
 
-public interface Repository<T, ID extends Serializable> {
-    public ID createOrUpdate(T entity);
+public interface Repository<T, ID extends Serializable>
+{
 
-    public void delete(ID entityId);
+	public ID create(T entity);
 
-    public List<T> findAll();
+	public ID update(T entity);
 
-    public T findById(ID entityId);
+	public ID delete(ID entityId);
 
-    public Page<T> findNextPageData(Page<T> page);
+	public List<T> findAll();
+
+	public T findById(ID entityId);
+
+	public Page<T> findNextPageData(Page<T> page);
 }

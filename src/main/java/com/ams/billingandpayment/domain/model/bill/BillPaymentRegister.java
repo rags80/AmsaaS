@@ -53,6 +53,9 @@ public class BillPaymentRegister implements Serializable
 	@Enumerated(EnumType.STRING)
 	private Status				billPaymentStatus;
 
+	BillPaymentRegister()
+	{}
+
 	public BillPaymentRegister(long persnId)
 	{
 		this.personId = persnId;

@@ -33,6 +33,9 @@ public class Tax implements Serializable
 	@Column(name = "Tax_Description")
 	private String				taxDescription;
 
+	Tax()
+	{}
+
 	public Tax(Money taxAmount, String description)
 	{
 		this.taxAmount = taxAmount;

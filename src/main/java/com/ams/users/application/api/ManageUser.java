@@ -5,15 +5,16 @@ import com.ams.users.domain.model.Person;
 
 import java.util.List;
 
-public interface ManageUser {
-    public void deleteUser(long userId) throws ServiceException;
+public interface ManageUser
+{
+	public void deleteUser(long userId) throws ServiceException;
 
-    public List<Person> getAllUsers() throws ServiceException;
+	public List<Person> getAllUsers() throws ServiceException;
 
-    public Person getUserDetails(long userId) throws ServiceException;
+	public Person getUserDetails(long userId) throws ServiceException;
 
-    public void registerUser(Person user) throws ServiceException;
+	public void registerUser(Person user) throws ServiceException;
 
-    public void updateUserDetails(Person user) throws ServiceException;
+	public void updateUserDetails(Person user) throws ServiceException;
 
 }

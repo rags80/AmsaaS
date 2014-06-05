@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
@@ -28,24 +28,24 @@ public class ServiceUsageEvent implements Serializable
 	@EmbeddedId
 	ServiceUsageEventId			sueId;
 
+	@MapsId("srvc")
 	@ManyToOne
 	@JoinColumn(name = "Service_Code")
 	private Service			srvc;
 
+	@MapsId("srvcUser")
 	@ManyToOne
 	@JoinColumn(name = "SrvcUser_Id")
 	private Person				srvcUser;
 
-	@Embedded
-	private Period				srvcUsagePeriod;
+	ServiceUsageEvent()
+	{}
 
 	public ServiceUsageEvent(Person persn, Service srvc, Period duration)
 	{
-		this.sueId = new ServiceUsageEventId(srvc.getSrvcCode(), persn.getPersnId(), duration.getFromDate(), duration.getToDate());
+		this.sueId = new ServiceUsageEventId(srvc.getSrvcCode(), persn.getPersnId(), duration);
 		this.srvc = srvc;
 		this.srvcUser = persn;
-		this.srvcUsagePeriod = duration;
-
 	}
 
 	/*
@@ -57,14 +57,14 @@ public class ServiceUsageEvent implements Serializable
 		return this.srvc;
 	}
 
-	public Period getSrvcUsagePeriod()
-	{
-		return this.srvcUsagePeriod;
-	}
-
 	public Person getSrvcUser()
 	{
 		return this.srvcUser;
+	}
+
+	public Period getSrvcUsagePeriod()
+	{
+		return this.sueId.getSrvcUsagePeriod();
 	}
 
 }

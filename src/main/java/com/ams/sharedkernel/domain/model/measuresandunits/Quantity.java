@@ -29,6 +29,9 @@ public class Quantity implements Serializable
 	@Enumerated(EnumType.STRING)
 	private TimeUnit			unit;
 
+	Quantity()
+	{}
+
 	public Quantity(BigDecimal qty, TimeUnit qtUnit)
 	{
 		this.value = qty;

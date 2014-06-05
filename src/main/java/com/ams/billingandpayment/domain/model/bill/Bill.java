@@ -49,7 +49,7 @@ public class Bill implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long				billNumber;
-	@ManyToOne
+	@ManyToOne(targetEntity = Person.class)
 	@JoinColumn(name = "BilledPerson_Id")
 	private Person				billedPerson;
 	@Temporal(TemporalType.DATE)
@@ -87,7 +87,7 @@ public class Bill implements Serializable
 			@AttributeOverride(name = "currency",column = @Column(name = "NetAmount_Currency"))
 	})
 	private Money				billNetAmount;
-	@OneToOne
+	@OneToOne(targetEntity = BillPaymentRegister.class)
 	@JoinColumn(name = "BillPayReg_Id")
 	private BillPaymentRegister	billPaymentRegister;
 
@@ -98,7 +98,7 @@ public class Bill implements Serializable
 	@CollectionTable(name = "T_BILLPAYMENTS",joinColumns = @JoinColumn(name = "Bill_No"))
 	private List<Payment>		billPayments;
 
-	private Bill()
+	Bill()
 	{}
 
 	/*

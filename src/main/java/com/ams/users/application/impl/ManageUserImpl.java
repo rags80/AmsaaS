@@ -51,7 +51,7 @@ public class ManageUserImpl implements ManageUser
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void registerUser(Person user)
 	{
-		this.personRepository.createOrUpdate(user);
+		this.personRepository.create(user);
 		this.usrEventPublisher.raiseEvent(new UserCreatedEvent(user));
 
 	}
@@ -60,7 +60,7 @@ public class ManageUserImpl implements ManageUser
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.REPEATABLE_READ)
 	public void updateUserDetails(Person user)
 	{
-		this.personRepository.createOrUpdate(user);
+		this.personRepository.update(user);
 
 	}
 

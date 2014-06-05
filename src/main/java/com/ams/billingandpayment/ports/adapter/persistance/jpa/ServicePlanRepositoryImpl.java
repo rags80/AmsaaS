@@ -22,23 +22,30 @@ public class ServicePlanRepositoryImpl implements ServicePlanRepository
 {
 
 	@Autowired
-	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
 	private EntityManager	entityManager;
 
 	@Override
-	public String createOrUpdate(ServicePlan servicePlan)
+	public String create(ServicePlan entity)
 	{
-		this.entityManager.merge(servicePlan);
-		this.entityManager.flush();
-		return servicePlan.getSrvcPlanName();
-
+		this.entityManager.persist(entity);
+		return entity.getSrvcPlanName();
 	}
 
 	@Override
-	public void delete(String srvcPlanName)
+	public String update(ServicePlan entity)
+	{
+		this.entityManager.merge(entity);
+		this.entityManager.flush();
+		return entity.getSrvcPlanName();
+	}
+
+	@Override
+	public String delete(String srvcPlanName)
 	{
 		ServicePlan servicePlan = this.findById(srvcPlanName);
 		this.entityManager.remove(servicePlan);
+		return servicePlan.getSrvcPlanName();
 	}
 
 	@Override
@@ -68,7 +75,7 @@ public class ServicePlanRepositoryImpl implements ServicePlanRepository
 	@Override
 	public List<ServicePrice> findAllServicePriceByPlanName(String srvcPlanName)
 	{
-		TypedQuery<ServicePrice> query = this.entityManager.createQuery("SELECT psp FROM PlanServicePrice AS sr WHERE sr.srvcPlan.srvcPlanName=:splName", ServicePrice.class);
+		TypedQuery<ServicePrice> query = this.entityManager.createQuery("SELECT sp FROM ServicePrice AS sp WHERE sp.srvcPlan.srvcPlanName=:splName", ServicePrice.class);
 		query.setParameter("splName", srvcPlanName);
 		return query.getResultList();
 	}
@@ -89,9 +96,15 @@ public class ServicePlanRepositoryImpl implements ServicePlanRepository
 	@Override
 	public ServicePlan findById(String srvcPlanName)
 	{
-		TypedQuery<ServicePlan> query = this.entityManager.createQuery("SELECT spl FROM ServicePlan AS spl LEFT JOIN FETCH spl.srvcPriceSet WHERE spl.srvcPlanName=:splName", ServicePlan.class);
-		query.setParameter("splName", srvcPlanName);
-		return query.getSingleResult();
+		/*
+		 * TypedQuery<ServicePlan> query = this.entityManager.createQuery(
+		 * "SELECT spl FROM ServicePlan AS spl LEFT JOIN FETCH spl.srvcPriceSet WHERE spl.srvcPlanName=:splName"
+		 * , ServicePlan.class); query.setParameter("splName", srvcPlanName);
+		 * return query.getSingleResult();
+		 */
+
+		ServicePlan spl = this.entityManager.find(ServicePlan.class, srvcPlanName);
+		return spl;
 	}
 
 	@Override
@@ -125,15 +138,8 @@ public class ServicePlanRepositoryImpl implements ServicePlanRepository
 	@Override
 	public String saveOrUpdateServicePriceToPlan(ServicePrice srvcRate)
 	{
-		if (this.entityManager.merge(srvcRate) != null)
-		{
-			this.entityManager.flush();
-			return "success";
-		}
-		else
-		{
-			return "failure";
-		}
+		this.entityManager.persist(srvcRate);
+		return "success";
 
 	}
 

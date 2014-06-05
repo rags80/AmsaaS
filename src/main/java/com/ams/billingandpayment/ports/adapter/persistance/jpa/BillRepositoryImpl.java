@@ -22,7 +22,7 @@ public class BillRepositoryImpl implements BillRepository
 {
 
 	@Autowired
-	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
 	private EntityManager	entityManager;
 
 	@Override
@@ -63,7 +63,7 @@ public class BillRepositoryImpl implements BillRepository
 	public List<Bill> findBillsByPaymentStatus()
 	{
 		Query query = this.entityManager.createQuery("select b from Bill b where b.billPaymentRegister.billPaymentStatus = 'UNPAID'");
-		List billList = query.getResultList();
+		List<Bill> billList = query.getResultList();
 		// CriteriaQuery<Bill> cq =
 		// entityManager.getCriteriaBuilder().createQuery(Bill.class);
 		// cq.from(Bill.class)

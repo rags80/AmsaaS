@@ -18,6 +18,9 @@ public class LoginDetails implements Serializable
 	private String				loginId;
 	private String				loginPassword;
 
+	LoginDetails()
+	{}
+
 	public LoginDetails(String id, String passwd)
 	{
 		this.loginId = id;

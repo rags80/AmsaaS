@@ -8,6 +8,7 @@ import com.ams.users.domain.repository.FileRepository;
 /**
  * @author Raghavendra Badiger
  */
-public class FileRepositoryImpl implements FileRepository {
+public class FileRepositoryImpl implements FileRepository
+{
 
 }
