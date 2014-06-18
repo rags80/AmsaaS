@@ -30,7 +30,9 @@ public class Money implements Serializable, Comparable<Money>
 	public static final Currency	DEFAULT_CURRENCY	= Currency.getInstance("INR");
 	@Transient
 	public static final Money	ZERO				= new Money(BigDecimal.ZERO, DEFAULT_CURRENCY);
+
 	private BigDecimal			amount;
+
 	private Currency			currency;
 
 	public Money()

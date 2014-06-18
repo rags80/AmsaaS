@@ -1,7 +1,7 @@
 package com.ams.billingandpayment.application.api.service.serviceportfolio;
 
-import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 
 public interface ManageServiceUsage
 {

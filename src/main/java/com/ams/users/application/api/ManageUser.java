@@ -1,6 +1,6 @@
 package com.ams.users.application.api;
 
-import com.ams.sharedkernel.application.api.exception.ServiceException;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 import com.ams.users.domain.model.Person;
 
 import java.util.List;

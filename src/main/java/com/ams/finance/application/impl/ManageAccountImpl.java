@@ -12,7 +12,7 @@ import com.ams.finance.application.api.servicedata.AccountServiceData;
 import com.ams.finance.domain.model.Account;
 import com.ams.finance.domain.model.Transaction;
 import com.ams.finance.domain.repository.AccountRepository;
-import com.ams.sharedkernel.application.api.exception.ServiceException;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 import com.ams.users.domain.model.Person;
 import com.ams.users.domain.repository.PersonRepository;
 

@@ -2,7 +2,7 @@ package com.ams.finance.application.api;
 
 import com.ams.finance.application.api.servicedata.AccountServiceData;
 import com.ams.finance.domain.model.Transaction;
-import com.ams.sharedkernel.application.api.exception.ServiceException;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 
 import java.util.Set;
 

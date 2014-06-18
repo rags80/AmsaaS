@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 
-import com.ams.sharedkernel.application.api.ManageMail;
+import com.ams.sharedkernel.domain.service.email.ManageMail;
 
 /**
  * @author Raghavendra Badiger

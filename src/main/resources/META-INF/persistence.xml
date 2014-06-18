@@ -15,6 +15,10 @@
 		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServiceSubscription</class>
 		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEvent</class>
 		<class>com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEventId</class>
+		<class>com.ams.booking.domain.model.Booking</class>
+		<class>com.ams.booking.domain.model.PersonId</class>
+		<class>com.ams.booking.domain.model.Resource</class>
+		<class>com.ams.booking.domain.model.ResourceId</class>
 		<class>com.ams.finance.domain.model.AccountDetail</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Money</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Period</class>

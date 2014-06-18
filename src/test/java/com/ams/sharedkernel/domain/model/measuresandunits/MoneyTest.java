@@ -32,7 +32,8 @@ public class MoneyTest
 	@Test
 	public final void testCopy()
 	{
-		fail("Not yet implemented");
+		Money m = new Money(null, null);
+		System.out.println(m.getAmount());
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /* 
  * Document   : JS
  * Author     : Raghavendra I Badiger
- * Description: 
+ * Description: Maps the CSS to be applied to styleKey.
  *  
  */
 

@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
 import com.ams.billingandpayment.application.api.service.bill.ManageBill;
 import com.ams.users.domain.model.Person;
 import com.ams.users.domain.repository.PersonRepository;
@@ -17,13 +13,13 @@ import com.ams.users.domain.repository.PersonRepository;
  * @author Raghavendra Badiger
  */
 
-public class BillRunJob implements Job
+public class BillRunJob extends com.ams.sharedkernel.domain.model.jobscheduler.Job
 {
 	private PersonRepository	persnRepo;
 	private ManageBill		manageBill;
-	private BillSchedule	billSchedule;
+	private String			billSchedule;
 
-	public BillRunJob(PersonRepository persnRepo, ManageBill mngBill, BillSchedule schedule)
+	public BillRunJob(PersonRepository persnRepo, ManageBill mngBill, String schedule)
 	{
 		this.persnRepo = persnRepo;
 		this.manageBill = mngBill;
@@ -31,7 +27,7 @@ public class BillRunJob implements Job
 	}
 
 	@Override
-	public void execute(JobExecutionContext context) throws JobExecutionException
+	public void execute()
 	{
 		List<Person> persnList = this.persnRepo.findAll();
 		ExecutorService billJobExecutor = Executors.newFixedThreadPool(5);

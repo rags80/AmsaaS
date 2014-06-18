@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ams.sharedkernel.application.api;
+package com.ams.sharedkernel.domain.service.reports;
 
 /**
  * @author Raghavendra Badiger

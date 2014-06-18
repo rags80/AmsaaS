@@ -3,19 +3,28 @@
  */
 package com.ams.booking.domain.repository;
 
-import com.ams.booking.domain.Booking;
-import com.ams.booking.domain.ResourceId;
-
 import java.util.Date;
 import java.util.List;
+
+import com.ams.booking.domain.model.Booking;
+import com.ams.booking.domain.model.ResourceId;
 
 /**
  * @author Raghavendra Badiger
  */
 public interface BookingRepository
 {
-
+	/**
+	 * @param booking
+	 * @return
+	 */
 	long createBooking(Booking booking);
+
+	/**
+	 * @param booking
+	 * @return
+	 */
+	long updateBooking(Booking booking);
 
 	/**
 	 * @param bookingId
@@ -24,16 +33,25 @@ public interface BookingRepository
 	long deleteBooking(long bookingId);
 
 	/**
+	 * @param bookingId
+	 * @return
+	 */
+	Booking findById(long bookingId);
+
+	/**
 	 * @param resourceId
 	 * @param startDateTime
 	 * @param endDateTime
 	 * @return
 	 */
-	List<Booking> findAllActiveBookingsForResource(ResourceId resourceId, Date startDateTime, Date endDateTime);
+	List<Booking> findOverlappingBookingsForResource(ResourceId resourceId, Date startDateTime, Date endDateTime);
 
 	/**
-	 * @param bookingId
+	 * @param resourceId
+	 * @param startDate
+	 * @param endDate
 	 * @return
 	 */
-	Booking findById(long bookingId);
+	List<Booking> findAllBookingsForPeriod(long resourceId, Date startDate, Date endDate);
+
 }

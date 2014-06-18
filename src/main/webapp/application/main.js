@@ -3,7 +3,8 @@ require.config({
     /*
      * AMD load by name configuration
      */
-    paths: {
+    
+	paths: {
         /*
          * Application mvc framework
          */
@@ -12,32 +13,28 @@ require.config({
         ViewResolver: '../lib/raghs-core/viewresolver',
 
         /*
-         *
          * Route map & style map of application
-         *
          */
         RouteMap: './config/routemap',
         ViewStyleMap: './config/viewstylemap',
 
-        /*
+        /* 
          * Libraries required!
          */
-        Text: '../lib/amd/text',
+        Calendar:'../lib/fullcalendar/fullcalendar.min',
+        Jquery:'../lib/jquery/jquery-1.8.3.min',
+        Knockout:'../lib/knockout/knockout-latest',
         Moment: '../lib/moment/moment.min',
         Router: '../lib/crossroads/crossroads',
-        signals: '../lib/crossroads/signals'
-
+        Signals: '../lib/crossroads/signals',
+        Text: '../lib/amd/text'
+       
     }
 });
 
 define(function (require) {
     "use strict";
     var application = require("Application");
-
-    // Start application once DOM gets loaded
-    /* $(function() {
-     application.start("#home");
-     }); */
-
+    // Start application 
     application.start("#home");
 });

@@ -15,6 +15,7 @@ public interface ManageBill
 	/**
 	 * Periodic Billing operations
 	 */
+
 	void billSubscriberForPeriod(Person srvcSubscriber, Period billPeriod, Date billDate, Date billDueDate);
 
 	/**

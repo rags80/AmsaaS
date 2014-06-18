@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ams.billingandpayment.application.api.service.serviceportfolio.ManageService;
 import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
-import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.repository.Page;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 
+/**
+ * @author Raghavendra Badiger
+ * 
+ */
 @Controller
 public class ServiceController
 {

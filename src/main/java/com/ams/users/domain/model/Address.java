@@ -1,7 +1,8 @@
 package com.ams.users.domain.model;
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
+
+import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address implements Serializable
@@ -11,6 +12,7 @@ public class Address implements Serializable
      *
      */
 	private static final long	serialVersionUID	= 1L;
+
 	private int				flatNumber;
 	private String				apartmentName;
 	private String				street;
@@ -33,7 +35,7 @@ public class Address implements Serializable
 
 	public String getCity()
 	{
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city)

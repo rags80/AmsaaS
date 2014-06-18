@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ams.booking.domain;
+package com.ams.booking.domain.model;
 
 import com.ams.sharedkernel.domain.model.exception.ExceptionCode;
 
@@ -11,7 +11,11 @@ import com.ams.sharedkernel.domain.model.exception.ExceptionCode;
 public enum BookingExceptionCode implements ExceptionCode
 {
 
-	NOT_POSSIBLE("Booking not possible @ this timeslot!"), CANCEL_FAILED("Booking can't be cancelled!");
+	CANCEL_FAILED("Booking can't be cancelled!"),
+	ENDDATETIME_CONFLICT("Booking Start Date-time conflicts with End Date-time"),
+	ISNT_OVER("The Booking isn't over yet!!"),
+	NO_BOOKINGS("No Bookings exist!"),
+	NOT_POSSIBLE("Booking is not possible @ this timeslot!");
 
 	private String	exceptionDetail;
 
@@ -25,7 +29,5 @@ public enum BookingExceptionCode implements ExceptionCode
 	{
 		return this.exceptionDetail;
 	}
-
-	;
 
 }

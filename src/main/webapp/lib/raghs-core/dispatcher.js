@@ -1,7 +1,8 @@
 /*
+ * 
  * Document   : JS
  * Author     : Raghavendra I Badiger
- * Description:
+ * Description:	The router intercepts changes in hash and forwards to respective controller.
  *
  */
 

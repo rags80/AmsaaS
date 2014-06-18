@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.ams.sharedkernel.application.api.exception.ServiceException;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 
 /**
  * 

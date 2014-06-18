@@ -38,10 +38,10 @@ import com.ams.billingandpayment.domain.repository.ServiceUsageEventRepository;
 import com.ams.billingandpayment.domain.service.DiscountPolicyAdvisor;
 import com.ams.billingandpayment.domain.service.ServicePriceSpecAdvisor;
 import com.ams.billingandpayment.domain.service.TaxPolicyAdvisor;
-import com.ams.sharedkernel.application.api.exception.ServiceException;
 import com.ams.sharedkernel.domain.model.measuresandunits.Money;
 import com.ams.sharedkernel.domain.model.measuresandunits.Period;
 import com.ams.sharedkernel.domain.model.measuresandunits.TimeUnit;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 import com.ams.users.domain.model.Person;
 import com.ams.users.domain.repository.PersonRepository;
 

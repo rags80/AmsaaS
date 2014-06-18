@@ -1,4 +1,4 @@
-package com.ams.sharedkernel.application.api.exception;
+package com.ams.sharedkernel.domain.service.exception;
 
 public class ServiceException extends RuntimeException
 {

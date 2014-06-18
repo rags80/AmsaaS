@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ams.edocket.application.api.ManageDocument;
 import com.ams.edocket.application.api.file.File;
 import com.ams.edocket.application.api.file.Folder;
-import com.ams.sharedkernel.application.api.exception.ServiceException;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
 import com.ams.users.domain.model.Person;
 
 /**
