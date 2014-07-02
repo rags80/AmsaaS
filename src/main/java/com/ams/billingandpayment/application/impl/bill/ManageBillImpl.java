@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ams.billingandpayment.application.api.service.bill.ManageBill;
@@ -17,8 +18,8 @@ import com.ams.billingandpayment.domain.model.bill.policy.DiscountPolicy;
 import com.ams.billingandpayment.domain.model.bill.policy.TaxPolicy;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
-import com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEvent;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice.ServicePriceCategory;
+import com.ams.billingandpayment.domain.model.serviceportfolio.ServiceUsageEvent;
 import com.ams.billingandpayment.domain.repository.BillRepository;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.billingandpayment.domain.repository.ServiceUsageEventRepository;
@@ -35,7 +36,7 @@ import com.ams.users.domain.repository.PersonRepository;
  * @author Raghavendra Badiger
  */
 
-@Transactional(isolation = Isolation.DEFAULT)
+@Transactional(isolation = Isolation.REPEATABLE_READ,propagation = Propagation.REQUIRED)
 @org.springframework.stereotype.Service("ManageBillService")
 public class ManageBillImpl implements ManageBill
 {
@@ -76,7 +77,6 @@ public class ManageBillImpl implements ManageBill
 		billBldr = this.usageCharges(billBldr);
 		Bill billForPeriod = billBldr.getBillInstance(this.discountPolicyAdvisor.adviseBillDiscountPolicy(srvcSubscriber, billPeriod), this.taxPolicyAdvisor.adviseBillTaxPolicy(srvcSubscriber, billPeriod));
 		this.billRepository.createBill(billForPeriod);
-
 	}
 
 	/*

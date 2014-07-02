@@ -19,25 +19,30 @@
 		<class>com.ams.booking.domain.model.PersonId</class>
 		<class>com.ams.booking.domain.model.Resource</class>
 		<class>com.ams.booking.domain.model.ResourceId</class>
+		<class>com.ams.edocket.domain.model.Folder</class>
 		<class>com.ams.finance.domain.model.AccountDetail</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Money</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Period</class>
 		<class>com.ams.sharedkernel.domain.model.measuresandunits.Quantity</class>
 		<class>com.ams.users.domain.model.Address</class>
+		<class>com.ams.users.domain.model.ContactDetail</class>
 		<class>com.ams.users.domain.model.LoginDetails</class>
 		<class>com.ams.users.domain.model.Person</class>
-		<class>com.ams.users.domain.model.PersonDetail</class>
 		<shared-cache-mode>ALL</shared-cache-mode>
 		<properties>
-			<property name="hibernate.connection.username" value="root"/>
-			<property name="hibernate.connection.password" value="password"/>
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ams"/>
-			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+			<property name="hibernate.connection.username" value="root" />
+			<property name="hibernate.connection.password" value="password" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/ams" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.generate_statistics" value="true" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+			<!-- <property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory" 
+				/> -->
+			<property name="hibernate.cache.region.factory_class"
+				value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+
 		</properties>
-		<!-- <properties> <property name="hibernate.cache.use_query_cache" value="true" 
-			/> <property name="hibernate.cache.use_second_level_cache" value="true" /> 
-			<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory" 
-			/> <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" 
-			/> </properties> -->
 	</persistence-unit>
 </persistence>

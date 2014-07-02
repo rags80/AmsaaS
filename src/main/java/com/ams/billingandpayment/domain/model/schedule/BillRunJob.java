@@ -51,7 +51,10 @@ public class BillRunJob extends com.ams.sharedkernel.domain.model.jobscheduler.J
 		@Override
 		public void run()
 		{
-			BillRunJob.this.manageBill.billSubscriberForPeriod(this.subscrbr, BillRunJob.this.billSchedule.getBillPeriod(), BillRunJob.this.billSchedule.getBillDate(), BillRunJob.this.billSchedule.getBillDueDate());
+			// BillRunJob.this.manageBill.billSubscriberForPeriod(this.subscrbr,
+			// BillRunJob.this.billSchedule.getBillPeriod(),
+			// BillRunJob.this.billSchedule.getBillDate(),
+			// BillRunJob.this.billSchedule.getBillDueDate());
 
 		}
 

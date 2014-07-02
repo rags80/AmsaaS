@@ -36,7 +36,7 @@ public class Person implements Serializable
 	private String				persnLastName;
 
 	@Embedded
-	private PersonDetail		persnDetail;
+	private ContactDetail		persnDetail;
 
 	@Embedded
 	private Address			persnAddress;
@@ -60,7 +60,7 @@ public class Person implements Serializable
 		this.persnLastName = lastName;
 	}
 
-	public void setPersnDetails(PersonDetail detail)
+	public void setPersnDetails(ContactDetail detail)
 	{
 		this.persnDetail = detail;
 	}
@@ -80,7 +80,7 @@ public class Person implements Serializable
 		return this.persnAddress;
 	}
 
-	public PersonDetail getPersnDetail()
+	public ContactDetail getPersnDetail()
 	{
 		return this.persnDetail;
 	}

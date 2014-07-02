@@ -5,8 +5,8 @@ package com.ams.edocket.application.api;
 
 import java.util.List;
 
-import com.ams.edocket.application.api.file.File;
-import com.ams.edocket.application.api.file.Folder;
+import com.ams.edocket.domain.model.File;
+import com.ams.edocket.domain.model.Folder;
 import com.ams.users.domain.model.Person;
 
 /**
@@ -30,5 +30,4 @@ public interface ManageDocument
 	Folder updateDocumentsFolderDetails(Folder folderData);
 
 	File updateFileDetails(File fileDetails);
-
 }

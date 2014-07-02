@@ -1,20 +1,19 @@
 package com.ams.users.application.api;
 
-import com.ams.sharedkernel.domain.service.exception.ServiceException;
-import com.ams.users.domain.model.Person;
-
 import java.util.List;
+
+import com.ams.users.domain.model.Person;
 
 public interface ManageUser
 {
-	public void deleteUser(long userId) throws ServiceException;
+	public void deleteUser(long userId);
 
-	public List<Person> getAllUsers() throws ServiceException;
+	public List<Person> getAllUsers();
 
-	public Person getUserDetails(long userId) throws ServiceException;
+	public Person getUserDetails(long userId);
 
-	public void registerUser(Person user) throws ServiceException;
+	public void registerUser(Person user);
 
-	public void updateUserDetails(Person user) throws ServiceException;
+	public void updateUserDetails(Person user);
 
 }

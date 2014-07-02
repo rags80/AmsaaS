@@ -12,10 +12,8 @@ import com.ams.billingandpayment.application.api.service.serviceportfolio.Manage
 import com.ams.billingandpayment.domain.model.serviceportfolio.Service;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePlan;
 import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice;
-import com.ams.billingandpayment.domain.model.serviceportfolio.ServicePrice.ServicePriceCategory;
 import com.ams.billingandpayment.domain.repository.ServicePlanRepository;
 import com.ams.billingandpayment.domain.repository.ServiceRepository;
-import com.ams.sharedkernel.domain.model.measuresandunits.TimeUnit;
 import com.ams.sharedkernel.domain.repository.Page;
 
 @Transactional
@@ -28,6 +26,33 @@ public class ManageServicePlanImpl implements ManageServicePlan
 
 	@Autowired
 	private ServicePlanRepository	servicePlanRepository;
+
+	/*
+	 * Service Plan command/write functions implementation
+	 */
+	@Override
+	public String registerServicePlan(ServicePlan srvcPlan)
+	{
+
+		return this.servicePlanRepository.create(srvcPlan);
+
+	}
+
+	@Override
+	public String updateServicePlanDetails(ServicePlan srvcPlan)
+	{
+		return this.servicePlanRepository.update(srvcPlan);
+	}
+
+	@Override
+	public void removeServicePlan(String srvcPlanName)
+	{
+		this.servicePlanRepository.delete(srvcPlanName);
+	}
+
+	/*
+	 * Service Plan query/read functions implementation
+	 */
 
 	@Override
 	public List<ServicePlan> getAllServicePlans()
@@ -55,27 +80,6 @@ public class ManageServicePlanImpl implements ManageServicePlan
 	}
 
 	/*
-	 * Service Plan query/read functions implementation
-	 */
-
-	@Override
-	public List<ServicePrice> getServicePricesForPlan(String srvcPlanName)
-	{
-		return this.servicePlanRepository.findAllServicePriceByPlanName(srvcPlanName);
-	}
-
-	/*
-	 * Service Plan command/write functions implementation
-	 */
-	@Override
-	public String registerServicePlan(ServicePlan srvcPlan)
-	{
-
-		return this.servicePlanRepository.create(srvcPlan);
-
-	}
-
-	/*
 	 * Plan-Service Price command/write functions implementation
 	 */
 
@@ -85,26 +89,24 @@ public class ManageServicePlanImpl implements ManageServicePlan
 		ServicePlan srvcPlan = this.servicePlanRepository.findById(srvcPriceCommand.getSrvcPlanName());
 		Service srvc = this.serviceRepository.findById(srvcPriceCommand.getSrvcCode());
 
-		System.out.println("Srvc Code:" + srvc.getSrvcCode() + "\n" + "Srvcplan:" + srvcPlan.getSrvcPlanName());
+		ServicePrice srvcRate = srvcPlan.servicePriceToPlan(srvcPriceCommand.getSrvcPriceCategory(), srvc,
+													srvcPriceCommand.getSrvcPriceAmountValue(),
+													srvcPriceCommand.getSrvcPriceAmountCurrency(),
+													srvcPriceCommand.getSrvcPriceUnitOfMeasure());
 
-		/*
-		 * ServicePrice srvcRate =
-		 * srvcPlan.servicePriceToPlan(srvcPriceCommand
-		 * .getSrvcPriceCategory(), srvc,
-		 * srvcPriceCommand.getSrvcPriceAmountValue(),
-		 * srvcPriceCommand.getSrvcPriceAmountCurrency(),
-		 * srvcPriceCommand.getSrvcPriceUnitOfMeasure());
-		 */
-
-		ServicePrice srvcRate = new ServicePrice(srvcPlan, srvc, ServicePriceCategory.USAGE.toString(), BigDecimal.valueOf(1000.0), "INR", TimeUnit.Months.toString());
 		return this.servicePlanRepository.saveOrUpdateServicePriceToPlan(srvcRate);
 
 	}
 
 	@Override
-	public void removeServicePlan(String srvcPlanName)
+	public void updateServicePriceDetails(ServicePriceCommand spc)
 	{
-		this.servicePlanRepository.delete(srvcPlanName);
+		ServicePrice srvcRate = this.servicePlanRepository.findServicePriceByCriteria(spc.getSrvcPlanName(), spc.getSrvcCode());
+		srvcRate.updateDetails(spc.getSrvcPriceCategory(),
+							BigDecimal.valueOf(spc.getSrvcPriceAmountValue()),
+							spc.getSrvcPriceAmountCurrency(),
+							spc.getSrvcPriceUnitOfMeasure());
+		this.servicePlanRepository.saveOrUpdateServicePriceToPlan(srvcRate);
 	}
 
 	@Override
@@ -125,19 +127,10 @@ public class ManageServicePlanImpl implements ManageServicePlan
 	 */
 
 	@Override
-	public String updateServicePlanDetails(ServicePlan srvcPlan)
+	public List<ServicePrice> getServicePricesForPlan(String srvcPlanName)
 	{
-		return this.servicePlanRepository.update(srvcPlan);
-	}
+		return this.servicePlanRepository.findAllServicePriceByPlanName(srvcPlanName);
 
-	@Override
-	public void updateServicePriceDetails(ServicePriceCommand spc)
-	{
-		ServicePrice srvcRate = this.servicePlanRepository.findServicePriceByCriteria(spc.getSrvcPlanName(), spc.getSrvcCode());
-		srvcRate.updateDetails(spc.getSrvcPriceCategory(),
-							BigDecimal.valueOf(spc.getSrvcPriceAmountValue()),
-							spc.getSrvcPriceAmountCurrency(),
-							spc.getSrvcPriceUnitOfMeasure());
 	}
 
 }

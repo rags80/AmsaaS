@@ -4,7 +4,7 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public class PersonDetail implements Serializable
+public class ContactDetail implements Serializable
 {
 
 	/**

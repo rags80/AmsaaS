@@ -33,6 +33,7 @@ public class ManageBookingImpl implements ManageBooking
 
 		int noOfOverlappingBookings = this.bookingRepository.findOverlappingBookingsForResource(resourceId, startDateTime, endDateTime).size();
 		System.out.println("# of Overlapping bookings:" + noOfOverlappingBookings);
+
 		if (noOfOverlappingBookings > 0)
 		{
 			throw new ServiceException(BookingExceptionCode.NOT_POSSIBLE.getExceptionDetails());
@@ -48,8 +49,17 @@ public class ManageBookingImpl implements ManageBooking
 	public long updateBooking(long bookingId, String details, Date startDateTime, Date endDateTime)
 	{
 		Booking booking = this.bookingRepository.findById(bookingId);
-		booking.updateDetails(details, startDateTime, endDateTime);
-		return this.bookingRepository.updateBooking(booking);
+		int noOfOverlappingBookings = this.bookingRepository.findOverlappingBookingsForResource(booking.getBookedResourceId(), startDateTime, endDateTime).size();
+		System.out.println("# of Overlapping bookings:" + noOfOverlappingBookings);
+		if (noOfOverlappingBookings > 0)
+		{
+			throw new ServiceException(BookingExceptionCode.NOT_POSSIBLE.getExceptionDetails());
+		}
+		else
+		{
+			booking.updateDetails(details, startDateTime, endDateTime);
+			return this.bookingRepository.updateBooking(booking);
+		}
 
 	}
 

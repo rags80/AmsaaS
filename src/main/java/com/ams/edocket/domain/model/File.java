@@ -1,20 +1,23 @@
 /**
  *
  */
-package com.ams.edocket.application.api.file;
+package com.ams.edocket.domain.model;
+
+import java.util.Date;
 
 import javax.persistence.Lob;
-import java.util.Date;
 
 /**
  * @author Raghavendra Badiger
  */
+
 public class File
 {
 	private String	name;
 	private String	type;
 	private long	size;
 	private Date	lastModifiedDate;
+	@Lob
 	private byte[]	fileObject;
 
 	public File()

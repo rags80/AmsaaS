@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ams.edocket.application.api.ManageDocument;
-import com.ams.edocket.application.api.file.File;
-import com.ams.edocket.application.api.file.Folder;
+import com.ams.edocket.domain.model.File;
+import com.ams.edocket.domain.model.Folder;
 import com.ams.users.domain.model.Person;
 
 /**

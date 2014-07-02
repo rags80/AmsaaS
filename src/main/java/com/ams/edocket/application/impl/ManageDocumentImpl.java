@@ -10,8 +10,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 
 import com.ams.edocket.application.api.ManageDocument;
-import com.ams.edocket.application.api.file.File;
-import com.ams.edocket.application.api.file.Folder;
+import com.ams.edocket.domain.model.File;
+import com.ams.edocket.domain.model.Folder;
 import com.ams.sharedkernel.domain.service.exception.ServiceException;
 import com.ams.users.domain.model.Person;
 

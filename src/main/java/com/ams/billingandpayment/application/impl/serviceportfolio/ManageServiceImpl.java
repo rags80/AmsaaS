@@ -23,25 +23,6 @@ public class ManageServiceImpl implements ManageService
 	private ServiceRepository	serviceRepository;
 
 	@Override
-	public List<Service> getAllServices()
-	{
-		return this.serviceRepository.findAll();
-	}
-
-	@Override
-	public Service getService(String svcCode)
-	{
-		return this.serviceRepository.findById(svcCode);
-	}
-
-	@Override
-	public Page<Service> getServicesNextPage(int index, int offset)
-	{
-		return this.serviceRepository.findNextPageData(new Page<Service>(index, offset));
-
-	}
-
-	@Override
 	public String registerService(Service svc)
 	{
 		return this.serviceRepository.create(svc);
@@ -59,6 +40,25 @@ public class ManageServiceImpl implements ManageService
 	public String updateServiceDetails(Service svc)
 	{
 		return this.serviceRepository.update(svc);
+	}
+
+	@Override
+	public List<Service> getAllServices()
+	{
+		return this.serviceRepository.findAll();
+	}
+
+	@Override
+	public Service getService(String svcCode)
+	{
+		return this.serviceRepository.findById(svcCode);
+	}
+
+	@Override
+	public Page<Service> getServicesNextPage(int index, int offset)
+	{
+		return this.serviceRepository.findNextPageData(new Page<Service>(index, offset));
+
 	}
 
 }

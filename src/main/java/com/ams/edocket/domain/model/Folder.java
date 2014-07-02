@@ -1,21 +1,28 @@
 /**
  *
  */
-package com.ams.edocket.application.api.file;
+package com.ams.edocket.domain.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Id;
+
 /**
  * @author Raghavendra Badiger
  */
+
+// @Entity @Access(AccessType.FIELD)@Table(name = "T_DOCKET_FOLDER")
 public class Folder
 {
+	@Id
 	private String			name;
 	private String			path;
 	private Date			lastModifiedDate;
 	private List<Folder>	subFolderList;
+	@ElementCollection
 	private List<File>		fileList;
 
 	public Folder()

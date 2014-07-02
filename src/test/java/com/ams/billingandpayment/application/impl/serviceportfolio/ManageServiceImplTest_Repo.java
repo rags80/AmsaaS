@@ -57,14 +57,20 @@ public class ManageServiceImplTest_Repo
 	{
 		int size = this.manageService.getAllServices().size();
 		System.out.println("Size:" + size);
-		Service srvc = this.manageService.getService("SRVC01");
-		System.out.println("Service:" + srvc);
+		Service srvc = this.manageService.getService("SRVC-01");
+		System.out.println("Service01:" + srvc);
+
 		srvc = this.manageService.getService("SRVC02");
-		System.out.println("Service:" + srvc);
+		System.out.println("Service02:" + srvc);
+
 		srvc = new Service("SRVC03", "ELECTRNSRVC", "Electrian Service");
 		this.manageService.registerService(srvc);
+
+		srvc = this.manageService.getService("SRVC-01");
+		System.out.println("Service01:" + srvc);
+
 		srvc = this.manageService.getService("SRVC03");
-		System.out.println("Service:" + srvc);
+		System.out.println("Service03:" + srvc);
 	}
 
 }

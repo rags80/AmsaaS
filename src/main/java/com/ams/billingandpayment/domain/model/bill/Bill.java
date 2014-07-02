@@ -15,12 +15,12 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +36,7 @@ import com.ams.sharedkernel.domain.model.measuresandunits.Quantity;
 import com.ams.users.domain.model.Person;
 
 /**
+ * 
  * @author Raghavendra Badiger
  */
 
@@ -49,7 +50,7 @@ public class Bill implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long				billNumber;
-	@ManyToOne(targetEntity = Person.class)
+	@ManyToOne(targetEntity = Person.class,fetch = FetchType.EAGER)
 	@JoinColumn(name = "BilledPerson_Id")
 	private Person				billedPerson;
 	@Temporal(TemporalType.DATE)
@@ -87,7 +88,7 @@ public class Bill implements Serializable
 			@AttributeOverride(name = "currency",column = @Column(name = "NetAmount_Currency"))
 	})
 	private Money				billNetAmount;
-	@OneToOne(targetEntity = BillPaymentRegister.class)
+	@ManyToOne(targetEntity = BillPaymentRegister.class)
 	@JoinColumn(name = "BillPayReg_Id")
 	private BillPaymentRegister	billPaymentRegister;
 

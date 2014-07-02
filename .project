@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>AMSAAS</name>
+	<name>Amsaas</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -65,6 +65,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.zeroturnaround.eclipse.rebelXmlBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.sonar.ide.eclipse.core.sonarNature</nature>
@@ -79,5 +84,6 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.jboss.tools.ws.jaxrs.nature</nature>
 		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
+		<nature>org.zeroturnaround.eclipse.jrebelNature</nature>
 	</natures>
 </projectDescription>
