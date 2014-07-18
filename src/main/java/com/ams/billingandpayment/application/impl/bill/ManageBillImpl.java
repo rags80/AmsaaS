@@ -70,7 +70,7 @@ public class ManageBillImpl implements ManageBill
 	@Override
 	public void billSubscriberForPeriod(Person srvcSubscriber, Period billPeriod, Date billDate, Date billDueDate)
 	{
-		BillPaymentRegister billPayReg = this.billRepository.findBillPaymentRegisterFor(srvcSubscriber);
+		final BillPaymentRegister billPayReg = this.billRepository.findBillPaymentRegisterFor(srvcSubscriber);
 
 		BillBuilder billBldr = new BillBuilder().header(srvcSubscriber, billDate, billDueDate, billPeriod, billPayReg);
 		billBldr = this.nonUsageCharges(billBldr);

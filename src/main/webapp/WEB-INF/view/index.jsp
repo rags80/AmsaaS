@@ -128,12 +128,12 @@
 								<ul class="nav nav-tabs">
 									<li class="active"><a href="#services" data-toggle="tab">Service
 											Catalogue</a></li>
-									<li><a href="#serviceplans" data-toggle="tab">Service
+									<li><a href="#/serviceplans" data-toggle="tab">Service
 											Plan Catalogue</a></li>
 								</ul>
 								<div class="tab-content">
 									<div id="services" class="tab-pane active"></div>
-									<div id="serviceplans" class="tab-pane"></div>
+									<div id="/serviceplans" class="tab-pane"></div>
 								</div>
 							</div>
 						</div>

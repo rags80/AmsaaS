@@ -1,14 +1,18 @@
 package com.ams.users.ports.adapter.rest.springmvc.controller;
 
-import com.ams.sharedkernel.domain.service.exception.ServiceException;
-import com.ams.users.application.api.ManageUser;
-import com.ams.users.domain.model.Person;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import com.ams.sharedkernel.domain.service.exception.ServiceException;
+import com.ams.users.application.api.ManageUser;
+import com.ams.users.domain.model.Person;
 
 @Controller
 public class UserController
@@ -20,7 +24,6 @@ public class UserController
 	@ResponseBody
 	public String deleteUser(@PathVariable final Long userId) throws ServiceException
 	{
-		System.out.println(userId);
 		this.manageUser.deleteUser(userId);
 		return "SUCCESS";
 
@@ -62,7 +65,6 @@ public class UserController
 	@ResponseBody
 	public String updateUseretail(@RequestBody final Person user) throws ServiceException
 	{
-		System.out.println(user.getPersnFirstName());
 		this.manageUser.updateUserDetails(user);
 		return "SUCCESS";
 
